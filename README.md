@@ -18,4 +18,6 @@ yarn run start # 또는 (npm run start), (npm start)
 
 # 정보
 - [Electron](https://electronjs.org/) 기반의 웹 게임
+- (배경) [메인](https://www.pixelstalk.net/hd-8-bit-backgrounds/)
+- (폰트) 소야폰트 `소야논8` 사용 중
 - 개발자: 이근혁(lghlove0509@naver.com)
