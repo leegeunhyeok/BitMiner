@@ -1,0 +1,27 @@
+{
+  "name": "bitminer",
+  "version": "0.0.1",
+  "description": "[Electron] 가상화폐 채굴, 방치형 키우기 게임입니다.",
+  "main": "main.js",
+  "dependencies": {
+    "devtron": "^1.4.0",
+    "electron": "^2.0.2"
+  },
+  "devDependencies": {
+    "standard": "^11.0.1"
+  },
+  "scripts": {
+    "start": "electron .",
+    "standard": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leegeunhyeok/BitMiner.git"
+  },
+  "author": "Leegeunhyeok",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leegeunhyeok/BitMiner/issues"
+  },
+  "homepage": "https://github.com/leegeunhyeok/BitMiner#readme"
+}

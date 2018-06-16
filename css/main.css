@@ -1,0 +1,53 @@
+#main {
+    background: url('../static/background.png') no-repeat center fixed;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+#title {
+    padding-top: 50px;
+    display: inline-block;
+    color: #ffd800;
+    text-shadow: 0px 0px 20px #000;
+    font-size: 4.5rem;
+    text-align: center;
+    animation: swing 1s alternate infinite;
+}
+
+@keyframes swing {
+    0% {
+        transform: rotate(5deg);
+    }
+
+    100% {
+        transform: rotate(-5deg);
+    }
+}
+
+#menu-button-area {
+    margin: auto;
+    margin-top: 140px;
+    font-size: 1.5rem;
+}
+
+.menu-button {
+    margin: 10px 0;
+}
+
+.menu-text {
+    cursor: pointer;
+    transition: .2s;
+}
+
+.menu-text:hover {
+    color: #ffd800;
+    text-shadow: 0px 0px 10px #000;
+}
+
+#version {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
