@@ -1,3 +1,7 @@
+/* 메인화면 CSS */
+
+
+/* 메인화면 배경 이미지, 영역 크기 지정 */
 #main {
     background: url('../static/background.png') no-repeat center fixed;
     background-size: cover;
@@ -6,6 +10,7 @@
     text-align: center;
 }
 
+/* 메인화면 게임 타이틀 */
 #title {
     padding-top: 50px;
     display: inline-block;
@@ -16,6 +21,7 @@
     animation: swing 1s alternate infinite;
 }
 
+/* 게임 타이틀 흔들리는 애니메이션 */
 @keyframes swing {
     0% {
         transform: rotate(5deg);
@@ -26,26 +32,31 @@
     }
 }
 
+/* 메인메뉴 버튼 영역 */
 #menu-button-area {
     margin: auto;
     margin-top: 140px;
     font-size: 1.5rem;
 }
 
+/* 메인메뉴 버튼 위, 아래(세로) 여백 */
 .menu-button {
     margin: 10px 0;
 }
 
+/* 메인메뉴 버튼 텍스트, 마우스 모양, 트렌지션 적용 */
 .menu-text {
     cursor: pointer;
     transition: .2s;
 }
 
+/* 마우스가 버튼 텍스트 위로 올라가면 텍스트 색 변경 */
 .menu-text:hover {
     color: #ffd800;
     text-shadow: 0px 0px 10px #000;
 }
 
+/* 버전 텍스트 */
 #version {
     position: absolute;
     bottom: 5px;
