@@ -1,18 +1,50 @@
 {
   "name": "bitminer",
   "version": "0.0.1",
-  "description": "[Electron] 가상화폐 채굴, 방치형 키우기 게임입니다.",
+  "description": "가상화폐 채굴, 방치형 키우기 게임입니다.",
   "main": "main.js",
-  "dependencies": {
-    "devtron": "^1.4.0",
-    "electron": "^2.0.2"
-  },
   "devDependencies": {
+    "electron": "^2.0.2",
+    "electron-builder": "^20.15.1",
     "standard": "^11.0.1"
   },
   "scripts": {
     "start": "electron .",
-    "standard": "standard"
+    "standard": "standard",
+    "build": "electron-builder",
+    "build:dir": "electron-builder --dir"
+  },
+  "build": {
+    "productName": "Bit Miner",
+    "appId": "com.electron.bitminer",
+    "copyright": "Copyright © 2018 Geunhyeok LEE",
+    "directories": {
+      "output": "build"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
+    "mac": {
+      "icon": "build/icons/icon.icns"
+    },
+    "win": {
+      "icon": "build/icons/icon.ico"
+    },
+    "linux": {
+      "icon": "build/icons"
+    }
   },
   "repository": {
     "type": "git",
