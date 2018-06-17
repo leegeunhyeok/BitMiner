@@ -49,9 +49,19 @@ class Game {
     }
 
     /* 세이브파일에 저장된 정보 보여주기 */
-    document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
-    document.getElementById('own-coin').textContent = this.store.getData('coin') + ' BTC'
-    document.getElementById('coin-per-second').textContent = this.coinPerSecond + ' BTC/s'
+    this.update()
+
+    /* 컴퓨터 클릭시 이벤트 */
+    document.getElementById('my-computer').onclick = function () {
+      const sound = new Audio('./static/computer.mp3')
+      sound.play();
+    }
+
+    /* 문 클릭시 이벤트 */
+    document.getElementById('door').onclick = function () {
+      const sound = new Audio('./static/door.mp3')
+      sound.play();
+    }
   }
 
   /**
