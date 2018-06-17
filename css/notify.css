@@ -1,0 +1,11 @@
+/* 알림(팝업) CSS */
+
+#notify {
+    display: none;
+    position: absolute;
+    padding: 5px 10px;
+    background-color: steelblue;
+    border-radius: 5px;
+    color: #fff;
+    z-index: 9999;
+}

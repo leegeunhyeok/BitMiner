@@ -1,0 +1,39 @@
+/* 게임화면 CSS */
+
+
+/* 메인화면 배경 이미지, 영역 크기 지정 */
+#game {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: none;
+}
+
+#header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9998;
+}
+
+.header-info {
+    margin: 10px 5px;
+    background-color: lightskyblue;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    float: right;
+}
+
+#home {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    background: url('../static/background.png') no-repeat center;
+    background-size: cover;
+}
