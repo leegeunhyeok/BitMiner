@@ -18,6 +18,7 @@
     text-align: center;
 }
 
+/* 다이얼로그 버튼 영역 */
 #dialog-button-area {
     position: absolute;
     left: 50%;
@@ -25,6 +26,7 @@
     transform: translateX(-50%);
 }
 
+/* 다이얼로그 버튼 */
 .dialog-button {
     font-family: 'pixel';
     cursor: pointer;
@@ -35,6 +37,7 @@
     transition: .5s;
 }
 
+/* 예 버튼 */
 #dialog-yes {
     background-color: #44b3c2;
     color: #fff;
@@ -46,6 +49,7 @@
     border: 1px solid #44b3c2;
 }
 
+/* 아니오 버튼 */
 #dialog-no {
     background-color: #e45641;
     color: #fff;

@@ -10,6 +10,7 @@
     background-color: #353535;
 }
 
+/* 게임 내의 상단 영역(보유 현금 등...) */
 #header {
     position: absolute;
     top: 0;
@@ -18,6 +19,7 @@
     z-index: 9998;
 }
 
+/* 상단 영역 요소(보유 현금, 코인 수 등..) */
 .header-info {
     margin: 10px 5px;
     background-color: lightskyblue;
@@ -27,6 +29,7 @@
     float: right;
 }
 
+/* 실내 */
 #home {
     position: absolute;
     top: 50%;
@@ -38,6 +41,7 @@
     background: url('../static/room1.png') no-repeat center;
 }
 
+/* 내 컴퓨터 영역 */
 #my-computer {
     cursor: pointer;
     position: absolute;
@@ -48,6 +52,7 @@
     animation: arrow 1s alternate infinite;
 }
 
+/* 내 컴퓨터 영역 아이콘 */
 #computer-icon div {
     font-weight: bold;
     background-color: #fff;
@@ -56,6 +61,7 @@
     margin-bottom: 2px;
 }
 
+/* 현관문 영역 */
 #door {
     cursor: pointer;
     position: absolute;
@@ -66,6 +72,7 @@
     animation: arrow 1s alternate infinite;
 }
 
+/* 현관문 영역 아이콘 */
 #door-icon div {
     font-weight: bold;
     background-color: #fff;
@@ -74,12 +81,14 @@
     margin-bottom: 2px;
 }
 
+/* 아이콘 위 아래로 움직이는 애니메이션 */
 @keyframes arrow {
     100% {
         transform: translateY(20px);
     }
 }
 
+/* 게임 종료 버튼 */
 #game-exit {
     cursor: pointer;
     position: absolute;

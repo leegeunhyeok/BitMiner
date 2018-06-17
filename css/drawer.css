@@ -1,3 +1,5 @@
+/* Drawer CSS */
+
 #drawer {
     position: absolute;
     background-color: #fff;
@@ -10,15 +12,18 @@
     text-align: center;
 }
 
+/* Drawer 열린 상태 */
 .open {
     box-shadow: 0px 10px 10px #000;
     transform: translateX(0px);
 }
 
+/* Drawer 닫힌 상태 */
 .close {
     transform: translateX(-200px);
 }
 
+/* Drawer 제목 */
 #drawer-title {
     padding-top: 20px;
     font-weight: bold;

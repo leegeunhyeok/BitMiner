@@ -1,3 +1,5 @@
+/* 팝업 CSS */
+
 #popup {
     position: absolute;
     width: 350px;
@@ -14,6 +16,7 @@
     z-index: 9998;
 }
 
+/* 팝업 X 버튼 */
 #popup-close {
     cursor: pointer;
     position: absolute;
@@ -28,11 +31,13 @@
     content: 'x'
 }
 
+/* 팝업 숨김 상태 */
 .popup-hide {
     opacity: 0;
     display: none;
 }
 
+/* 팝업 보이는 상태 */
 .popup-show {
     opacity: 1;
     display: block;
