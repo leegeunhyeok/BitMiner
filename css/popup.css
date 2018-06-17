@@ -1,0 +1,39 @@
+#popup {
+    position: absolute;
+    width: 350px;
+    height: 250px;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    padding: 10px;
+    padding-top: 40px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    text-align: center;
+    z-index: 9998;
+}
+
+#popup-close {
+    cursor: pointer;
+    position: absolute;
+    display: inline-block;
+    top: 5px;
+    right: 10px;
+    color: #e45641;
+    font-weight: bold;
+}
+
+#popup-close::before {
+    content: 'x'
+}
+
+.popup-hide {
+    opacity: 0;
+    display: none;
+}
+
+.popup-show {
+    opacity: 1;
+    display: block;
+}

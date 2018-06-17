@@ -79,3 +79,18 @@
         transform: translateY(20px);
     }
 }
+
+#game-exit {
+    cursor: pointer;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #c54040;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+#game-exit::before {
+    content: '종료'
+}

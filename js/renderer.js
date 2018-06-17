@@ -6,9 +6,6 @@ window.onload = function () {
   const game = new Game('user.dat')
   game.init()
 
-  /* 다이얼로그 유형(새 게임시작, 아이템 구매 여부 등) */
-  var dialogType = ''
-
   /* 이어서하기 버튼 이벤트 등록 */
   document.getElementById('continue-button').onclick = function () {
     game.continue()
@@ -19,7 +16,7 @@ window.onload = function () {
     /* 다이얼로그 창 띄우기 */
     document.getElementById('dialog-message').textContent = '정말 새로 시작하시겠습니까?'
     document.getElementById('dialog').style['display'] = 'block'
-    dialogType = 'newGame'
+    game.dialogType = 'newGame'
   }
 
   /* 정보 버튼 이벤트 등록 */
@@ -38,8 +35,15 @@ window.onload = function () {
     /* 다이얼로그 창 닫기 */
     document.getElementById('dialog').style['display'] = 'none'
     
-    if (dialogType === 'newGame') {
+    if (game.dialogType === 'newGame') {
       game.newGame()
+    } else if (game.dialogType === 'exitGame') {
+      game.save()
+      /* HTML: 아이디가 main인 영역 보이기 */
+      document.getElementById('main').style['display'] = 'block'
+
+      /* HTML: 아이디가 game인 영역 숨기기 */
+      document.getElementById('game').style['display'] = 'none'
     }
   }
 

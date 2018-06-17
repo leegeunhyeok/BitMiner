@@ -13,6 +13,15 @@ class Game {
 
     /* 게임 이어서 하기(false: 파일 없음, true: 이어서하기 가능) */
     this.load = false
+
+    /* Drawer 메뉴 열기/닫기 */
+    this.drawer = false
+
+    /* 팝업창 열기/닫기 */
+    this.popup = false
+
+    /* 다이얼로그 타입 */
+    this.dialogType = ''
   }
 
   /**
@@ -52,16 +61,52 @@ class Game {
     this.update()
 
     /* 컴퓨터 클릭시 이벤트 */
-    document.getElementById('my-computer').onclick = function () {
+    document.getElementById('my-computer').onclick = () => {
       const sound = new Audio('./static/computer.mp3')
       sound.play();
+
+      let popup = document.getElementById('popup')
+      document.getElementById('popup-title').textContent = '내 컴퓨터'
+      popup.classList.remove('popup-hide')
+      popup.classList.remove('popup-show')
+
+      if (this.popup) {
+        popup.classList.add('popup-hide')
+      } else {
+        popup.classList.add('popup-show')
+      }
+      this.popup = !this.popup
     }
 
     /* 문 클릭시 이벤트 */
-    document.getElementById('door').onclick = function () {
+    document.getElementById('door').onclick = () => {
       const sound = new Audio('./static/door.mp3')
       sound.play();
     }
+
+    document.getElementById('popup-close').onclick = () => {
+      this.popup = false
+      popup.classList.remove('popup-show')
+      popup.classList.add('popup-hide')
+    }
+
+    /* 게임 종료 버튼 이벤트 */
+    document.getElementById('game-exit').onclick = () => {
+      console.log('exit')
+      this.showDialog('정말 종료하시겠습니까?', 'exitGame')
+    }
+  }
+
+  /**
+   * @description 다이얼로그 띄우기
+   * @param {string} message 다이얼로그에 띄울 메시지
+   * @param {string} message 다이얼로그 타입(구분 문자열)
+   */
+  showDialog (message, type) {
+    /* 다이얼로그 창 띄우기 */
+    document.getElementById('dialog-message').textContent = message
+    document.getElementById('dialog').style['display'] = 'block'
+    this.dialogType = type
   }
 
   /**
@@ -85,6 +130,13 @@ class Game {
   newGame () {
     this.store.create()
     this.continue()
+  }
+
+  /**
+   * @description 게임 진행상태 저장
+   */
+  save () {
+    this.store.save()
   }
   
   /**

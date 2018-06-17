@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="./css/index.css"></link>
     <link rel="stylesheet" href="./css/notify.css"></link>
     <link rel="stylesheet" href="./css/dialog.css"></link>
+    <link rel="stylesheet" href="./css/drawer.css"></link>
+    <link rel="stylesheet" href="./css/popup.css"></link>
     <link rel="stylesheet" href="./css/main.css"></link>
     <link rel="stylesheet" href="./css/game.css"></link>
   </head>
@@ -53,6 +55,14 @@
     <!-- 메인화면 영역 END -->
     <!-- 게임 화면 -->
     <div id="game">
+      <!-- 옆에 나오는 Drawer 영역 -->
+      <div id="drawer" class="close">
+        <div id="drawer-title"></div>
+      </div>
+      <div id="popup" class="popup-hide">
+        <div id="popup-close"></div>
+        <div id="popup-title"></div>
+      </div>
       <div id="header">
         <!-- 1초당 코인 -->
         <span id="coin-per-second" class="header-info">BTC/s</span>
@@ -75,6 +85,9 @@
             <img src="./static/arrow.png">
           </div>
         </div>
+      </div>
+      <div id="game-exit">
+        <!-- 종료 버튼 -->
       </div>
     </div>
     <!-- 게임 화면 END -->
