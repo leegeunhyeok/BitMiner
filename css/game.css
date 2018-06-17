@@ -7,6 +7,7 @@
     height: 100%;
     text-align: center;
     display: none;
+    background-color: #353535;
 }
 
 #header {
@@ -34,6 +35,47 @@
     background-color: #fff;
     width: 100%;
     height: 100%;
-    background: url('../static/background.png') no-repeat center;
-    background-size: cover;
+    background: url('../static/room1.png') no-repeat center;
+}
+
+#my-computer {
+    cursor: pointer;
+    position: absolute;
+    top: 170px;
+    left: 210px;
+    height: 150px;
+    text-align: center;
+    animation: arrow 1s alternate infinite;
+}
+
+#computer-icon div {
+    font-weight: bold;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 2px;
+}
+
+#door {
+    cursor: pointer;
+    position: absolute;
+    top: 70px;
+    right: 180px;
+    height: 200px;
+    text-align: center;
+    animation: arrow 1s alternate infinite;
+}
+
+#door-icon div {
+    font-weight: bold;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 2px;
+}
+
+@keyframes arrow {
+    100% {
+        transform: translateY(20px);
+    }
 }

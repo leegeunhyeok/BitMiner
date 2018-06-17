@@ -8,7 +8,7 @@ class Game {
   constructor () {
     this.store = new Store('user.dat')
 
-    /* 초당 코인 갯수 */
+    /* 1초당 코인 갯수 */
     this.coinPerSecond = 0
 
     /* 게임 이어서 하기(false: 파일 없음, true: 이어서하기 가능) */
@@ -44,6 +44,7 @@ class Game {
 
     /* 부품 번호 중 -1이 하나도 없을 경우 */
     if (cpuNum !== -1 && vgaNum !== -1 && ramNum !== -1) {
+      console.log('코인 채굴 가능 PC')
       this.coinPerSecond = cpu[cpuNum].coin + ram[ramNum].coin + vga[vgaNum].coin
     }
 
@@ -83,8 +84,27 @@ class Game {
     /* 1초마다 1번 실행 */
     let time = 0
     setInterval (() => {
-      console.log(time++)
+      this.update()
+
+      /* 1분에 한번 저장 */
+      if (time % 60 === 0) {
+        this.store.save()
+      }
+      time++
     }, 1000)
+  }
+
+  /**
+   * @description 게임 진행 상태 업데이트
+   */
+  update () {
+    /* 1초당 코인 수 만큼 누적 */
+    this.store.setData('coin', this.store.getData('coin') + this.coinPerSecond)
+
+    /* 세이브파일에 저장된 정보 보여주기 */
+    document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
+    document.getElementById('own-coin').textContent = this.store.getData('coin') + ' BTC'
+    document.getElementById('coin-per-second').textContent = this.coinPerSecond + ' BTC/s'
   }
 }
 
