@@ -10,15 +10,15 @@ const defaultSaveData = {
   /* 보유 현금 */
   'money': 5000,
   /* CPU 종류 */
-  'cpu': 0,
+  'cpu': -1,
   /* CPU 레벨 */
   'cpuLv': 1,
   /* 램 종류 */
-  'ram': 0,
+  'ram': -1,
   /* 램 레벨 */
   'ramLv': 1,
   /* 그래픽카드 종류 */
-  'vga': 0,
+  'vga': -1,
   /* 그래픽카드 레벨 */
   'vgaLv': 1,
   /* 파워서플라이 레벨 */
