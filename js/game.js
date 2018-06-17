@@ -1,5 +1,9 @@
 const Store = require('./store.js')
 
+const cpu = require('./model/cpu.js')
+const ram = require('./model/ram.js')
+const vga = require('./model/vga.js')
+
 class Game {
   constructor () {
     this.store = new Store('user.dat')
@@ -33,9 +37,20 @@ class Game {
     /* HTML: 아이디가 game인 영역 보이기 */
     document.getElementById('game').style['display'] = 'block'
 
+    /* 세이브파일에 저장된 컴퓨터 부품 종류 번호 */
+    const cpuNum = this.store.getData('cpu')
+    const ramNum = this.store.getData('ram')
+    const vgaNum = this.store.getData('vga')
+
+    /* 부품 번호 중 -1이 하나도 없을 경우 */
+    if (cpuNum !== -1 && vgaNum !== -1 && ramNum !== -1) {
+      this.coinPerSecond = cpu[cpuNum].coin + ram[ramNum].coin + vga[vgaNum].coin
+    }
+
     /* 세이브파일에 저장된 정보 보여주기 */
     document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
     document.getElementById('own-coin').textContent = this.store.getData('coin') + ' BTC'
+    document.getElementById('coin-per-second').textContent = this.coinPerSecond + ' BTC/s'
   }
 
   /**
