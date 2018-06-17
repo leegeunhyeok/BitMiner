@@ -4,9 +4,28 @@
     <meta charset="UTF-8">
     <title>Bit Miner</title>
     <link rel="stylesheet" href="./css/index.css"></link>
+    <link rel="stylesheet" href="./css/notify.css"></link>
+    <link rel="stylesheet" href="./css/dialog.css"></link>
     <link rel="stylesheet" href="./css/main.css"></link>
+    <link rel="stylesheet" href="./css/game.css"></link>
   </head>
   <body>
+    <!-- 알림창 -->
+    <div id="notify">
+      알림
+    </div>
+    <!-- 알림창 END -->
+    <!-- 대화창 -->
+    <div id="dialog">
+      <div id="dialog-message">
+        <!-- 대화창 메시지 영역 -->
+      </div>
+      <div id="dialog-button-area">
+        <button id="dialog-yes" class="dialog-button">예</button>
+        <button id="dialog-no" class="dialog-button">아니오</button>
+      </div>
+    </div>
+    <!-- 대화창 END -->
     <!-- 메인화면 영역 -->
     <div id="main">
       <!-- 게임 타이틀 -->
@@ -29,7 +48,19 @@
       <!-- 버전 -->
       <div id="version">0.0.1 Beta</div>
     </div>
-    <!-- 메인화면 영역 끝 -->
+    <!-- 메인화면 영역 END -->
+    <!-- 게임 화면 -->
+    <div id="game">
+      <div id="header">
+        <span id="coin-per-sec" class="header-info">BTC/s</span>
+        <span id="own-money" class="header-info">원</span>
+        <span id="own-coin" class="header-info">BTC</span>
+      </div>
+      <div id="home">
+        실내 영역
+      </div>
+    </div>
+    <!-- 게임 화면 END -->
     <script>
       require('./js/renderer.js')
     </script>
