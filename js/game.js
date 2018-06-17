@@ -65,17 +65,30 @@ class Game {
       const sound = new Audio('./static/computer.mp3')
       sound.play();
 
-      let popup = document.getElementById('popup')
-      document.getElementById('popup-title').textContent = '내 컴퓨터'
-      popup.classList.remove('popup-hide')
-      popup.classList.remove('popup-show')
+      const items = [
+        {
+          name: '파워서플라이',
+          index: 0,
+          level: this.store.getData('psu')
+        },
+        {
+          name: 'CPU',
+          index: this.store.getData('cpu'),
+          level: this.store.getData('cpuLv')
+        },
+        {
+          name: '램',
+          index: this.store.getData('ram'),
+          level: this.store.getData('ramLv')
+        },
+        {
+          name: '그래픽카드',
+          index: this.store.getData('vga'),
+          level: this.store.getData('vgaLv')
+        }
+      ]
 
-      if (this.popup) {
-        popup.classList.add('popup-hide')
-      } else {
-        popup.classList.add('popup-show')
-      }
-      this.popup = !this.popup
+      this.showPopup('내 컴퓨터', items)
     }
 
     /* 문 클릭시 이벤트 */
@@ -84,6 +97,7 @@ class Game {
       sound.play();
     }
 
+    /* 팝업 닫기 버튼 이벤트 */
     document.getElementById('popup-close').onclick = () => {
       this.popup = false
       popup.classList.remove('popup-show')
@@ -100,13 +114,86 @@ class Game {
   /**
    * @description 다이얼로그 띄우기
    * @param {string} message 다이얼로그에 띄울 메시지
-   * @param {string} message 다이얼로그 타입(구분 문자열)
+   * @param {string} type 다이얼로그 타입(구분 문자열)
    */
   showDialog (message, type) {
     /* 다이얼로그 창 띄우기 */
     document.getElementById('dialog-message').textContent = message
     document.getElementById('dialog').style['display'] = 'block'
     this.dialogType = type
+  }
+
+  /**
+   * @description 팝업 띄우기
+   * @param {string} title 팝업에 띄울 제목
+   * @param {array} items 팝업에 표시할 부품 리스트
+   */
+  showPopup (title, items) {
+    let popup = document.getElementById('popup')
+    document.getElementById('popup-title').textContent = title
+    popup.classList.remove('popup-hide')
+    popup.classList.remove('popup-show')
+
+    if (this.popup) {
+      popup.classList.add('popup-hide')
+    } else {
+      if (items !== 0) {
+        let content = document.getElementById('popup-content')
+
+        /* 기존 내용 비우기 */
+        content.innerHTML = ''
+
+        /* 아이템 목록 추가 */
+        for (let item of items) {
+          /* 부품 정보 영역 */
+          let itemArea = document.createElement('div')
+          itemArea.classList.add('popup-item')
+
+          /* 부품 종류 */
+          let itemName = document.createElement('b')
+
+          /* 부품 유형 */
+          let titleText = document.createTextNode(item.name)
+          itemName.appendChild(titleText)
+
+          itemArea.appendChild(itemName)
+          
+          /* 부품 명, 부품 레벨 */
+          let moduleText = null
+          let moduleLevelText = document.createTextNode('오버클럭 레벨: ' + item.level)
+
+          /* 인덱스가 -1 이면 고장 */
+          if (item.index === -1) {
+            moduleText = document.createTextNode('고장 남')
+          } else {
+            if (item.name === '파워서플라이') {
+              moduleText = document.createTextNode('')
+            } else if (item.name === 'CPU') {
+              moduleText = document.createTextNode(cpu[item.index])
+            } else if (item.name === '램') {
+              moduleText = document.createTextNode(ram[item.index])
+            } else if (item.name === '그래픽카드') {
+              moduleText = document.createTextNode(vga[item.index])
+            }
+          }
+
+          /* 제품 이름 */
+          let moduleInfoArea = document.createElement('div')
+          moduleInfoArea.appendChild(moduleText)
+
+          /* 부품 오버클럭 레벨 */
+          let moduleLevelArea = document.createElement('div')
+          moduleLevelArea.classList.add('popup-sub-item')
+          moduleLevelArea.appendChild(moduleLevelText)
+
+          moduleInfoArea.appendChild(moduleLevelArea)
+          itemArea.appendChild(moduleInfoArea)
+          content.appendChild(itemArea)
+        }
+      }
+      popup.classList.add('popup-show')
+    }
+    this.popup = !this.popup
   }
 
   /**
