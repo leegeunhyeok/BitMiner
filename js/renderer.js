@@ -38,12 +38,7 @@ window.onload = function () {
     if (game.dialogType === 'newGame') {
       game.newGame()
     } else if (game.dialogType === 'exitGame') {
-      game.save()
-      /* HTML: 아이디가 main인 영역 보이기 */
-      document.getElementById('main').style['display'] = 'block'
-
-      /* HTML: 아이디가 game인 영역 숨기기 */
-      document.getElementById('game').style['display'] = 'none'
+      game.exit()
     }
   }
 

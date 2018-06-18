@@ -22,6 +22,9 @@ class Game {
 
     /* 다이얼로그 타입 */
     this.dialogType = ''
+
+    /* Interval 반복 객체 */
+    this.loop = null
   }
 
   /**
@@ -135,6 +138,8 @@ class Game {
     let notify = document.getElementById('notify')
     notify.style['display'] = 'block'
     notify.textContent = message
+
+    /* 3초뒤에 자동 숨김 */
     setTimeout(() => {
       notify.style['display'] = 'none'
     }, 3000)
@@ -260,7 +265,6 @@ class Game {
       /* 게임 시작 */
       this.start()
     } else {
-      console.log('no file', this.load)
       this.showNotify('세이브파일이 없습니다.')
     }
   }
@@ -297,7 +301,7 @@ class Game {
   start () {
     /* 1초마다 1번 실행 */
     let time = 0
-    setInterval (() => {
+    this.loop = setInterval (() => {
       this.update()
 
       /* 1분에 한번 저장 */
@@ -319,6 +323,18 @@ class Game {
     document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
     document.getElementById('own-coin').textContent = this.store.getData('coin') + ' BTC'
     document.getElementById('coin-per-second').textContent = this.coinPerSecond + ' BTC/s'
+  }
+
+  /**
+   * @description 게임 종료
+   */
+  exit () {
+    game.save()
+    /* HTML: 아이디가 main인 영역 보이기 */
+    document.getElementById('main').style['display'] = 'block'
+
+    /* HTML: 아이디가 game인 영역 숨기기 */
+    document.getElementById('game').style['display'] = 'none'
   }
 }
 
