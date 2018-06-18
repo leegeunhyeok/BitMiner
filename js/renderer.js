@@ -29,12 +29,12 @@ window.onload = function () {
     /* Electron 종료 */
     electron.remote.getCurrentWindow().close()
   }
-  
+
   /* 다이얼로그 예 버튼 이벤트 등록 */
   document.getElementById('dialog-yes').onclick = function () {
     /* 다이얼로그 창 닫기 */
     document.getElementById('dialog').style['display'] = 'none'
-    
+
     if (game.dialogType === 'newGame') {
       game.newGame()
     } else if (game.dialogType === 'exitGame') {

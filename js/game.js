@@ -73,7 +73,7 @@ class Game {
     /* 컴퓨터 클릭시 이벤트 */
     document.getElementById('my-computer').onclick = () => {
       const sound = new Audio('./static/computer.mp3')
-      sound.play();
+      sound.play()
 
       const items = [
         {
@@ -108,14 +108,14 @@ class Game {
     /* 문 클릭시 이벤트 */
     document.getElementById('door').onclick = () => {
       const sound = new Audio('./static/door.mp3')
-      sound.play();
+      sound.play()
     }
 
     /* 팝업 닫기 버튼 이벤트 */
     document.getElementById('popup-close').onclick = () => {
       this.popup = false
-      popup.classList.remove('popup-show')
-      popup.classList.add('popup-hide')
+      document.getElementById('popup').classList.remove('popup-show')
+      document.getElementById('popup').classList.add('popup-hide')
     }
 
     /* 게임 종료 버튼 이벤트 */
@@ -191,7 +191,7 @@ class Game {
           itemName.appendChild(titleText)
 
           itemArea.appendChild(itemName)
-          
+
           /* 부품 명, 부품 레벨 */
           let moduleText = null
           let moduleLevelText = document.createTextNode('오버클럭 레벨: ' + item.level)
@@ -294,14 +294,14 @@ class Game {
   save () {
     this.store.save()
   }
-  
+
   /**
    * @description 게임 시작
    */
   start () {
     /* 1초마다 1번 실행 */
     let time = 0
-    this.loop = setInterval (() => {
+    this.loop = setInterval(() => {
       this.update()
 
       /* 1분에 한번 저장 */
@@ -329,7 +329,7 @@ class Game {
    * @description 게임 종료
    */
   exit () {
-    game.save()
+    this.save()
     /* HTML: 아이디가 main인 영역 보이기 */
     document.getElementById('main').style['display'] = 'block'
 
