@@ -4,8 +4,10 @@
     display: none;
     position: absolute;
     padding: 5px 10px;
-    background-color: steelblue;
+    background-color: #fff;
     border-radius: 5px;
-    color: #fff;
+    color: #000;
     z-index: 6;
+    bottom: 5px;
+    left: 5px;
 }

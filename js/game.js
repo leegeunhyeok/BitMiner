@@ -132,9 +132,12 @@ class Game {
    * @param {string} message 알림에 띄울 메시지
    */
   showNotify (message) {
-    let el = document.getElementById('notify')
-    console.log(el.style)
-    console.log(message)
+    let notify = document.getElementById('notify')
+    notify.style['display'] = 'block'
+    notify.textContent = message
+    setTimeout(() => {
+      notify.style['display'] = 'none'
+    }, 3000)
   }
 
   /**
@@ -220,6 +223,15 @@ class Game {
           moduleOverclockArea.classList.add('popup-sub-item')
           let overclockButton = document.createElement('button')
           overclockButton.classList.add('overclock-button')
+          /* 오버클럭 버튼 */
+          overclockButton.onclick = () => {
+            console.log(item.name)
+            if (item.index !== -1) {
+
+            } else {
+              this.showNotify('고장난 부품은 오버클럭할 수 없습니다.')
+            }
+          }
           let overclockButtonText = document.createTextNode('오버클럭')
           overclockButton.appendChild(overclockButtonText)
           let overclockPrice = document.createElement('div')
