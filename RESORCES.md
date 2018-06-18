@@ -1,6 +1,7 @@
 # 리소스 저작권
 
 - 인게임 방 이미지: `Leegeunhyeok`
+- 인게임 도시 이미지: `Leegeunhyeok`
 - 폰트: `소야논8` 사용 중
 - 메인배경 이미지: [출처](https://www.pixelstalk.net/hd-8-bit-backgrounds/)
 - 배경음악: [출처](https://bgmstore.net/playlists/play/WdfYZ?q_type=category&q=%EB%B9%84%ED%8A%B8)
