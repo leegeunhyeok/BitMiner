@@ -62,3 +62,7 @@
     bottom: 5px;
     right: 5px;
 }
+
+.disable-text {
+    color: #525252;
+}

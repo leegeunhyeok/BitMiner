@@ -12,15 +12,15 @@ const defaultSaveData = {
   /* CPU 종류 */
   'cpu': -1,
   /* CPU 레벨 */
-  'cpuLv': 1,
+  'cpuLv': 0,
   /* 램 종류 */
   'ram': -1,
   /* 램 레벨 */
-  'ramLv': 1,
+  'ramLv': 0,
   /* 그래픽카드 종류 */
   'vga': -1,
   /* 그래픽카드 레벨 */
-  'vgaLv': 1,
+  'vgaLv': 0,
   /* 파워서플라이 레벨 */
   'psu': 1
 }
@@ -59,7 +59,7 @@ class Store {
         console.log(e)
       }
     } else {
-      console.log('유저 데이터가 없습니다.')
+      console.log('유저 데이터 저장 실패')
     }
   }
 

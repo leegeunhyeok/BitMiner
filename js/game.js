@@ -32,7 +32,9 @@ class Game {
       this.store.load()
       this.load = true
     } else {
-      this.store.create()
+      let button = document.getElementById('continue-button')
+      button.classList.remove('menu-text')
+      button.classList.add('disable-text')
     }
   }
 
@@ -109,6 +111,15 @@ class Game {
       console.log('exit')
       this.showDialog('정말 종료하시겠습니까?', 'exitGame')
     }
+  }
+
+  /**
+   * @description 알림 띄우기
+   * @param {string} message 알림에 띄울 메시지
+   */
+  showNotify (message) {
+    let el = document.getElementById('notify')
+    console.log(el.style)
   }
 
   /**
@@ -207,7 +218,8 @@ class Game {
       /* 게임 시작 */
       this.start()
     } else {
-      console.log('세이브파일이 없습니다.')
+      console.log('no file', this.load)
+      this.showNotify('세이브파일이 없습니다.')
     }
   }
 
@@ -215,7 +227,18 @@ class Game {
    * @description 게임 새로 시작
    */
   newGame () {
+    this.load = true
+    let button = document.getElementById('continue-button')
+    button.classList.add('menu-text')
+    button.classList.remove('disable-text')
+
+    /* 파일 생성 */
     this.store.create()
+
+    /* 생성한 파일 로드 */
+    this.store.load()
+
+    /* 이어서 진행 */
     this.continue()
   }
 
