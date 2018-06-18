@@ -109,6 +109,8 @@ class Game {
     document.getElementById('door').onclick = () => {
       const sound = new Audio('./static/door.mp3')
       sound.play()
+
+      this.city()
     }
 
     /* 팝업 닫기 버튼 이벤트 */
@@ -252,6 +254,26 @@ class Game {
       popup.classList.add('popup-show')
     }
     this.popup = !this.popup
+  }
+
+  /**
+   * @description 도시(야외)로 이동
+   */
+  city () {
+    /* 집 안 영역 숨기기 */
+    document.getElementById('home').style['display'] = 'none'
+
+    /* 도시 영역 보이기 */
+    document.getElementById('city').style['display'] = 'block'
+
+    /* 집으로 돌아오는 버튼 이벤트 */
+    document.getElementById('go-to-home').onclick = () => {
+      /* 집 안 영역 보이기 */
+      document.getElementById('home').style['display'] = 'block'
+
+      /* 도시 영역 숨기기 */
+      document.getElementById('city').style['display'] = 'none'
+    }
   }
 
   /**
