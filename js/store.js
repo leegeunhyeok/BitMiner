@@ -22,7 +22,9 @@ const defaultSaveData = {
   /* 그래픽카드 레벨 */
   'vgaLv': 0,
   /* 파워서플라이 레벨 */
-  'psu': 1
+  'psu': 1,
+  /* 튜토리얼 여부 */
+  'tutorial': 1
 }
 
 /* 파일 저장, 불러오기 클래스 */

@@ -16,7 +16,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 9998;
+    z-index: 3;
 }
 
 /* 상단 영역 요소(보유 현금, 코인 수 등..) */
@@ -39,6 +39,7 @@
     width: 100%;
     height: 100%;
     background: url('../static/room1.png') no-repeat center;
+    z-index: 0;
 }
 
 /* 내 컴퓨터 영역 */
@@ -95,11 +96,18 @@
     bottom: 5px;
     right: 5px;
     background-color: #c54040;
+    border: 1px solid #c54040;
     color: #fff;
     border-radius: 5px;
     padding: 5px 10px;
+    transition: .5s;
 }
 
 #game-exit::before {
     content: '종료'
+}
+
+#game-exit:hover {
+    background-color: #fff;
+    color: #c54040;
 }

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./css/popup.css"></link>
     <link rel="stylesheet" href="./css/main.css"></link>
     <link rel="stylesheet" href="./css/game.css"></link>
+    <link rel="stylesheet" href="./css/tutorial.css"></link>
   </head>
   <body>
     <!-- 배경음악 재생(자동재생, 반복) -->
@@ -30,6 +31,27 @@
       </div>
     </div>
     <!-- 대화창 END -->
+    <!-- 튜토리얼 영역 -->
+    <div id="tutorial">
+      <div id="tutorial-info">
+        보유중인 현금과 코인, 1초당 채굴되는 코인 수를 확인하실 수 있습니다.
+      </div>
+      <div id="tutorial-computer">
+        내 컴퓨터를 누르면<br>
+        컴퓨터 부품 정보와<br>
+        오버클럭을<br>
+        할 수 있습니다.
+      </div>
+      <div id="tutorial-door">
+        현관문을 눌러서<br>
+        외출할 수 있습니다.<br>
+        컴퓨터 부품과<br>
+        아이템을 구매<br>
+        할 수 있습니다.
+      </div>
+      <div id="tutorial-exit"></div>
+    </div>
+    <!-- 튜토리얼 END -->
     <!-- 메인화면 영역 -->
     <div id="main">
       <!-- 게임 타이틀 -->
@@ -70,10 +92,10 @@
       <div id="header">
         <!-- 1초당 코인 -->
         <span id="coin-per-second" class="header-info">BTC/s</span>
-        <!-- 보유중인 현금 -->
-        <span id="own-money" class="header-info">원</span>
         <!-- 보유중인 코인 -->
         <span id="own-coin" class="header-info">BTC</span>
+        <!-- 보유중인 현금 -->
+        <span id="own-money" class="header-info">원</span>
       </div>
       <div id="home">
         <!-- 집 안 영역 -->

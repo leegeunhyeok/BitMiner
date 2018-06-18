@@ -48,6 +48,11 @@ class Game {
     /* HTML: 아이디가 game인 영역 보이기 */
     document.getElementById('game').style['display'] = 'block'
 
+    /* 튜토리얼 영역 */
+    if (this.store.getData('tutorial') === 1) {
+      document.getElementById('tutorial').style['display'] = 'block'
+    }
+
     /* 세이브파일에 저장된 컴퓨터 부품 종류 번호 */
     const cpuNum = this.store.getData('cpu')
     const ramNum = this.store.getData('ram')
@@ -108,8 +113,13 @@ class Game {
 
     /* 게임 종료 버튼 이벤트 */
     document.getElementById('game-exit').onclick = () => {
-      console.log('exit')
       this.showDialog('정말 종료하시겠습니까?', 'exitGame')
+    }
+
+    /* 튜토리얼 종료 버튼 이벤트 */
+    document.getElementById('tutorial-exit').onclick = () => {
+      this.store.setData('tutorial', 0)
+      document.getElementById('tutorial').style['display'] = 'none'
     }
   }
 
@@ -120,6 +130,7 @@ class Game {
   showNotify (message) {
     let el = document.getElementById('notify')
     console.log(el.style)
+    console.log(message)
   }
 
   /**

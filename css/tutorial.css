@@ -1,0 +1,68 @@
+/* 튜토리얼 CSS */
+
+#tutorial {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    display: none;
+}
+
+/* 튜토리얼 종료 버튼 */
+#tutorial-exit {
+    cursor: pointer;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #c54040;
+    border: 1px solid #c54040;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    transition: .5s;
+}
+
+#tutorial-exit::before {
+    content: '튜토리얼 닫기'
+}
+
+#tutorial-exit:hover {
+    background-color: #fff;
+    color: #c54040;
+}
+
+#tutorial-info {
+    position: absolute;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    top: 5px;
+    left: 5px;
+    padding: 10px;
+}
+
+#tutorial-computer {
+    position: absolute;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    top: 230px;
+    left: 45px;
+    padding: 10px;
+}
+
+#tutorial-door {
+    position: absolute;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    top: 200px;
+    right: 15px;
+    padding: 10px;
+}
