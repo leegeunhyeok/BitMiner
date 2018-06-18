@@ -46,8 +46,8 @@
 #my-computer {
     cursor: pointer;
     position: absolute;
-    top: 170px;
-    left: 210px;
+    top: 150px;
+    left: 230px;
     height: 150px;
     text-align: center;
     animation: arrow 1s alternate infinite;
@@ -67,7 +67,7 @@
     cursor: pointer;
     position: absolute;
     top: 70px;
-    right: 180px;
+    right: 185px;
     height: 200px;
     text-align: center;
     animation: arrow 1s alternate infinite;

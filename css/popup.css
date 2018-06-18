@@ -44,7 +44,8 @@
 #popup-title {
     font-weight: bold;
     font-size: 1.4rem;
-    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 #popup-content {
@@ -63,4 +64,24 @@
 
 .popup-sub-item {
     margin: 5px 0;
+}
+
+.module-name {
+    margin: 10px 0;
+}
+
+.overclock-button {
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 10px 0;
+    background-color: #da9841;
+    border: 1px solid #da9841;
+    border-radius: 5px;
+    color: #fff;
+    transition: .5s;
+}
+
+.overclock-button:hover {
+    background-color: #fff;
+    color: #da9841;
 }

@@ -75,21 +75,25 @@ class Game {
       const items = [
         {
           name: '파워서플라이',
+          id: 'psu',
           index: 0,
           level: this.store.getData('psu')
         },
         {
           name: 'CPU',
+          id: 'cpu',
           index: this.store.getData('cpu'),
           level: this.store.getData('cpuLv')
         },
         {
           name: '램',
+          id: 'ram',
           index: this.store.getData('ram'),
           level: this.store.getData('ramLv')
         },
         {
           name: '그래픽카드',
+          id: 'vga',
           index: this.store.getData('vga'),
           level: this.store.getData('vgaLv')
         }
@@ -188,28 +192,43 @@ class Game {
           if (item.index === -1) {
             moduleText = document.createTextNode('고장 남')
           } else {
-            if (item.name === '파워서플라이') {
+            if (item.id === 'psu') {
               moduleText = document.createTextNode('')
-            } else if (item.name === 'CPU') {
+            } else if (item.id === 'cpu') {
               moduleText = document.createTextNode(cpu[item.index])
-            } else if (item.name === '램') {
+            } else if (item.id === 'ram') {
               moduleText = document.createTextNode(ram[item.index])
-            } else if (item.name === '그래픽카드') {
+            } else if (item.id === 'vga') {
               moduleText = document.createTextNode(vga[item.index])
             }
           }
 
           /* 제품 이름 */
           let moduleInfoArea = document.createElement('div')
+          moduleInfoArea.classList.add('module-name')
           moduleInfoArea.appendChild(moduleText)
+          itemArea.appendChild(moduleInfoArea)
 
           /* 부품 오버클럭 레벨 */
           let moduleLevelArea = document.createElement('div')
           moduleLevelArea.classList.add('popup-sub-item')
           moduleLevelArea.appendChild(moduleLevelText)
+          itemArea.appendChild(moduleLevelArea)
 
-          moduleInfoArea.appendChild(moduleLevelArea)
-          itemArea.appendChild(moduleInfoArea)
+          /* 오버클럭 영역 */
+          let moduleOverclockArea = document.createElement('div')
+          moduleOverclockArea.classList.add('popup-sub-item')
+          let overclockButton = document.createElement('button')
+          overclockButton.classList.add('overclock-button')
+          let overclockButtonText = document.createTextNode('오버클럭')
+          overclockButton.appendChild(overclockButtonText)
+          let overclockPrice = document.createElement('div')
+          let overclockPriceText = document.createTextNode('오버클럭 비용: 0 원')
+          overclockPrice.appendChild(overclockPriceText)
+          moduleOverclockArea.appendChild(overclockPrice)
+          moduleOverclockArea.appendChild(overclockButton)
+
+          itemArea.appendChild(moduleOverclockArea)
           content.appendChild(itemArea)
         }
       }
