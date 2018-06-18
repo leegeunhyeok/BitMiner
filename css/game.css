@@ -52,15 +52,6 @@
     animation: arrow 1s alternate infinite;
 }
 
-/* 내 컴퓨터 영역 아이콘 */
-#computer-icon div {
-    font-weight: bold;
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-bottom: 2px;
-}
-
 /* 현관문 영역 */
 #door {
     cursor: pointer;
@@ -72,8 +63,8 @@
     animation: arrow 1s alternate infinite;
 }
 
-/* 현관문 영역 아이콘 */
-#door-icon div {
+/* 영역 표시 아이콘 */
+.arrow-area {
     font-weight: bold;
     background-color: #fff;
     border-radius: 5px;
