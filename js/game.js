@@ -159,7 +159,7 @@ class Game {
     /* CPU 오버클럭 버튼 */
     document.getElementById('cpu-overclock').onclick = () => {
       if (this.checkOverclock()) {
-        this.showNotify('CPU, 램, 그래픽카드 모두 있어야 가능합니다.')
+        this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 오버클럭 할 수 있습니다.')
         return
       }
 
@@ -174,8 +174,7 @@ class Game {
           /* 초당 채굴량 계산 */
           this.calcCoinPerSecond ()
 
-          document.getElementById('cpu-level').textContent = this.store.getData('cpuLv')
-          document.getElementById('cpu-levelup-price').textContent = this.cpuOverclock
+          this.updateComputerPopup()
           this.save()
         } else {
           this.showNotify('이미 최대 레벨에 도달했습니다.')
@@ -188,7 +187,7 @@ class Game {
     /* 램 오버클럭 버튼 */
     document.getElementById('ram-overclock').onclick = () => {
       if (this.checkOverclock()) {
-        this.showNotify('CPU, 램, 그래픽카드 모두 있어야 가능합니다.')
+        this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 오버클럭 할 수 있습니다.')
         return
       }
 
@@ -203,8 +202,7 @@ class Game {
           /* 초당 채굴량 계산 */
           this.calcCoinPerSecond ()
 
-          document.getElementById('ram-level').textContent = this.store.getData('ramLv')
-          document.getElementById('ram-levelup-price').textContent = this.ramOverclock
+          this.updateComputerPopup()
           this.save()
         } else {
           this.showNotify('이미 최대 레벨에 도달했습니다.')
@@ -216,7 +214,7 @@ class Game {
 
     /* 그래픽카드 오버클럭 버튼 */
     document.getElementById('vga-overclock').onclick = () => {
-      if (this.checkOverclock()) {
+      if (!this.checkOverclock()) {
         this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 오버클럭 할 수 있습니다.')
         return
       }
@@ -232,8 +230,7 @@ class Game {
           /* 초당 채굴량 계산 */
           this.calcCoinPerSecond ()
 
-          document.getElementById('vga-level').textContent = this.store.getData('vgaLv')
-          document.getElementById('vga-levelup-price').textContent = this.vgaOverclock
+          this.updateComputerPopup()
           this.save()
         } else {
           this.showNotify('이미 최대 레벨에 도달했습니다.')
@@ -252,7 +249,7 @@ class Game {
     const ramLv = this.store.getData('ramLv')
     const vgaLv = this.store.getData('vgaLv')
 
-    return !(cpuLv === -1 || ramLv === -1 || vgaLv === -1)
+    return cpuLv !== -1 && ramLv !== -1 && vgaLv !== -1
   }
 
   /**
@@ -268,8 +265,6 @@ class Game {
     const ramLv = this.store.getData('ramLv')
     const vgaLv = this.store.getData('vgaLv')
 
-    console.log(cpu[cpuNum], cpu, cpuNum)
-
     /* 부품 번호 중 -1이 하나도 없을 경우 */
     if (cpuNum !== -1 && vgaNum !== -1 && ramNum !== -1) {
       /* 오버클럭 레벨 1당 해당 부품의 채굴량 10% 증가 */
@@ -277,7 +272,7 @@ class Game {
       const ramCoin = ram[ramNum].coin + ram[ramNum].coin * ((ramLv) / 10)
       const vgaCoin = vga[vgaNum].coin + vga[vgaNum].coin * ((vgaLv) / 10)
 
-      this.coinPerSecond = cpuCoin + ramCoin + vgaCoin
+      this.coinPerSecond = (cpuCoin + ramCoin + vgaCoin).toFixed(2)
     } else {
       this.coinPerSecond = 0
     }
@@ -343,9 +338,10 @@ class Game {
     let ramLv = this.store.getData('ramLv')
     let vgaLv = this.store.getData('vgaLv')
 
-    this.cpuOverclock = cpu[cpuIdx] ? (cpuLv + 1) * 0.5 * cpu[cpuIdx].price : 0
-    this.ramOverclock = ram[ramIdx] ? (ramLv + 1) * 0.5 * ram[ramIdx].price : 0
-    this.vgaOverclock = vga[vgaIdx] ? (vgaLv + 1) * 0.5 * vga[vgaIdx].price : 0
+    /* 오버클럭 비용 */
+    this.cpuOverclock = cpu[cpuIdx] ? (cpuLv + 1) * 0.2 * cpu[cpuIdx].price : 0
+    this.ramOverclock = ram[ramIdx] ? (ramLv + 1) * 0.2 * ram[ramIdx].price : 0
+    this.vgaOverclock = vga[vgaIdx] ? (vgaLv + 1) * 0.2 * vga[vgaIdx].price : 0
 
     document.getElementById('psu-level').textContent = this.store.getData('psu')
 
@@ -619,7 +615,8 @@ class Game {
    */
   update () {
     /* 1초당 코인 수 만큼 누적 */
-    this.store.setData('coin', (parseFloat(this.store.getData('coin')) + this.coinPerSecond).toFixed(2))
+    console.log(typeof this.coinPerSecond)
+    this.store.setData('coin', (parseFloat(this.store.getData('coin')) + parseFloat(this.coinPerSecond)).toFixed(2))
 
     /* 세이브파일에 저장된 정보 보여주기 */
     document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
