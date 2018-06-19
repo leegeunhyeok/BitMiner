@@ -217,7 +217,7 @@ class Game {
     /* 그래픽카드 오버클럭 버튼 */
     document.getElementById('vga-overclock').onclick = () => {
       if (this.checkOverclock()) {
-        this.showNotify('CPU, 램, 그래픽카드 모두 있어야 가능합니다.')
+        this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 오버클럭 할 수 있습니다.')
         return
       }
       
@@ -250,7 +250,7 @@ class Game {
   checkOverclock () {
     const cpuLv = this.store.getData('cpuLv')
     const ramLv = this.store.getData('ramLv')
-    const vgaLv = this.store.getDate('vgaLv')
+    const vgaLv = this.store.getData('vgaLv')
 
     return !(cpuLv === -1 || ramLv === -1 || vgaLv === -1)
   }
@@ -322,7 +322,7 @@ class Game {
       popup.classList.add('popup-hide')
     } else {
       /* 컴퓨터 효과음 재생 */
-      const sound = new Audio('./static/computer.mp3')
+      const sound = new Audio('./static/sound/computer.mp3')
       sound.play()
 
       this.updateComputerPopup()
@@ -374,7 +374,7 @@ class Game {
       popup.classList.add('popup-hide')
     } else {
       /* 핸드폰 효과음 재생 */
-      const sound = new Audio('./static/phone.mp3')
+      const sound = new Audio('./static/sound/phone.mp3')
       sound.play()
 
       popup.classList.add('popup-show')
@@ -396,7 +396,7 @@ class Game {
       popup.classList.add('popup-hide')
     } else {
       /* 상점 효과음 재생 */
-      const sound = new Audio('./static/shop.mp3')
+      const sound = new Audio('./static/sound/shop.mp3')
       sound.play()
 
       this.updateStorePopup(title, store)
@@ -473,7 +473,7 @@ class Game {
             this.showNotify('파워서플라이 레벨이 낮습니다.')
           } else if (money - data.price >= 0) { // 구매
             /* 구매 효과음 재생 */
-            const sound = new Audio('./static/coin.mp3')
+            const sound = new Audio('./static/sound/coin.mp3')
             sound.play()
 
             /* 구매 후 현금 저장 */
@@ -541,7 +541,7 @@ class Game {
    */
   city () {
     /* 문 여는 효과음 재생 */
-    const sound = new Audio('./static/door.mp3')
+    const sound = new Audio('./static/sound/door.mp3')
     sound.play()
 
     /* 집 안 영역 숨기기 */

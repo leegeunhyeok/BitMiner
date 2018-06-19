@@ -22,7 +22,7 @@
 /* 상단 영역 요소(보유 현금, 코인 수 등..) */
 .header-info {
     margin: 10px 5px;
-    background-color: lightskyblue;
+    background-color: goldenrod;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     padding: 5px 10px;
