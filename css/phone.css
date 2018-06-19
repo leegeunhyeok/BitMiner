@@ -16,6 +16,7 @@
 
 /* 핸드폰 스크린 */
 .phone-screen {
+    position: relative;
     width: 100%;
     height: 100%;
     background-color: #fff;
@@ -48,3 +49,51 @@
     background-color: #aaa;
 }
 
+.phone-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background-color: #f0aa28;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.phone-content {
+    width: 100%;
+    height: 100%;
+    padding-top: 55px;
+    background-color: #efe3af;
+}
+
+.phone-footer {
+    background-color: #fff;
+    border-top: 2px solid #f0aa28;
+}
+
+#sell-count {
+    cursor: text;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #f0aa28;
+}
+
+/* 매도 버튼 */
+#sell-button {
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px 0px;
+    background-color: #f0aa28;
+    border: 1px solid #f0aa28;
+    color: #000;
+    transition: .5s;
+}
+
+#sell-button:hover {
+    background-color: #fff;
+    color: #f0aa28;
+}

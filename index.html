@@ -156,7 +156,23 @@
       <!-- 내 컴퓨터 팝업 영역 END -->
       <!-- 핸드폰 영역 -->
       <div id="popup-phone" class="popup-hide">
-        <div class="phone-screen"></div>
+        <div class="phone-screen">
+          <div class="phone-header">코인샵</div>
+          <div class="phone-content">
+            <img src="./static/chart.png">
+            <div class="phone-footer">
+              <h5>코인 시세는 1분마다 갱신됩니다.</h5>
+              <div>
+                1 BTC = <b id="coin-price">0</b>원
+              </div>
+              <input id="sell-count" type="number" placeholder="개">
+              <button id="sell-button">매도</button>
+              <div>
+                예상: <b id="prediction-money">0</b>원
+              </div>
+            </div>
+          </div>
+        </div>
         <div id="phone-exit"></div>
       </div>
       <!-- 핸드폰 영역 END -->

@@ -32,6 +32,9 @@ class Game {
     this.cpuOverclock = 0
     this.ramOverclock = 0
     this.vgaOverclock = 0
+
+    /* 1 BTC 당 가격 */
+    this.coinPrice = 10
   }
 
   /**
@@ -79,6 +82,9 @@ class Game {
         document.getElementById('tutorial-exit').classList.remove('tutorial-hide')
       }
     }
+
+    /* 코인 시세 변경 */
+    this.refreshCoin()
 
     /* 1초당 채굴되는 코인 량 계산 */
     this.calcCoinPerSecond()
@@ -158,7 +164,7 @@ class Game {
 
     /* CPU 오버클럭 버튼 */
     document.getElementById('cpu-overclock').onclick = () => {
-      if (this.checkOverclock()) {
+      if (!this.checkOverclock()) {
         this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 오버클럭 할 수 있습니다.')
         return
       }
@@ -174,6 +180,8 @@ class Game {
           /* 초당 채굴량 계산 */
           this.calcCoinPerSecond ()
 
+          this.updateHeaderInfo()
+
           this.updateComputerPopup()
           this.save()
         } else {
@@ -186,7 +194,7 @@ class Game {
 
     /* 램 오버클럭 버튼 */
     document.getElementById('ram-overclock').onclick = () => {
-      if (this.checkOverclock()) {
+      if (!this.checkOverclock()) {
         this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 오버클럭 할 수 있습니다.')
         return
       }
@@ -249,7 +257,7 @@ class Game {
     const ramLv = this.store.getData('ramLv')
     const vgaLv = this.store.getData('vgaLv')
 
-    return cpuLv !== -1 && ramLv !== -1 && vgaLv !== -1
+    return (cpuLv > -1 && cpuLv > -1 && cpuLv > -1)
   }
 
   /**
@@ -339,9 +347,9 @@ class Game {
     let vgaLv = this.store.getData('vgaLv')
 
     /* 오버클럭 비용 */
-    this.cpuOverclock = cpu[cpuIdx] ? (cpuLv + 1) * 0.2 * cpu[cpuIdx].price : 0
-    this.ramOverclock = ram[ramIdx] ? (ramLv + 1) * 0.2 * ram[ramIdx].price : 0
-    this.vgaOverclock = vga[vgaIdx] ? (vgaLv + 1) * 0.2 * vga[vgaIdx].price : 0
+    this.cpuOverclock = cpu[cpuIdx] ? Math.floor((cpuLv + 1) * 0.2 * cpu[cpuIdx].price) : 0
+    this.ramOverclock = ram[ramIdx] ? Math.floor((ramLv + 1) * 0.2 * ram[ramIdx].price) : 0
+    this.vgaOverclock = vga[vgaIdx] ? Math.floor((vgaLv + 1) * 0.2 * vga[vgaIdx].price) : 0
 
     document.getElementById('psu-level').textContent = this.store.getData('psu')
 
@@ -372,6 +380,49 @@ class Game {
       /* 핸드폰 효과음 재생 */
       const sound = new Audio('./static/sound/phone.mp3')
       sound.play()
+
+      /* 기존 입력된 데이터가 있을 수 있으므로 초기화 */
+      document.getElementById('sell-count').value = ''
+
+      /* 1 BTC 당 가격 */
+      document.getElementById('coin-price').textContent = this.coinPrice
+
+      /* 예상 수익금 */
+      document.getElementById('sell-count').onkeyup = () => {
+        const count = document.getElementById('sell-count').value
+        const prediction = parseInt(count) * this.coinPrice
+        document.getElementById('prediction-money').textContent = isNaN(prediction) ? 0 : prediction
+      }
+
+      /* 매도 버튼 */
+      document.getElementById('sell-button').onclick = () => {
+        const price = this.coinPrice
+        const count = parseInt(document.getElementById('sell-count').value)
+
+        if (isNaN(count)) {
+          this.showNotify('정확하게 입력해주세요')
+          return
+        }
+
+        if (this.store.getData('coin') < count) {
+          this.showNotify('최대 매도가능 갯수를 초과했습니다.')
+        } else {
+          if (count < 1) {
+            this.showNotify('갯수는 1개 이상 입력해주세요')
+            return
+          }
+
+          /* 매도한 코인 수 만큼 차감하고 해당 수익금만큼 현금 누적 */
+          this.store.setData('coin', this.store.getData('coin') - count)
+          this.store.setData('money', this.store.getData('money') + count * price)
+          this.save()
+
+          this.updateHeaderInfo()
+
+          this.showNotify('매도 거래가 완료되었습니다.')
+          this.togglePopupPhone()
+        }
+      }
 
       popup.classList.add('popup-show')
     }
@@ -484,10 +535,8 @@ class Game {
             /* 상점 팝업 닫기 */
             this.togglePopupStore()
 
-            /* 세이브파일에 저장된 정보 보여주기 */
-            document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
-            document.getElementById('own-coin').textContent = this.store.getData('coin') + ' BTC'
-            document.getElementById('coin-per-second').textContent = this.coinPerSecond + ' BTC/s'
+            /* 상단의 보유 현금, 코인 등 정보 갱신 */
+            this.updateHeaderInfo()
 
             /* 알림 띄우기 */
             this.showNotify(data.name + ' 구매 완료')
@@ -512,6 +561,25 @@ class Game {
       list.appendChild(item)
       idx++
     }
+  }
+
+  /**
+   * @description 상단의 보유 현금, 코인 등 정보 갱신
+   */
+  updateHeaderInfo () {
+    /* 세이브파일에 저장된 정보 보여주기 */
+    document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
+    document.getElementById('own-coin').textContent = this.store.getData('coin') + ' BTC'
+    document.getElementById('coin-per-second').textContent = this.coinPerSecond + ' BTC/s'
+  }
+
+  /**
+   * @description 1 BTC 시세 변경
+   */
+  refreshCoin () {
+    this.coinPrice = Math.floor(Math.random() * 10) + 1
+    /* 1 BTC 당 가격 */
+    document.getElementById('coin-price').textContent = this.coinPrice
   }
 
   /**
@@ -602,8 +670,9 @@ class Game {
     this.loop = setInterval(() => {
       this.update()
 
-      /* 1분에 한번 저장 */
+      /* 1분에 한번 코인 시세 변경 및 저장 */
       if (time % 60 === 0) {
+        this.refreshCoin()
         this.store.save()
       }
       time++
@@ -615,13 +684,9 @@ class Game {
    */
   update () {
     /* 1초당 코인 수 만큼 누적 */
-    console.log(typeof this.coinPerSecond)
     this.store.setData('coin', (parseFloat(this.store.getData('coin')) + parseFloat(this.coinPerSecond)).toFixed(2))
 
-    /* 세이브파일에 저장된 정보 보여주기 */
-    document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
-    document.getElementById('own-coin').textContent = this.store.getData('coin') + ' BTC'
-    document.getElementById('coin-per-second').textContent = this.coinPerSecond + ' BTC/s'
+    this.updateHeaderInfo()
   }
 
   /**
