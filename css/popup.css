@@ -41,6 +41,7 @@
     display: block;
 }
 
+/* 팝업 상단 제목 */
 .popup-title {
     font-weight: bold;
     font-size: 1.4rem;
@@ -48,28 +49,34 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
+/* 팝업 내용 */
 .popup-content {
     height: 180px;
     overflow-y: auto;
 }
 
+/* 팝업 내용 영역 스크롤바 숨기기 */
 .popup-content::-webkit-scrollbar {
     display: none;
 }
 
+/* 팝업 내 아이템 */
 .popup-item {
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     margin-top: 20px;
 }
 
+/* 팝업 아이템 내의 하위 항목 (상세정보) */
 .popup-sub-item {
     margin: 5px 0;
 }
 
+/* 컴퓨터 부품 명 */
 .module-name {
     margin: 10px 0;
 }
 
+/* 오버클럭 버튼 */
 .overclock-button {
     cursor: pointer;
     padding: 5px 10px;
@@ -84,4 +91,53 @@
 .overclock-button:hover {
     background-color: #fff;
     color: #da9841;
+}
+
+/* 매장 상품 이미지 */
+.item-img {
+  float: left;
+  width: 100px;
+  height: 100px;
+}
+
+/* 매장 상품 이름 */
+.store-item-name {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+/* 매장 상품 상세정보 */
+.store-sub-item {
+  margin: 3px;
+}
+
+/* 구매 버튼 */
+.buy-button {
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #50b970;
+  background-color: #50b970;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: .5s;
+}
+
+.buy-button:hover {
+  background-color: #fff;
+  color: #50b970;
+}
+
+/* 구매 버튼 비활성화 */
+.buy-button:disabled {
+  cursor: unset;
+  background-color: #888;
+  border: 1px solid #888;
+  color: #000;
+}
+
+.buy-button:disabled:hover {
+  background-color: #888;
+  color: #000;
 }

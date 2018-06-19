@@ -20,6 +20,9 @@ class Game {
     /* 컴퓨터 팝업창 열기/닫기 */
     this.popupComputer = false
 
+    /* 매장 팝업창 열기/닫기 */
+    this.popupStore = false
+
     /* 다이얼로그 타입 */
     this.dialogType = ''
 
@@ -67,7 +70,8 @@ class Game {
       document.getElementById('tutorial').style['display'] = 'block'
     }
 
-    calcCoinPerSecond()
+    /* 1초당 채굴되는 코인 량 계산 */
+    this.calcCoinPerSecond()
 
     /* 세이브파일에 저장된 정보 보여주기 */
     this.update()
@@ -76,22 +80,19 @@ class Game {
     document.getElementById('my-computer').onclick = () => {
       const sound = new Audio('./static/computer.mp3')
       sound.play()
-      this.showPopupComputer()
+      this.togglePopupComputer()
     }
 
     /* 문 클릭시 이벤트 */
     document.getElementById('door').onclick = () => {
       const sound = new Audio('./static/door.mp3')
       sound.play()
-
       this.city()
     }
 
     /* 컴퓨터 팝업 닫기 버튼 이벤트 */
     document.getElementById('popup-computer-close').onclick = () => {
-      this.popup = false
-      document.getElementById('popup-computer').classList.remove('popup-show')
-      document.getElementById('popup-computer').classList.add('popup-hide')
+      this.togglePopupComputer()
     }
 
     /* 게임 종료 버튼 이벤트 */
@@ -107,22 +108,27 @@ class Game {
 
     /* 램 매장 클릭시 이벤트 */
     document.getElementById('ram-store').onclick = () => {
-      console.log('RAM')
+      this.togglePopupStore('램 매장', 'ram')
     }
 
     /* CPU 매장 클릭시 이벤트 */
     document.getElementById('cpu-store').onclick = () => {
-      console.log('CPU')
+      this.togglePopupStore('CPU 매장', 'cpu')
     }
 
     /* 그래픽카드 매장 클릭시 이벤트 */
     document.getElementById('vga-store').onclick = () => {
-      console.log('VGA')
+      this.togglePopupStore('그래픽카드 매장', 'vga')
     }
 
     /* 기타 소모품 매장 클릭시 이벤트 */
     document.getElementById('other-store').onclick = () => {
-      console.log('Other')
+      this.togglePopupStore('소모품 매장', 'other')
+    }
+
+    /* 매장 팝업 닫기 버튼 이벤트 */
+    document.getElementById('popup-store-close').onclick = () => {
+      this.togglePopupStore()
     }
   }
 
@@ -138,6 +144,8 @@ class Game {
     const cpuLv = this.store.getData('cpuLv')
     const ramLv = this.store.getData('ramLv')
     const vgaLv = this.store.getData('vgaLv')
+
+    console.log(cpu[cpuNum], cpu, cpuNum)
 
     /* 부품 번호 중 -1이 하나도 없을 경우 */
     if (cpuNum !== -1 && vgaNum !== -1 && ramNum !== -1) {
@@ -180,9 +188,9 @@ class Game {
   }
 
   /**
-   * @description 컴퓨터 정보 팝업 띄우기
+   * @description 컴퓨터 정보 팝업 토글
    */
-  showPopupComputer () {
+  togglePopupComputer () {
     let popup = document.getElementById('popup-computer')
     popup.classList.remove('popup-hide')
     popup.classList.remove('popup-show')
@@ -228,6 +236,124 @@ class Game {
   }
 
   /**
+   * @description 매장 팝업 토글
+   * @param {string} title 매장 타이틀
+   * @param {string} store 매장 유형
+   */
+  togglePopupStore (title, store) {
+    let popup = document.getElementById('popup-store')
+    popup.classList.remove('popup-hide')
+    popup.classList.remove('popup-show')
+
+    if (this.popupStore) {
+      popup.classList.add('popup-hide')
+    } else {
+      this.updateStorePopup(title, store)
+      popup.classList.add('popup-show')
+    }
+    this.popupStore = !this.popupStore
+  }
+
+  /**
+   * @description 매장 데이터 갱신
+   * @param {string} title 매장 타이틀
+   * @param {string} store 매장 유형
+   */
+  updateStorePopup (title, store) {
+    document.getElementById('popup-store-title').textContent = title
+    let list = document.getElementById('popup-store-list')
+    list.innerHTML = ''
+
+    let dataSet = null
+    let idx = 0
+    let myIdx = 0
+    if (store === 'ram') {
+      dataSet = ram
+      myIdx = this.store.getData('ram')
+    } else if (store === 'cpu') {
+      dataSet = cpu
+      myIdx = this.store.getData('cpu')
+    } else if (store === 'vga') {
+      dataSet = vga
+      myIdx = this.store.getData('vga')
+    } else if (store === 'other') {
+      dataSet = []
+    }
+
+    for (let data of dataSet) {
+      let item = document.createElement('div')
+
+      let itemImg = document.createElement('img')
+      itemImg.src = './static/' + data.src
+      itemImg.classList.add('item-img')
+
+      let itemName = document.createElement('div')
+      let itemNameText = document.createTextNode(data.name)
+      itemName.classList.add('store-item-name')
+      itemName.appendChild(itemNameText)
+
+      let itemCoin = document.createElement('div')
+      let itemCoinText = document.createTextNode(`채굴량: ${data.coin} BTC/s`)
+      itemCoin.classList.add('store-sub-item')
+      itemCoin.appendChild(itemCoinText)
+
+      let itemPrice = document.createElement('div')
+      let itemPriceText = document.createTextNode(data.price + '원')
+      itemPrice.classList.add('store-sub-item')
+      itemPrice.appendChild(itemPriceText)
+
+      let buyButton = document.createElement('button')
+      let buyButtonText = document.createTextNode(myIdx >= idx ? '매진' : '구매하기')
+      if (!(myIdx >= idx)) {
+        /* 인덱스 데이터 임시저장 */
+        const tempIdx = idx
+
+        /* 구매 버튼 이벤트 */
+        buyButton.onclick = () => {
+          const money = this.store.getData('money')
+
+          /* 구매 */
+          if (money - data.price >= 0) {
+            /* 구매 후 현금 저장 */
+            this.store.setData('money', money - data.price)
+
+            /* 구매한 항목 저장 */
+            this.store.setData(store, tempIdx)
+
+            /* 1초당 채굴하는 코인 량 계산 */
+            this.calcCoinPerSecond()
+
+            /* 상점 팝업 닫기 */
+            this.togglePopupStore()
+
+            /* 상단 정보 영역 새로고침 */
+            this.update()
+
+            /* 알림 띄우기 */
+            this.showNotify(data.name + ' 구매 완료')
+          } else {
+            /* 알림 띄우기 */
+            this.showNotify('보유 현금이 부족합니다.')
+          }
+        }
+      }
+      buyButton.appendChild(buyButtonText)
+      buyButton.disabled = !(idx > myIdx)
+      buyButton.classList.add('buy-button')
+
+      item.appendChild(itemImg)
+      item.appendChild(itemName)
+      item.appendChild(itemCoin)
+      item.appendChild(itemPrice)
+      item.appendChild(buyButton)
+      item.classList.add('popup-item')
+
+      list.appendChild(item)
+      idx++
+    }
+  }
+
+  /**
    * @description 도시(야외)로 이동
    */
   city () {
@@ -244,6 +370,9 @@ class Game {
 
       /* 도시 영역 숨기기 */
       document.getElementById('city').style['display'] = 'none'
+
+      /* 내 컴퓨터 영역 갱신 */
+      this.updateComputerPopup()
     }
   }
 

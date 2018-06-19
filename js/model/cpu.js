@@ -7,8 +7,9 @@
 
 module.exports = [
   {
-    name: 'Intal Pantim',
+    name: 'Intal Pantom',
     price: 1000,
-    coin: 0.04
+    coin: 0.04,
+    src: 'cpu/1.png'
   }
 ]

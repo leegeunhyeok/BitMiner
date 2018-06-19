@@ -7,8 +7,9 @@
 
 module.exports = [
   {
-    name: 'AND Pentom',
+    name: 'AND Radeo',
     price: 3500,
-    coin: 0.15
+    coin: 0.15,
+    src: 'vga/1.png'
   }
 ]
