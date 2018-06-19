@@ -95,49 +95,56 @@
 
 /* 매장 상품 이미지 */
 .item-img {
-  float: left;
-  width: 100px;
-  height: 100px;
+    float: left;
+    width: 100px;
+    height: 100px;
+    margin-top: 5px;
 }
 
 /* 매장 상품 이름 */
 .store-item-name {
-  margin-top: 5px;
-  margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 /* 매장 상품 상세정보 */
 .store-sub-item {
-  margin: 3px;
+    margin: 3px;
 }
 
 /* 구매 버튼 */
 .buy-button {
-  cursor: pointer;
-  outline: none;
-  border: 1px solid #50b970;
-  background-color: #50b970;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  transition: .5s;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid #50b970;
+    background-color: #50b970;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: .5s;
 }
 
 .buy-button:hover {
-  background-color: #fff;
-  color: #50b970;
+    background-color: #fff;
+    color: #50b970;
 }
 
 /* 구매 버튼 비활성화 */
 .buy-button:disabled {
-  cursor: unset;
-  background-color: #888;
-  border: 1px solid #888;
-  color: #000;
+    cursor: unset;
+    background-color: #888;
+    border: 1px solid #888;
+    color: #000;
 }
 
 .buy-button:disabled:hover {
-  background-color: #888;
-  color: #000;
+    background-color: #888;
+    color: #000;
+}
+
+.store-limit {
+    color: #e45641;
+    font-size: 0.8rem;
+    margin-top: 5px;
 }

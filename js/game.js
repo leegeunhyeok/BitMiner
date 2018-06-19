@@ -78,15 +78,11 @@ class Game {
 
     /* 컴퓨터 클릭시 이벤트 */
     document.getElementById('my-computer').onclick = () => {
-      const sound = new Audio('./static/computer.mp3')
-      sound.play()
       this.togglePopupComputer()
     }
 
     /* 문 클릭시 이벤트 */
     document.getElementById('door').onclick = () => {
-      const sound = new Audio('./static/door.mp3')
-      sound.play()
       this.city()
     }
 
@@ -198,6 +194,10 @@ class Game {
     if (this.popupComputer) {
       popup.classList.add('popup-hide')
     } else {
+      /* 컴퓨터 효과음 재생 */
+      const sound = new Audio('./static/computer.mp3')
+      sound.play()
+
       this.updateComputerPopup()
       popup.classList.add('popup-show')
     }
@@ -248,6 +248,10 @@ class Game {
     if (this.popupStore) {
       popup.classList.add('popup-hide')
     } else {
+      /* 상점 효과음 재생 */
+      const sound = new Audio('./static/shop.mp3')
+      sound.play()
+
       this.updateStorePopup(title, store)
       popup.classList.add('popup-show')
     }
@@ -302,6 +306,11 @@ class Game {
       itemPrice.classList.add('store-sub-item')
       itemPrice.appendChild(itemPriceText)
 
+      let levelLimit = document.createElement("div")
+      let levelLimitText = document.createTextNode(`PSU 제한 레벨: ${data.level}`)
+      levelLimit.classList.add('store-limit')
+      levelLimit.appendChild(levelLimitText)
+
       let buyButton = document.createElement('button')
       let buyButtonText = document.createTextNode(myIdx >= idx ? '매진' : '구매하기')
       if (!(myIdx >= idx)) {
@@ -311,9 +320,15 @@ class Game {
         /* 구매 버튼 */
         buyButton.onclick = () => {
           const money = this.store.getData('money')
+          const psu = this.store.getData('psu')
+          if (psu < data.level) {
+            /* 알림 띄우기 */
+            this.showNotify('파워서플라이 레벨이 낮습니다.')
+          } else if (money - data.price >= 0) { // 구매
+            /* 구매 효과음 재생 */
+            const sound = new Audio('./static/coin.mp3')
+            sound.play()
 
-          /* 구매 */
-          if (money - data.price >= 0) {
             /* 구매 후 현금 저장 */
             this.store.setData('money', money - data.price)
 
@@ -347,6 +362,7 @@ class Game {
       item.appendChild(itemName)
       item.appendChild(itemCoin)
       item.appendChild(itemPrice)
+      item.appendChild(levelLimit)
       item.appendChild(buyButton)
       item.classList.add('popup-item')
 
@@ -359,6 +375,10 @@ class Game {
    * @description 도시(야외)로 이동
    */
   city () {
+    /* 문 여는 효과음 재생 */
+    const sound = new Audio('./static/door.mp3')
+    sound.play()
+
     /* 집 안 영역 숨기기 */
     document.getElementById('home').style['display'] = 'none'
 
