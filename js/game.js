@@ -120,8 +120,9 @@ class Game {
       console.log('VGA')
     }
 
+    /* 기타 소모품 매장 클릭시 이벤트 */
     document.getElementById('other-store').onclick = () => {
-      
+      console.log('Other')
     }
   }
 
