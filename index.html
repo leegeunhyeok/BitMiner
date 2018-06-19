@@ -80,14 +80,69 @@
       <div id="drawer" class="close">
         <div id="drawer-title"></div>
       </div>
-      <!-- 팝업 영역 -->
-      <div id="popup" class="popup-hide">
-        <div id="popup-close"></div>
-        <div id="popup-title"></div>
-        <div id="popup-content">
-          <!-- 팝업 내용 -->
+      <!-- 내 컴퓨터 팝업 영역 -->
+      <div id="popup-computer" class="popup popup-hide">
+        <div id="popup-computer-close" class="popup-close"></div>
+        <div id="popup-computer-title" class="popup-title">내 컴퓨터</div>
+        <div id="popup-computer-content" class="popup-content">
+          <div class="popup-item">
+            <b>파워서플라이</b>
+            <div class="module-name"></div>
+            <div class="popup-sub-item">
+              레벨: <b id="psu-level"></b>
+            </div>
+          </div>
+          <div class="popup-item">
+            <b>CPU</b>
+            <div id="cpu-name-info" class="module-name"></div>
+            <div class="popup-sub-item">
+              오버클럭 레벨: <b id="cpu-level"></b>
+            </div>
+            <div>
+              오버클럭 비용: <b id="cpu-levelup-price"></b>원
+            </div>
+            <div class="popup-sub-item">
+              <button class="overclock-button">오버클럭</button>
+            </div>
+          </div>
+          <div class="popup-item">
+            <b>램</b>
+            <div id="ram-name-info" class="module-name"></div>
+            <div class="popup-sub-item">
+              오버클럭 레벨: <b id="ram-level"></b>
+            </div>
+            <div>
+              오버클럭 비용: <b id="ram-levelup-price"></b>원
+            </div>
+            <div class="popup-sub-item">
+              <button class="overclock-button">오버클럭</button>
+            </div>
+          </div>
+          <div class="popup-item">
+            <b>그래픽카드</b>
+            <div id="vga-name-info" class="module-name"></div>
+            <div class="popup-sub-item">
+              오버클럭 레벨: <b id="vga-level"></b>원
+            </div>
+            <div>
+              오버클럭 비용: <b id="vga-levelup-price"></b>
+            </div>
+            <div class="popup-sub-item">
+              <button class="overclock-button">오버클럭</button>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- 내 컴퓨터 팝업 영역 END -->
+      <!-- 매점 팝업 영역 -->
+      <div id="popup-store" class="popup popup-hide">
+        <div id="popup-store-close" class="popup-close"></div>
+        <div id="popup-store-title" class="popup-title"></div>
+        <div id="popup-store-list" class="popup-content">
+          <!-- 매점 상품 리스트 -->
+        </div>
+      </div>
+      <!-- 매점 팝업 영역 END -->
       <div id="header">
         <!-- 1초당 코인 -->
         <span id="coin-per-second" class="header-info">BTC/s</span>

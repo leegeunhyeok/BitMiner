@@ -1,6 +1,6 @@
 /* 팝업 CSS */
 
-#popup {
+.popup {
     position: absolute;
     width: 350px;
     height: 250px;
@@ -17,7 +17,7 @@
 }
 
 /* 팝업 X 버튼 */
-#popup-close {
+.popup-close {
     cursor: pointer;
     position: absolute;
     display: inline-block;
@@ -27,7 +27,7 @@
     font-weight: bold;
 }
 
-#popup-close::before {
+.popup-close::before {
     content: 'x'
 }
 
@@ -41,19 +41,19 @@
     display: block;
 }
 
-#popup-title {
+.popup-title {
     font-weight: bold;
     font-size: 1.4rem;
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-#popup-content {
+.popup-content {
     height: 180px;
     overflow-y: auto;
 }
 
-#popup-content::-webkit-scrollbar {
+.popup-content::-webkit-scrollbar {
     display: none;
 }
 

@@ -17,14 +17,19 @@ class Game {
     /* Drawer 메뉴 열기/닫기 */
     this.drawer = false
 
-    /* 팝업창 열기/닫기 */
-    this.popup = false
+    /* 컴퓨터 팝업창 열기/닫기 */
+    this.popupComputer = false
 
     /* 다이얼로그 타입 */
     this.dialogType = ''
 
     /* Interval 반복 객체 */
     this.loop = null
+
+    /* 오버클럭 비용 */
+    this.cpuOverclock = 0
+    this.ramOverclock = 0
+    this.vgaOverclock = 0
   }
 
   /**
@@ -48,8 +53,14 @@ class Game {
     /* HTML: 아이디가 main인 영역 숨기기 */
     document.getElementById('main').style['display'] = 'none'
 
+    /* HTML: 아이디가 city인 영역 숨기기 */
+    document.getElementById('city').style['display'] = 'none'
+
     /* HTML: 아이디가 game인 영역 보이기 */
     document.getElementById('game').style['display'] = 'block'
+
+    /* HTML: 아이디가 home인 영역 보이기 */
+    document.getElementById('home').style['display'] = 'block'
 
     /* 튜토리얼 영역 */
     if (this.store.getData('tutorial') === 1) {
@@ -74,35 +85,7 @@ class Game {
     document.getElementById('my-computer').onclick = () => {
       const sound = new Audio('./static/computer.mp3')
       sound.play()
-
-      const items = [
-        {
-          name: '파워서플라이',
-          id: 'psu',
-          index: 0,
-          level: this.store.getData('psu')
-        },
-        {
-          name: 'CPU',
-          id: 'cpu',
-          index: this.store.getData('cpu'),
-          level: this.store.getData('cpuLv')
-        },
-        {
-          name: '램',
-          id: 'ram',
-          index: this.store.getData('ram'),
-          level: this.store.getData('ramLv')
-        },
-        {
-          name: '그래픽카드',
-          id: 'vga',
-          index: this.store.getData('vga'),
-          level: this.store.getData('vgaLv')
-        }
-      ]
-
-      this.showPopup('내 컴퓨터', items)
+      this.showPopupComputer()
     }
 
     /* 문 클릭시 이벤트 */
@@ -113,11 +96,11 @@ class Game {
       this.city()
     }
 
-    /* 팝업 닫기 버튼 이벤트 */
-    document.getElementById('popup-close').onclick = () => {
+    /* 컴퓨터 팝업 닫기 버튼 이벤트 */
+    document.getElementById('popup-computer-close').onclick = () => {
       this.popup = false
-      document.getElementById('popup').classList.remove('popup-show')
-      document.getElementById('popup').classList.add('popup-hide')
+      document.getElementById('popup-computer').classList.remove('popup-show')
+      document.getElementById('popup-computer').classList.add('popup-hide')
     }
 
     /* 게임 종료 버튼 이벤트 */
@@ -160,100 +143,51 @@ class Game {
   }
 
   /**
-   * @description 팝업 띄우기
-   * @param {string} title 팝업에 띄울 제목
-   * @param {array} items 팝업에 표시할 부품 리스트
+   * @description 컴퓨터 정보 팝업 띄우기
    */
-  showPopup (title, items) {
-    let popup = document.getElementById('popup')
-    document.getElementById('popup-title').textContent = title
+  showPopupComputer () {
+    let popup = document.getElementById('popup-computer')
     popup.classList.remove('popup-hide')
     popup.classList.remove('popup-show')
 
-    if (this.popup) {
+    if (this.popupComputer) {
       popup.classList.add('popup-hide')
     } else {
-      if (items !== 0) {
-        let content = document.getElementById('popup-content')
-
-        /* 기존 내용 비우기 */
-        content.innerHTML = ''
-
-        /* 아이템 목록 추가 */
-        for (let item of items) {
-          /* 부품 정보 영역 */
-          let itemArea = document.createElement('div')
-          itemArea.classList.add('popup-item')
-
-          /* 부품 종류 */
-          let itemName = document.createElement('b')
-
-          /* 부품 유형 */
-          let titleText = document.createTextNode(item.name)
-          itemName.appendChild(titleText)
-
-          itemArea.appendChild(itemName)
-
-          /* 부품 명, 부품 레벨 */
-          let moduleText = null
-          let moduleLevelText = document.createTextNode('오버클럭 레벨: ' + item.level)
-
-          /* 인덱스가 -1 이면 고장 */
-          if (item.index === -1) {
-            moduleText = document.createTextNode('고장 남')
-          } else {
-            if (item.id === 'psu') {
-              moduleText = document.createTextNode('')
-            } else if (item.id === 'cpu') {
-              moduleText = document.createTextNode(cpu[item.index])
-            } else if (item.id === 'ram') {
-              moduleText = document.createTextNode(ram[item.index])
-            } else if (item.id === 'vga') {
-              moduleText = document.createTextNode(vga[item.index])
-            }
-          }
-
-          /* 제품 이름 */
-          let moduleInfoArea = document.createElement('div')
-          moduleInfoArea.classList.add('module-name')
-          moduleInfoArea.appendChild(moduleText)
-          itemArea.appendChild(moduleInfoArea)
-
-          /* 부품 오버클럭 레벨 */
-          let moduleLevelArea = document.createElement('div')
-          moduleLevelArea.classList.add('popup-sub-item')
-          moduleLevelArea.appendChild(moduleLevelText)
-          itemArea.appendChild(moduleLevelArea)
-
-          /* 오버클럭 영역 */
-          let moduleOverclockArea = document.createElement('div')
-          moduleOverclockArea.classList.add('popup-sub-item')
-          let overclockButton = document.createElement('button')
-          overclockButton.classList.add('overclock-button')
-          /* 오버클럭 버튼 */
-          overclockButton.onclick = () => {
-            console.log(item.name)
-            if (item.index !== -1) {
-
-            } else {
-              this.showNotify('고장난 부품은 오버클럭할 수 없습니다.')
-            }
-          }
-          let overclockButtonText = document.createTextNode('오버클럭')
-          overclockButton.appendChild(overclockButtonText)
-          let overclockPrice = document.createElement('div')
-          let overclockPriceText = document.createTextNode('오버클럭 비용: 0 원')
-          overclockPrice.appendChild(overclockPriceText)
-          moduleOverclockArea.appendChild(overclockPrice)
-          moduleOverclockArea.appendChild(overclockButton)
-
-          itemArea.appendChild(moduleOverclockArea)
-          content.appendChild(itemArea)
-        }
-      }
+      this.updateComputerPopup()
       popup.classList.add('popup-show')
     }
-    this.popup = !this.popup
+    this.popupComputer = !this.popupComputer
+  }
+
+  /**
+   * @description 컴퓨터 정보 팝업 정보 갱신
+   */
+  updateComputerPopup () {
+    let cpuIdx = this.store.getData('cpu')
+    let ramIdx = this.store.getData('ram')
+    let vgaIdx = this.store.getData('vga')
+
+    let cpuLv = this.store.getData('cpuLv')
+    let ramLv = this.store.getData('ramLv')
+    let vgaLv = this.store.getData('vgaLv')
+
+    this.cpuOverclock = cpu[cpuIdx] ? cpuLv * 2.5 * cpu[cpuIdx].price : 0
+    this.ramOverclock = ram[ramIdx] ? ramLv * 2.5 * ram[ramIdx].price : 0
+    this.vgaOverclock = vga[vgaIdx] ? vgaLv * 2.5 * vga[vgaIdx].price : 0
+
+    document.getElementById('psu-level').textContent = this.store.getData('psu')
+
+    document.getElementById('cpu-name-info').textContent = cpu[cpuIdx] ? cpu[cpuIdx].name : '고장 남'
+    document.getElementById('cpu-level').textContent = cpuLv
+    document.getElementById('cpu-levelup-price').textContent = this.cpuOverclock
+
+    document.getElementById('ram-name-info').textContent = ram[ramIdx] ? ram[ramIdx].name : '고장 남'
+    document.getElementById('ram-level').textContent = ramLv
+    document.getElementById('ram-levelup-price').textContent = this.ramOverclock
+
+    document.getElementById('vga-name-info').textContent = vga[vgaIdx] ? vga[vgaIdx].name : '고장 남'
+    document.getElementById('vga-level').textContent = vgaLv
+    document.getElementById('vga-levelup-price').textContent = this.vgaOverclock
   }
 
   /**
@@ -338,8 +272,9 @@ class Game {
    * @description 게임 진행 상태 업데이트
    */
   update () {
+    console.log('update')
     /* 1초당 코인 수 만큼 누적 */
-    this.store.setData('coin', this.store.getData('coin') + this.coinPerSecond)
+    this.store.setData('coin', (parseFloat(this.store.getData('coin')) + this.coinPerSecond).toFixed(2))
 
     /* 세이브파일에 저장된 정보 보여주기 */
     document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
