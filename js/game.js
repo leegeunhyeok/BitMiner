@@ -413,7 +413,7 @@ class Game {
           }
           
           /* 코인 효과음 재생 */
-          const sound = new Audio('./static/sound/shop.mp3')
+          const sound = new Audio('./static/sound/coin.mp3')
           sound.play()
 
           /* 매도한 코인 수 만큼 차감하고 해당 수익금만큼 현금 누적 */
