@@ -67,16 +67,7 @@ class Game {
       document.getElementById('tutorial').style['display'] = 'block'
     }
 
-    /* 세이브파일에 저장된 컴퓨터 부품 종류 번호 */
-    const cpuNum = this.store.getData('cpu')
-    const ramNum = this.store.getData('ram')
-    const vgaNum = this.store.getData('vga')
-
-    /* 부품 번호 중 -1이 하나도 없을 경우 */
-    if (cpuNum !== -1 && vgaNum !== -1 && ramNum !== -1) {
-      console.log('코인 채굴 가능 PC')
-      this.coinPerSecond = cpu[cpuNum].coin + ram[ramNum].coin + vga[vgaNum].coin
-    }
+    calcCoinPerSecond()
 
     /* 세이브파일에 저장된 정보 보여주기 */
     this.update()
@@ -112,6 +103,51 @@ class Game {
     document.getElementById('tutorial-exit').onclick = () => {
       this.store.setData('tutorial', 0)
       document.getElementById('tutorial').style['display'] = 'none'
+    }
+
+    /* 램 매장 클릭시 이벤트 */
+    document.getElementById('ram-store').onclick = () => {
+      console.log('RAM')
+    }
+
+    /* CPU 매장 클릭시 이벤트 */
+    document.getElementById('cpu-store').onclick = () => {
+      console.log('CPU')
+    }
+
+    /* 그래픽카드 매장 클릭시 이벤트 */
+    document.getElementById('vga-store').onclick = () => {
+      console.log('VGA')
+    }
+
+    document.getElementById('other-store').onclick = () => {
+      
+    }
+  }
+
+  /**
+   * @description 1초당 채굴되는 코인 량 계산
+   */
+  calcCoinPerSecond () {
+    /* 세이브파일에 저장된 컴퓨터 부품 종류 번호 */
+    const cpuNum = this.store.getData('cpu')
+    const ramNum = this.store.getData('ram')
+    const vgaNum = this.store.getData('vga')
+
+    const cpuLv = this.store.getData('cpuLv')
+    const ramLv = this.store.getData('ramLv')
+    const vgaLv = this.store.getData('vgaLv')
+
+    /* 부품 번호 중 -1이 하나도 없을 경우 */
+    if (cpuNum !== -1 && vgaNum !== -1 && ramNum !== -1) {
+      /* 오버클럭 레벨 1당 해당 부품의 채굴량 10% 증가 */
+      const cpuCoin = cpu[cpuNum].coin + cpu[cpuNum].coin * ((cpuLv) / 10)
+      const ramCoin = ram[ramNum].coin + ram[ramNum].coin * ((ramLv) / 10)
+      const vgaCoin = vga[vgaNum].coin + vga[vgaNum].coin * ((vgaLv) / 10)
+
+      this.coinPerSecond = cpuCoin + ramCoin + vgaCoin
+    } else {
+      this.coinPerSecond = 0
     }
   }
 
@@ -272,7 +308,6 @@ class Game {
    * @description 게임 진행 상태 업데이트
    */
   update () {
-    console.log('update')
     /* 1초당 코인 수 만큼 누적 */
     this.store.setData('coin', (parseFloat(this.store.getData('coin')) + this.coinPerSecond).toFixed(2))
 

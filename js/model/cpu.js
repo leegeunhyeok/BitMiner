@@ -9,6 +9,6 @@ module.exports = [
   {
     name: 'Intal Pantim',
     price: 1000,
-    coin: 0.3
+    coin: 0.04
   }
 ]

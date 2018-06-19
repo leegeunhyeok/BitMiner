@@ -9,6 +9,6 @@ module.exports = [
   {
     name: 'AND Pentom',
     price: 3500,
-    coin: 0.5
+    coin: 0.15
   }
 ]

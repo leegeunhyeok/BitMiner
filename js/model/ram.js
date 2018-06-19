@@ -9,6 +9,6 @@ module.exports = [
   {
     name: 'Hinix DDR1',
     price: 500,
-    coin: 0.5
+    coin: 0.06
   }
 ]
