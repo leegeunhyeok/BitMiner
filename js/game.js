@@ -114,7 +114,7 @@ class Game {
       this.togglePopupComputer()
     }
 
-    /* 컴퓨터 팝업 닫기 버튼 이벤트 */
+    /* 핸드폰 팝업 닫기 버튼 이벤트 */
     document.getElementById('phone-exit').onclick = () => {
       this.togglePopupPhone()
     }
@@ -155,6 +155,104 @@ class Game {
     document.getElementById('popup-store-close').onclick = () => {
       this.togglePopupStore()
     }
+
+    /* CPU 오버클럭 버튼 */
+    document.getElementById('cpu-overclock').onclick = () => {
+      if (this.checkOverclock()) {
+        this.showNotify('CPU, 램, 그래픽카드 모두 있어야 가능합니다.')
+        return
+      }
+
+      if (this.store.getData('money') - this.cpuOverclock >= 0) {
+        if (this.store.getData('cpuLv') + 1 <= 10) {
+          /* 비용 차감 */
+          this.store.setData('money', this.store.getData('money') - this.cpuOverclock)
+
+          /* 오버클럭 레벨 증가 */
+          this.store.setData('cpuLv', this.store.getData('cpuLv') + 1)
+
+          /* 초당 채굴량 계산 */
+          this.calcCoinPerSecond ()
+
+          document.getElementById('cpu-level').textContent = this.store.getData('cpuLv')
+          document.getElementById('cpu-levelup-price').textContent = this.cpuOverclock
+          this.save()
+        } else {
+          this.showNotify('이미 최대 레벨에 도달했습니다.')
+        }
+      } else {
+        this.showNotify('현금이 부족합니다.')
+      }
+    }
+
+    /* 램 오버클럭 버튼 */
+    document.getElementById('ram-overclock').onclick = () => {
+      if (this.checkOverclock()) {
+        this.showNotify('CPU, 램, 그래픽카드 모두 있어야 가능합니다.')
+        return
+      }
+
+      if (this.store.getData('money') - this.ramOverclock >= 0) {
+        if (this.store.getData('vgaLv') + 1 <= 10) {
+          /* 비용 차감 */
+          this.store.setData('money', this.store.getData('money') - this.ramOverclock)
+          
+          /* 오버클럭 레벨 증가 */
+          this.store.setData('ramLv', this.store.getData('ramLv') + 1)
+
+          /* 초당 채굴량 계산 */
+          this.calcCoinPerSecond ()
+
+          document.getElementById('ram-level').textContent = this.store.getData('ramLv')
+          document.getElementById('ram-levelup-price').textContent = this.ramOverclock
+          this.save()
+        } else {
+          this.showNotify('이미 최대 레벨에 도달했습니다.')
+        }
+      } else {
+        this.showNotify('현금이 부족합니다.')
+      }
+    }
+
+    /* 그래픽카드 오버클럭 버튼 */
+    document.getElementById('vga-overclock').onclick = () => {
+      if (this.checkOverclock()) {
+        this.showNotify('CPU, 램, 그래픽카드 모두 있어야 가능합니다.')
+        return
+      }
+      
+      if (this.store.getData('money') - this.vgaOverclock >= 0) {
+        if (this.store.getData('vgaLv') + 1 <= 10) {
+          /* 비용 차감 */
+          this.store.setData('money', this.store.getData('money') - this.vgaOverclock)
+          
+          /* 오버클럭 레벨 증가 */
+          this.store.setData('vgaLv', this.store.getData('vgaLv') + 1)
+
+          /* 초당 채굴량 계산 */
+          this.calcCoinPerSecond ()
+
+          document.getElementById('vga-level').textContent = this.store.getData('vgaLv')
+          document.getElementById('vga-levelup-price').textContent = this.vgaOverclock
+          this.save()
+        } else {
+          this.showNotify('이미 최대 레벨에 도달했습니다.')
+        }
+      } else {
+        this.showNotify('현금이 부족합니다.')
+      }
+    }
+  }
+
+  /**
+   * @description 오버클럭 가능 여부 확인
+   */
+  checkOverclock () {
+    const cpuLv = this.store.getData('cpuLv')
+    const ramLv = this.store.getData('ramLv')
+    const vgaLv = this.store.getDate('vgaLv')
+
+    return !(cpuLv === -1 || ramLv === -1 || vgaLv === -1)
   }
 
   /**
@@ -245,9 +343,9 @@ class Game {
     let ramLv = this.store.getData('ramLv')
     let vgaLv = this.store.getData('vgaLv')
 
-    this.cpuOverclock = cpu[cpuIdx] ? cpuLv * 2.5 * cpu[cpuIdx].price : 0
-    this.ramOverclock = ram[ramIdx] ? ramLv * 2.5 * ram[ramIdx].price : 0
-    this.vgaOverclock = vga[vgaIdx] ? vgaLv * 2.5 * vga[vgaIdx].price : 0
+    this.cpuOverclock = cpu[cpuIdx] ? (cpuLv + 1) * 0.5 * cpu[cpuIdx].price : 0
+    this.ramOverclock = ram[ramIdx] ? (ramLv + 1) * 0.5 * ram[ramIdx].price : 0
+    this.vgaOverclock = vga[vgaIdx] ? (vgaLv + 1) * 0.5 * vga[vgaIdx].price : 0
 
     document.getElementById('psu-level').textContent = this.store.getData('psu')
 
