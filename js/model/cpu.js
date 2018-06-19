@@ -12,7 +12,7 @@ module.exports = [
     name: 'Intal Pantom',
     price: 1000,
     coin: 0.04,
-    level: 2,
+    level: 1,
     src: 'cpu/1.png'
   }
 ]
