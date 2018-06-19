@@ -88,19 +88,32 @@ class Game {
       this.togglePopupComputer()
     }
 
-    /*  클릭시 이벤트 */
-    document.getElementById('my-computer').onclick = () => {
-      this.togglePopupComputer('phone')
+    /* 핸드폰 클릭시 이벤트 */
+    document.getElementById('phone').onclick = () => {
+      this.togglePopupPhone()
     }
 
     /* 문 클릭시 이벤트 */
     document.getElementById('door').onclick = () => {
+      if (this.popupComputer) {
+        this.togglePopupComputer()
+      }
+
+      if (this.popupPhone) {
+        this.togglePopupPhone()
+      }
+
       this.city()
     }
 
     /* 컴퓨터 팝업 닫기 버튼 이벤트 */
     document.getElementById('popup-computer-close').onclick = () => {
       this.togglePopupComputer()
+    }
+
+    /* 컴퓨터 팝업 닫기 버튼 이벤트 */
+    document.getElementById('phone-exit').onclick = () => {
+      this.togglePopupPhone()
     }
 
     /* 게임 종료 버튼 이벤트 */
@@ -251,22 +264,21 @@ class Game {
   /**
    * @description 핸드폰 영역 팝업 토글
    */
-  togglePhonePopup () {
+  togglePopupPhone () {
     let popup = document.getElementById('popup-phone')
     popup.classList.remove('popup-hide')
     popup.classList.remove('popup-show')
 
-    if (this.popupStore) {
+    if (this.popupPhone) {
       popup.classList.add('popup-hide')
     } else {
       /* 핸드폰 효과음 재생 */
-      const sound = new Audio('./static/computer.mp3')
+      const sound = new Audio('./static/phone.mp3')
       sound.play()
 
-      this.updateStorePopup(title, store)
       popup.classList.add('popup-show')
     }
-    this.popupStore = !this.popupStore
+    this.popupPhone = !this.popupPhone
   }
 
   /**
@@ -409,6 +421,10 @@ class Game {
    * @description 집으로 이동
    */
   home () {
+    if (this.popupStore) {
+      this.togglePopupStore()
+    }
+
     /* 집 안 영역 보이기 */
     document.getElementById('home').style['display'] = 'block'
 
