@@ -351,7 +351,12 @@ class Game {
    * @description 게임 종료
    */
   exit () {
+    /* Interval 종료 */
+    clearInterval(this.loop)
+
+    /* 게임 저장 */
     this.save()
+
     /* HTML: 아이디가 main인 영역 보이기 */
     document.getElementById('main').style['display'] = 'block'
 
