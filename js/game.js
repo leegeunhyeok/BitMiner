@@ -411,6 +411,10 @@ class Game {
             this.showNotify('갯수는 1개 이상 입력해주세요')
             return
           }
+          
+          /* 코인 효과음 재생 */
+          const sound = new Audio('./static/sound/shop.mp3')
+          sound.play()
 
           /* 매도한 코인 수 만큼 차감하고 해당 수익금만큼 현금 누적 */
           this.store.setData('coin', this.store.getData('coin') - count)
