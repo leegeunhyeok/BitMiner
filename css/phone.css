@@ -14,12 +14,14 @@
     z-index: 4;
 }
 
+/* 핸드폰 스크린 */
 .phone-screen {
     width: 100%;
     height: 100%;
     background-color: #fff;
 }
 
+/* 핸드폰 닫기 버튼 */
 #phone-exit {
     position: absolute;
     cursor: pointer;

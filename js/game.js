@@ -67,6 +67,9 @@ class Game {
     /* 튜토리얼 영역 */
     if (this.store.getData('tutorial') === 1) {
       document.getElementById('tutorial').style['display'] = 'block'
+      document.getElementById('tutorial-1').style['display'] = 'block'
+      document.getElementById('tutorial-2').classList.add('tutorial-hide')
+      document.getElementById('tutorial-exit').classList.add('tutorial-hide')
 
       /* 튜토리얼 다음 버튼 */
       document.getElementById('tutorial-next').onclick = () => {
