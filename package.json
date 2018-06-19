@@ -1,6 +1,6 @@
 {
   "name": "bitminer",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "가상화폐 채굴, 방치형 키우기 게임입니다.",
   "main": "main.js",
   "devDependencies": {
