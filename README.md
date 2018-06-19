@@ -17,12 +17,20 @@
 
 </div>
 
-# 설정
-의존성 모듈들을 설치한 후 `start` 모드로 실행시킵니다.
+# 개발 설정
+의존성 모듈들을 설치한 후 `start` 스크립트 실행
 ```bash
-yarn # 또는 (npm install)
-yarn run start # 또는 (npm run start), (npm start)
+npm i
+npm start #npm run start
 ```
+
+# 빌드
+개발 후 `build` 스크립트 실행
+```bash
+npm run build
+```
+
+빌드 성공 시 build 폴더에 빌드 된 프로그램이 생성됩니다.
 
 # 정보
 - [Electron](https://electronjs.org/) 기반의 웹 게임
