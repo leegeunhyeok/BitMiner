@@ -9,4 +9,5 @@
 - 문 여는 소리 효과음: [출처](http://jinstale.tistory.com/966?category=261763)
 - 코인 효과음: [출처](https://opengameart.org/content/10-8bit-coin-sounds)
 - 상점 효과음: [출처](http://www.orangefreesounds.com/shop-door-bell-sound/)
+- 전화 효과음: [출처](https://www.youtube.com/watch?v=5ZOypS08jYI)
 - 아이콘 이미지: [출처](http://www.iconarchive.com/show/small-n-flat-icons-by-paomedia/bitcoin-icon.html)

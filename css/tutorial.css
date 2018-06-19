@@ -11,6 +11,29 @@
     display: none;
 }
 
+/* 튜토리얼 다음 버튼 */
+#tutorial-next {
+  cursor: pointer;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: #44b3c2;
+  border: 1px solid #44b3c2;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 10px;
+  transition: .5s;
+}
+
+#tutorial-next::before {
+  content: '다음'
+}
+
+#tutorial-next:hover {
+  background-color: #fff;
+  color: #44b3c2;
+}
+
 /* 튜토리얼 종료 버튼 */
 #tutorial-exit {
     cursor: pointer;
@@ -56,6 +79,17 @@
     padding: 10px;
 }
 
+#tutorial-phone {
+    position: absolute;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    bottom: 40px;
+    left: 380px;
+    padding: 10px;
+}
+
 #tutorial-door {
     position: absolute;
     display: inline-block;
@@ -65,4 +99,19 @@
     top: 200px;
     right: 15px;
     padding: 10px;
+}
+
+#tutorial-store {
+    position: absolute;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    top: 140px;
+    left: 270px;
+    padding: 10px;
+}
+
+.tutorial-hide {
+  display: none;
 }

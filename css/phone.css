@@ -1,0 +1,12 @@
+/* 핸드폰 영역 */
+
+#phone {
+    position: absolute;
+    width: 320px;
+    height: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 24px;
+    background-color: #222;
+}

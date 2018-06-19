@@ -17,10 +17,9 @@ class Game {
     /* Drawer 메뉴 열기/닫기 */
     this.drawer = false
 
-    /* 컴퓨터 팝업창 열기/닫기 */
+    /* 팝업창 열기/닫기 */
     this.popupComputer = false
-
-    /* 매장 팝업창 열기/닫기 */
+    this.popupPhone = false
     this.popupStore = false
 
     /* 다이얼로그 타입 */
@@ -68,6 +67,14 @@ class Game {
     /* 튜토리얼 영역 */
     if (this.store.getData('tutorial') === 1) {
       document.getElementById('tutorial').style['display'] = 'block'
+
+      /* 튜토리얼 다음 버튼 */
+      document.getElementById('tutorial-next').onclick = () => {
+        this.city()
+        document.getElementById('tutorial-1').style['display'] = 'none'
+        document.getElementById('tutorial-2').classList.remove('tutorial-hide')
+        document.getElementById('tutorial-exit').classList.remove('tutorial-hide')
+      }
     }
 
     /* 1초당 채굴되는 코인 량 계산 */
@@ -79,6 +86,11 @@ class Game {
     /* 컴퓨터 클릭시 이벤트 */
     document.getElementById('my-computer').onclick = () => {
       this.togglePopupComputer()
+    }
+
+    /*  클릭시 이벤트 */
+    document.getElementById('my-computer').onclick = () => {
+      this.togglePopupComputer('phone')
     }
 
     /* 문 클릭시 이벤트 */
@@ -100,6 +112,7 @@ class Game {
     document.getElementById('tutorial-exit').onclick = () => {
       this.store.setData('tutorial', 0)
       document.getElementById('tutorial').style['display'] = 'none'
+      this.home()
     }
 
     /* 램 매장 클릭시 이벤트 */
@@ -233,6 +246,27 @@ class Game {
     document.getElementById('vga-name-info').textContent = vga[vgaIdx] ? vga[vgaIdx].name : '고장 남'
     document.getElementById('vga-level').textContent = vgaLv
     document.getElementById('vga-levelup-price').textContent = this.vgaOverclock
+  }
+
+  /**
+   * @description 핸드폰 영역 팝업 토글
+   */
+  togglePhonePopup () {
+    let popup = document.getElementById('popup-phone')
+    popup.classList.remove('popup-hide')
+    popup.classList.remove('popup-show')
+
+    if (this.popupStore) {
+      popup.classList.add('popup-hide')
+    } else {
+      /* 핸드폰 효과음 재생 */
+      const sound = new Audio('./static/computer.mp3')
+      sound.play()
+
+      this.updateStorePopup(title, store)
+      popup.classList.add('popup-show')
+    }
+    this.popupStore = !this.popupStore
   }
 
   /**
@@ -372,6 +406,20 @@ class Game {
   }
 
   /**
+   * @description 집으로 이동
+   */
+  home () {
+    /* 집 안 영역 보이기 */
+    document.getElementById('home').style['display'] = 'block'
+
+    /* 도시 영역 숨기기 */
+    document.getElementById('city').style['display'] = 'none'
+
+    /* 내 컴퓨터 영역 갱신 */
+    this.updateComputerPopup()
+  }
+
+  /**
    * @description 도시(야외)로 이동
    */
   city () {
@@ -387,14 +435,7 @@ class Game {
 
     /* 집으로 돌아오는 버튼 이벤트 */
     document.getElementById('go-to-home').onclick = () => {
-      /* 집 안 영역 보이기 */
-      document.getElementById('home').style['display'] = 'block'
-
-      /* 도시 영역 숨기기 */
-      document.getElementById('city').style['display'] = 'none'
-
-      /* 내 컴퓨터 영역 갱신 */
-      this.updateComputerPopup()
+      this.home()
     }
   }
 

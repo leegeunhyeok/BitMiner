@@ -55,15 +55,23 @@
     overflow-y: auto;
 }
 
-/* 팝업 내용 영역 스크롤바 숨기기 */
+/* 팝업 내용 영역 스크롤바 스타일 */
 .popup-content::-webkit-scrollbar {
-    display: none;
+    width: 2px;
+}
+
+.popup-content::-webkit-scrollbar-thumb {
+    background-color: rgb(175, 175, 175);
 }
 
 /* 팝업 내 아이템 */
 .popup-item {
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     margin-top: 20px;
+}
+
+.computer-module-type {
+  font-size: 1.2rem;
 }
 
 /* 팝업 아이템 내의 하위 항목 (상세정보) */
@@ -74,6 +82,7 @@
 /* 컴퓨터 부품 명 */
 .module-name {
     margin: 10px 0;
+    color: #44b3c2;
 }
 
 /* 오버클럭 버튼 */
@@ -98,7 +107,7 @@
     float: left;
     width: 100px;
     height: 100px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 /* 매장 상품 이름 */
@@ -121,7 +130,7 @@
     color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin: 10px 0px;
     transition: .5s;
 }
 

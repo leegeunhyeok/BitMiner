@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./css/main.css"></link>
     <link rel="stylesheet" href="./css/game.css"></link>
     <link rel="stylesheet" href="./css/city.css"></link>
+    <link rel="stylesheet" href="./css/phone.css"></link>
     <link rel="stylesheet" href="./css/tutorial.css"></link>
   </head>
   <body>
@@ -32,23 +33,42 @@
     <!-- 대화창 END -->
     <!-- 튜토리얼 영역 -->
     <div id="tutorial">
-      <div id="tutorial-info">
-        보유중인 현금과 코인, 1초당 채굴되는 코인 수를 확인하실 수 있습니다.
+      <div id="tutorial-1">
+        <div id="tutorial-info">
+          보유중인 현금과 코인, 1초당 채굴되는 코인 수를 확인하실 수 있습니다.
+        </div>
+        <div id="tutorial-computer">
+          내 컴퓨터를 누르면<br>
+          컴퓨터 부품 정보와<br>
+          오버클럭을<br>
+          할 수 있습니다.
+        </div>
+        <div id="tutorial-phone">
+          스마트폰을 누른 후<br>
+          가상화폐 거래소에서<br>
+          보유중인 코인을<br>
+          판매할 수 있습니다<br>
+        </div>
+        <div id="tutorial-door">
+          현관문을 눌러서<br>
+          외출할 수 있습니다.<br>
+          컴퓨터 부품과<br>
+          아이템을 구매<br>
+          할 수 있습니다.
+        </div>
       </div>
-      <div id="tutorial-computer">
-        내 컴퓨터를 누르면<br>
-        컴퓨터 부품 정보와<br>
-        오버클럭을<br>
-        할 수 있습니다.
+      <div id="tutorial-2" class="tutorial-hide">
+        <div id="tutorial-store">
+          각 매장에서 컴퓨터 부품을<br>
+          구매할 수 있습니다.<br>
+          <br>
+          CPU, 램, 그래픽카드 모두<br>
+          구매한 후 가상화폐를<br>
+          채굴할 수 있습니다.
+        </div>
       </div>
-      <div id="tutorial-door">
-        현관문을 눌러서<br>
-        외출할 수 있습니다.<br>
-        컴퓨터 부품과<br>
-        아이템을 구매<br>
-        할 수 있습니다.
-      </div>
-      <div id="tutorial-exit"></div>
+      <div id="tutorial-next"></div>
+      <div id="tutorial-exit" class="tutorial-hide"></div>
     </div>
     <!-- 튜토리얼 END -->
     <!-- 메인화면 영역 -->
@@ -86,14 +106,14 @@
         <div id="popup-computer-title" class="popup-title">내 컴퓨터</div>
         <div id="popup-computer-content" class="popup-content">
           <div class="popup-item">
-            <b>파워서플라이</b>
+            <b class="computer-module-type">파워서플라이</b>
             <div class="module-name"></div>
             <div class="popup-sub-item">
               레벨: <b id="psu-level"></b>
             </div>
           </div>
           <div class="popup-item">
-            <b>CPU</b>
+            <b class="computer-module-type">CPU</b>
             <div id="cpu-name-info" class="module-name"></div>
             <div class="popup-sub-item">
               오버클럭 레벨: <b id="cpu-level"></b>
@@ -106,7 +126,7 @@
             </div>
           </div>
           <div class="popup-item">
-            <b>램</b>
+            <b class="computer-module-type">램</b>
             <div id="ram-name-info" class="module-name"></div>
             <div class="popup-sub-item">
               오버클럭 레벨: <b id="ram-level"></b>
@@ -119,7 +139,7 @@
             </div>
           </div>
           <div class="popup-item">
-            <b>그래픽카드</b>
+            <b class="computer-module-type">그래픽카드</b>
             <div id="vga-name-info" class="module-name"></div>
             <div class="popup-sub-item">
               오버클럭 레벨: <b id="vga-level"></b>
@@ -134,6 +154,11 @@
         </div>
       </div>
       <!-- 내 컴퓨터 팝업 영역 END -->
+      <!-- 핸드폰 영역 -->
+      <div id="popup-phone" class="popup-hide">
+        핸드폰
+      </div>
+      <!-- 핸드폰 영역 END -->
       <!-- 매점 팝업 영역 -->
       <div id="popup-store" class="popup popup-hide">
         <div id="popup-store-close" class="popup-close"></div>
@@ -156,6 +181,12 @@
         <div id="my-computer">
           <div id="computer-icon">
             <div class="arrow-area">내 컴퓨터</div>
+            <img src="./static/arrow.png">
+          </div>
+        </div>
+        <div id="phone">
+          <div id="phone-icon">
+            <div class="arrow-area">스마트폰</div>
             <img src="./static/arrow.png">
           </div>
         </div>

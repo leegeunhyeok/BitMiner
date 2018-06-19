@@ -52,6 +52,17 @@
     animation: arrow 1s alternate infinite;
 }
 
+/* 핸드폰 영역 */
+#phone {
+  cursor: pointer;
+  position: absolute;
+  top: 250px;
+  right: 300px;
+  height: 150px;
+  text-align: center;
+  animation: arrow 1s alternate infinite;
+}
+
 /* 현관문 영역 */
 #door {
     cursor: pointer;
