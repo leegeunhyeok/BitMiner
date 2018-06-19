@@ -308,7 +308,7 @@ class Game {
         /* 인덱스 데이터 임시저장 */
         const tempIdx = idx
 
-        /* 구매 버튼 이벤트 */
+        /* 구매 버튼 */
         buyButton.onclick = () => {
           const money = this.store.getData('money')
 
@@ -326,8 +326,10 @@ class Game {
             /* 상점 팝업 닫기 */
             this.togglePopupStore()
 
-            /* 상단 정보 영역 새로고침 */
-            this.update()
+            /* 세이브파일에 저장된 정보 보여주기 */
+            document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
+            document.getElementById('own-coin').textContent = this.store.getData('coin') + ' BTC'
+            document.getElementById('coin-per-second').textContent = this.coinPerSecond + ' BTC/s'
 
             /* 알림 띄우기 */
             this.showNotify(data.name + ' 구매 완료')
