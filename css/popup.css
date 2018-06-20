@@ -123,6 +123,13 @@
     margin: 3px;
 }
 
+/* 매장 상품 상세정보 2 */
+.store-sub-item-2 {
+  margin: 3px;
+  color: #44b3c2;
+  font-size: 0.8rem;
+}
+
 /* 구매 버튼 */
 .buy-button {
     cursor: pointer;

@@ -3,6 +3,7 @@ const Store = require('./store.js')
 const cpu = require('./model/cpu.js')
 const ram = require('./model/ram.js')
 const vga = require('./model/vga.js')
+const other = require('./model/other.js')
 
 class Game {
   constructor () {
@@ -10,6 +11,12 @@ class Game {
 
     /* 1초당 코인 갯수 */
     this.coinPerSecond = 0
+
+    /* 보너스 코인 % */
+    this.boost = 0
+
+    /* 부스트 지속 시간 */
+    this.boostTime = 0
 
     /* 게임 이어서 하기(false: 파일 없음, true: 이어서하기 가능) */
     this.load = false
@@ -35,6 +42,13 @@ class Game {
 
     /* 1 BTC 당 가격 */
     this.coinPrice = 10
+
+    /* 효과음 Elements */
+    this.coinSound = document.getElementById('coin-sound')
+    this.computerSound = document.getElementById('computer-sound')
+    this.doorSound = document.getElementById('door-sound')
+    this.phoneSound = document.getElementById('phone-sound')
+    this.shopSound = document.getElementById('shop-sound')
   }
 
   /**
@@ -171,8 +185,7 @@ class Game {
 
       if (this.store.getData('money') - this.cpuOverclock >= 0) {
         if (this.store.getData('cpuLv') + 1 <= 10) {
-          const sound = new Audio('./static/sound/coin.mp3')
-          sound.play()
+          this.coinSound.play()
 
           /* 비용 차감 */
           this.store.setData('money', this.store.getData('money') - this.cpuOverclock)
@@ -204,8 +217,7 @@ class Game {
 
       if (this.store.getData('money') - this.ramOverclock >= 0) {
         if (this.store.getData('vgaLv') + 1 <= 10) {
-          const sound = new Audio('./static/sound/coin.mp3')
-          sound.play()
+          this.coinSound.play()
 
           /* 비용 차감 */
           this.store.setData('money', this.store.getData('money') - this.ramOverclock)
@@ -237,8 +249,7 @@ class Game {
 
       if (this.store.getData('money') - this.vgaOverclock >= 0) {
         if (this.store.getData('vgaLv') + 1 <= 10) {
-          const sound = new Audio('./static/sound/coin.mp3')
-          sound.play()
+          this.coinSound.play()
 
           /* 비용 차감 */
           this.store.setData('money', this.store.getData('money') - this.vgaOverclock)
@@ -274,6 +285,25 @@ class Game {
   }
 
   /**
+   * @description 오버클럭 가능 여부 확인
+   * @param {number} percent 코인 부스트 %
+   * @param {boolean} duplicate 코인 부스트 %
+   */
+  coinBoost (percent, duplicate) {
+    /* 중복 가능 부스트인 경우 누적 */
+    if (duplicate) {
+      this.coinBoost += percent
+      this.showNotify(percent + ' % 부스트가 누적되었습니다.')
+    } else {
+      /* 중복 불가능 부스트인 경우 % 대체 */
+      this.coinBoost = percent
+      this.showNotify(percent + ' % 부스트가 적용되었습니다.')
+    }
+    /* 60초간 부스트 */
+    this.boostTime = 60
+  }
+
+  /**
    * @description 1초당 채굴되는 코인 량 계산
    */
   calcCoinPerSecond () {
@@ -293,7 +323,7 @@ class Game {
       const ramCoin = ram[ramNum].coin + ram[ramNum].coin * ((ramLv) / 10)
       const vgaCoin = vga[vgaNum].coin + vga[vgaNum].coin * ((vgaLv) / 10)
 
-      this.coinPerSecond = (cpuCoin + ramCoin + vgaCoin).toFixed(2)
+      this.coinPerSecond = (cpuCoin + ramCoin + vgaCoin).toFixed(3)
     } else {
       this.coinPerSecond = 0
     }
@@ -338,8 +368,7 @@ class Game {
       popup.classList.add('popup-hide')
     } else {
       /* 컴퓨터 효과음 재생 */
-      const sound = new Audio('./static/sound/computer.mp3')
-      sound.play()
+      this.computerSound.play()
 
       this.updateComputerPopup()
       popup.classList.add('popup-show')
@@ -394,11 +423,11 @@ class Game {
       popup.classList.add('popup-hide')
     } else {
       /* 핸드폰 효과음 재생 */
-      const sound = new Audio('./static/sound/phone.mp3')
-      sound.play()
+      this.phoneSound.play()
 
       /* 기존 입력된 데이터가 있을 수 있으므로 초기화 */
       document.getElementById('sell-count').value = ''
+      document.getElementById('prediction-money').textContent = 0
 
       /* 1 BTC 당 가격 */
       document.getElementById('coin-price').textContent = this.coinPrice
@@ -429,11 +458,10 @@ class Game {
           }
 
           /* 코인 효과음 재생 */
-          const sound = new Audio('./static/sound/coin.mp3')
-          sound.play()
+          this.coinSound.play()
 
           /* 매도한 코인 수 만큼 차감하고 해당 수익금만큼 현금 누적 */
-          this.store.setData('coin', (this.store.getData('coin') - count).toFixed(2))
+          this.store.setData('coin', (this.store.getData('coin') - count).toFixed(3))
           this.store.setData('money', this.store.getData('money') + count * price)
           this.save()
 
@@ -463,8 +491,7 @@ class Game {
       popup.classList.add('popup-hide')
     } else {
       /* 상점 효과음 재생 */
-      const sound = new Audio('./static/sound/shop.mp3')
-      sound.play()
+      this.shopSound.play()
 
       this.updateStorePopup(title, store)
       popup.classList.add('popup-show')
@@ -495,7 +522,7 @@ class Game {
       dataSet = vga
       myIdx = this.store.getData('vga')
     } else if (store === 'other') {
-      dataSet = []
+      dataSet = other
     }
 
     for (let data of dataSet) {
@@ -510,10 +537,26 @@ class Game {
       itemName.classList.add('store-item-name')
       itemName.appendChild(itemNameText)
 
-      let itemCoin = document.createElement('div')
-      let itemCoinText = document.createTextNode(`채굴량: ${data.coin} BTC/s`)
-      itemCoin.classList.add('store-sub-item')
-      itemCoin.appendChild(itemCoinText)
+      let itemCoin = null
+      let itemCoinText = null
+      let itemDuplicate = null
+      let itemDuplicateText = null
+      if (store !== 'other') {
+        itemCoin = document.createElement('div')
+        itemCoinText = document.createTextNode(`채굴량: ${data.coin} BTC/s`)
+        itemCoin.classList.add('store-sub-item')
+        itemCoin.appendChild(itemCoinText)
+      } else {
+        itemDuplicate = document.createElement('div')
+        itemDuplicateText = document.createTextNode(data.duplicate ? '중복사용 가능' : '중복 사용 불가능')
+        itemDuplicate.classList.add('store-sub-item-2')
+        itemDuplicate.appendChild(itemDuplicateText)
+        
+        itemCoin = document.createElement('div')
+        itemCoinText = document.createTextNode(data.info)
+        itemCoin.classList.add('store-sub-item')
+        itemCoin.appendChild(itemCoinText)
+      }
 
       let itemPrice = document.createElement('div')
       let itemPriceText = document.createTextNode(data.price + '원')
@@ -526,28 +569,83 @@ class Game {
       levelLimit.appendChild(levelLimitText)
 
       let buyButton = document.createElement('button')
-      let buyButtonText = document.createTextNode(myIdx >= idx ? '매진' : '구매하기')
-      if (!(myIdx >= idx)) {
-        /* 인덱스 데이터 임시저장 */
-        const tempIdx = idx
+      let buyButtonText = null
+
+      /* 기타 소모품 매장이 아닌 경우 */
+      /* CPU, 램, 그래픽카드 매장 */
+      if (store !== 'other') {
+        buyButtonText = document.createTextNode(myIdx >= idx ? '매진' : '구매하기')
+        if (!(myIdx >= idx)) {
+          /* 인덱스 데이터 임시저장 */
+          const tempIdx = idx
+
+          /* 구매 버튼 */
+          buyButton.onclick = () => {
+            const money = this.store.getData('money')
+            const psu = this.store.getData('psu')
+            if (psu < data.level) {
+              /* 알림 띄우기 */
+              this.showNotify('파워서플라이 레벨이 낮습니다.')
+            } else if (money - data.price >= 0) { // 구매
+              /* 구매 효과음 재생 */
+              this.coinSound.play()
+
+              /* 구매 후 현금 저장 */
+              this.store.setData('money', money - data.price)
+
+              /* 구매한 항목 저장 */
+              this.store.setData(store, tempIdx)
+
+              /* 1초당 채굴하는 코인 량 계산 */
+              this.calcCoinPerSecond()
+
+              /* 상점 팝업 닫기 */
+              this.togglePopupStore()
+
+              /* 상단의 보유 현금, 코인 등 정보 갱신 */
+              this.updateHeaderInfo()
+
+              /* 알림 띄우기 */
+              this.showNotify(data.name + ' 구매 완료')
+            } else {
+              /* 알림 띄우기 */
+              this.showNotify('보유 현금이 부족합니다.')
+            }
+          }
+        }
+        buyButton.disabled = !(idx > myIdx)
+      } else {
+        /* 상시 판매 상품이 아닌 경우 (파워서플라이) */
+        if (!data.always) {
+          buyButtonText = document.createTextNode(this.store.getData('psu') >= data.psu ? '매진' : '구매하기')
+        } else {
+          buyButtonText = document.createTextNode('구매하기')
+        }
 
         /* 구매 버튼 */
         buyButton.onclick = () => {
           const money = this.store.getData('money')
           const psu = this.store.getData('psu')
+          const psuLevel = data.psu
+          
           if (psu < data.level) {
             /* 알림 띄우기 */
             this.showNotify('파워서플라이 레벨이 낮습니다.')
           } else if (money - data.price >= 0) { // 구매
             /* 구매 효과음 재생 */
-            const sound = new Audio('./static/sound/coin.mp3')
-            sound.play()
+            this.coinSound.play()
 
             /* 구매 후 현금 저장 */
             this.store.setData('money', money - data.price)
 
-            /* 구매한 항목 저장 */
-            this.store.setData(store, tempIdx)
+            /* 파워서플라이 구매한 경우 세이브파일에 저장 */
+            if (psuLevel) {
+              /* 구매한 항목 저장 */
+              this.store.setData('psu', psuLevel)
+            } else {
+              /* 소모품인 경우 부스트 적용 */
+              this.coinBoost(data.boost, data.duplicate)
+            }
 
             /* 1초당 채굴하는 코인 량 계산 */
             this.calcCoinPerSecond()
@@ -566,13 +664,17 @@ class Game {
           }
         }
       }
+
       buyButton.appendChild(buyButtonText)
-      buyButton.disabled = !(idx > myIdx)
       buyButton.classList.add('buy-button')
 
       item.appendChild(itemImg)
       item.appendChild(itemName)
       item.appendChild(itemCoin)
+      /* 소모품인 경우만 중복가능 텍스트 추가 */
+      if (store === 'other' && data.psu === undefined) {
+        item.appendChild(itemDuplicate)
+      }
       item.appendChild(itemPrice)
       item.appendChild(levelLimit)
       item.appendChild(buyButton)
@@ -588,6 +690,7 @@ class Game {
    */
   updateHeaderInfo () {
     /* 세이브파일에 저장된 정보 보여주기 */
+    document.getElementById('boost-percent').textContent = this.boost + ' %'
     document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
     document.getElementById('own-coin').textContent = this.store.getData('coin') + ' BTC'
     document.getElementById('coin-per-second').textContent = this.coinPerSecond + ' BTC/s'
@@ -597,7 +700,12 @@ class Game {
    * @description 1 BTC 시세 변경
    */
   refreshCoin () {
-    this.coinPrice = Math.floor(Math.random() * 10) + 1
+    /* 파워 서플라이 1 레벨당 코인 변동 폭 변경 */
+    /* Lv.1 : 1 ~ 10 */
+    /* Lv.2 : 1 ~ 20 */
+    /* Lv.3 : 1 ~ 30 */
+    const psuLevel = this.store.getData('psu')
+    this.coinPrice = Math.floor(Math.random() * (psuLevel * 10)) + 1
     /* 1 BTC 당 가격 */
     document.getElementById('coin-price').textContent = this.coinPrice
   }
@@ -625,8 +733,7 @@ class Game {
    */
   city () {
     /* 문 여는 효과음 재생 */
-    const sound = new Audio('./static/sound/door.mp3')
-    sound.play()
+    this.doorSound.play()
 
     /* 집 안 영역 숨기기 */
     document.getElementById('home').style['display'] = 'none'
@@ -695,6 +802,10 @@ class Game {
         this.refreshCoin()
         this.store.save()
       }
+
+      if (this.boostTime > 0) {
+        this.boostTime--
+      }
       time++
     }, 1000)
   }
@@ -704,7 +815,11 @@ class Game {
    */
   update () {
     /* 1초당 코인 수 만큼 누적 */
-    this.store.setData('coin', (parseFloat(this.store.getData('coin')) + parseFloat(this.coinPerSecond)).toFixed(2))
+    const defaultCoin = parseFloat(this.coinPerSecond)
+
+    /* 추가 부스트 코인 */
+    const boostCoin = this.boostTime > 0 ? (defaultCoin * this.coinBoost) : 0
+    this.store.setData('coin', (parseFloat(this.store.getData('coin')) + defaultCoin + boostCoin).toFixed(3))
 
     this.updateHeaderInfo()
   }

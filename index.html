@@ -17,6 +17,12 @@
   <body>
     <!-- 배경음악 재생(자동재생, 반복) -->
     <audio src="./static/sound/bgm.mp3" autoplay loop></audio>
+    <!-- 효과음 -->
+    <audio src="./static/sound/coin.mp3" id="coin-sound"></audio>
+    <audio src="./static/sound/computer.mp3" id="computer-sound"></audio>
+    <audio src="./static/sound/door.mp3" id="door-sound"></audio>
+    <audio src="./static/sound/phone.mp3" id="phone-sound"></audio>
+    <audio src="./static/sound/shop.mp3" id="shop-sound"></audio>
     <!-- 알림창 -->
     <div id="notify"></div>
     <!-- 알림창 END -->
@@ -215,6 +221,8 @@
         <span id="own-coin" class="header-info">BTC</span>
         <!-- 보유중인 현금 -->
         <span id="own-money" class="header-info">원</span>
+        <!-- 부스트 -->
+        <span id="boost-percent" class="header-boost">%</span>
       </div>
       <!-- 집 안 영역 -->
       <div id="home">
