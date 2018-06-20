@@ -79,6 +79,11 @@
     margin: 5px 0;
 }
 
+.popup-sub-item-2 {
+    margin: 5px 0;
+    color: #e45641;
+}
+
 /* 컴퓨터 부품 명 */
 .module-name {
     margin: 10px 0;

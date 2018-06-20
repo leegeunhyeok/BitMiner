@@ -64,13 +64,20 @@
         </div>
       </div>
       <div id="tutorial-2">
+        <div id="tutorial-overclock" class="tutorial">
+          컴퓨터 부품을 오버클럭하면<br>
+          해당 부품 채굴량의<br>
+          10% 만큼 효과가 증가합니다.
+        </div>
+      </div>
+      <div id="tutorial-3">
         <div id="tutorial-boost" class="tutorial">
           부스트 아이템 구매 시 일정 %의 코인이 추가로 채굴됩니다.<br>
           <br>
           부스트 아이템은 1분 동안 지속됩니다.
         </div>
       </div>
-      <div id="tutorial-3">
+      <div id="tutorial-4">
         <div id="tutorial-store" class="tutorial">
           각 매장에서 컴퓨터 부품을<br>
           구매할 수 있습니다.<br>
@@ -145,6 +152,9 @@
             <img src="./static/cpu/1.png" id="my-cpu-image" class="my-computer-image">
             <br>
             <div id="cpu-name-info" class="module-name"></div>
+            <div class="popup-sub-item-2">
+              채굴량: <b id="cpu-coin"></b> BTC/s
+            </div>
             <div class="popup-sub-item">
               오버클럭 레벨: <b id="cpu-level"></b>
             </div>
@@ -161,6 +171,9 @@
             <img src="./static/ram/1.png" id="my-ram-image" class="my-computer-image">
             <br>
             <div id="ram-name-info" class="module-name"></div>
+            <div class="popup-sub-item-2">
+              채굴량: <b id="ram-coin"></b> BTC/s
+            </div>
             <div class="popup-sub-item">
               오버클럭 레벨: <b id="ram-level"></b>
             </div>
@@ -177,6 +190,9 @@
             <img src="./static/vga/1.png" id="my-vga-image" class="my-computer-image">
             <br>
             <div id="vga-name-info" class="module-name"></div>
+            <div class="popup-sub-item-2">
+              채굴량: <b id="vga-coin"></b> BTC/s
+            </div>
             <div class="popup-sub-item">
               오버클럭 레벨: <b id="vga-level"></b>
             </div>
@@ -222,6 +238,7 @@
       </div>
       <!-- 매점 팝업 영역 END -->
       <div id="header">
+        <!-- 부스트로 얻는 추가 코인 량 -->
         <span id="coin-per-second-boost">+ 0</span>
         <!-- 1초당 코인 -->
         <span id="coin-per-second" class="header-info">BTC/s</span>

@@ -91,8 +91,10 @@ class Game {
     if (this.store.getData('tutorial') === 1) {
       this.tutorialIdx = 0
       document.getElementById('tutorial').style['display'] = 'block'
+      document.getElementById('tutorial-1').classList.remove('tutorial-hide')
       document.getElementById('tutorial-2').classList.add('tutorial-hide')
       document.getElementById('tutorial-3').classList.add('tutorial-hide')
+      document.getElementById('tutorial-4').classList.add('tutorial-hide')
       document.getElementById('tutorial-exit').classList.add('tutorial-hide')
 
       /* 튜토리얼 다음 버튼 */
@@ -100,11 +102,17 @@ class Game {
         if (this.tutorialIdx === 0) {
           document.getElementById('tutorial-1').classList.add('tutorial-hide')
           document.getElementById('tutorial-2').classList.remove('tutorial-hide')
+          this.togglePopupComputer()
           this.tutorialIdx = 1
-        } else {
-          this.city()
+        } else if (this.tutorialIdx === 1) {
+          this.togglePopupComputer()
           document.getElementById('tutorial-2').classList.add('tutorial-hide')
           document.getElementById('tutorial-3').classList.remove('tutorial-hide')
+          this.tutorialIdx = 2
+        } else {
+          this.city()
+          document.getElementById('tutorial-3').classList.add('tutorial-hide')
+          document.getElementById('tutorial-4').classList.remove('tutorial-hide')
           document.getElementById('tutorial-exit').classList.remove('tutorial-hide')
         }
       }
@@ -419,16 +427,19 @@ class Game {
 
     document.getElementById('my-cpu-image').src = './static/' + (cpu[cpuIdx] ? cpu[cpuIdx].src : 'broken.png')
     document.getElementById('cpu-name-info').textContent = cpu[cpuIdx] ? cpu[cpuIdx].name : '고장 남'
+    document.getElementById('cpu-coin').textContent = cpu[cpuIdx] ? cpu[cpuIdx].coin : 0
     document.getElementById('cpu-level').textContent = cpuLv
     document.getElementById('cpu-levelup-price').textContent = this.cpuOverclock
 
     document.getElementById('my-ram-image').src = './static/' + (ram[ramIdx] ? ram[ramIdx].src : 'broken.png')
     document.getElementById('ram-name-info').textContent = ram[ramIdx] ? ram[ramIdx].name : '고장 남'
+    document.getElementById('ram-coin').textContent = ram[ramIdx] ? ram[ramIdx].coin : 0
     document.getElementById('ram-level').textContent = ramLv
     document.getElementById('ram-levelup-price').textContent = this.ramOverclock
 
     document.getElementById('my-vga-image').src = './static/' + (vga[vgaIdx] ? vga[vgaIdx].src : 'broken.png')
     document.getElementById('vga-name-info').textContent = vga[vgaIdx] ? vga[vgaIdx].name : '고장 남'
+    document.getElementById('vga-coin').textContent = vga[vgaIdx] ? vga[vgaIdx].coin : 0
     document.getElementById('vga-level').textContent = vgaLv
     document.getElementById('vga-levelup-price').textContent = this.vgaOverclock
   }
@@ -456,12 +467,6 @@ class Game {
 
       /* 예상 수익금 */
       document.getElementById('sell-count').onkeyup = () => {
-        const count = document.getElementById('sell-count').value
-        const prediction = parseInt(count) * this.coinPrice
-        document.getElementById('prediction-money').textContent = isNaN(prediction) ? 0 : prediction
-      }
-
-      document.getElementById('sell-count').change = () => {
         const count = document.getElementById('sell-count').value
         const prediction = parseInt(count) * this.coinPrice
         document.getElementById('prediction-money').textContent = isNaN(prediction) ? 0 : prediction
