@@ -171,6 +171,9 @@ class Game {
 
       if (this.store.getData('money') - this.cpuOverclock >= 0) {
         if (this.store.getData('cpuLv') + 1 <= 10) {
+          const sound = new Audio('./static/sound/coin.mp3')
+          sound.play()
+
           /* 비용 차감 */
           this.store.setData('money', this.store.getData('money') - this.cpuOverclock)
 
@@ -201,6 +204,9 @@ class Game {
 
       if (this.store.getData('money') - this.ramOverclock >= 0) {
         if (this.store.getData('vgaLv') + 1 <= 10) {
+          const sound = new Audio('./static/sound/coin.mp3')
+          sound.play()
+
           /* 비용 차감 */
           this.store.setData('money', this.store.getData('money') - this.ramOverclock)
           
@@ -209,6 +215,8 @@ class Game {
 
           /* 초당 채굴량 계산 */
           this.calcCoinPerSecond ()
+
+          this.updateHeaderInfo()
 
           this.updateComputerPopup()
           this.save()
@@ -229,6 +237,9 @@ class Game {
       
       if (this.store.getData('money') - this.vgaOverclock >= 0) {
         if (this.store.getData('vgaLv') + 1 <= 10) {
+          const sound = new Audio('./static/sound/coin.mp3')
+          sound.play()
+
           /* 비용 차감 */
           this.store.setData('money', this.store.getData('money') - this.vgaOverclock)
           
@@ -237,6 +248,8 @@ class Game {
 
           /* 초당 채굴량 계산 */
           this.calcCoinPerSecond ()
+
+          this.updateHeaderInfo()
 
           this.updateComputerPopup()
           this.save()
@@ -417,7 +430,7 @@ class Game {
           sound.play()
 
           /* 매도한 코인 수 만큼 차감하고 해당 수익금만큼 현금 누적 */
-          this.store.setData('coin', this.store.getData('coin') - count)
+          this.store.setData('coin', (this.store.getData('coin') - count).toFixed(2))
           this.store.setData('money', this.store.getData('money') + count * price)
           this.save()
 
