@@ -341,7 +341,8 @@ class Game {
     /* 상단에 추가 코인 정보 업데이트 */
     this.boostCoinUpdate()
 
-    console.log(this.boostCoinPerSecond)
+    document.getElementById('coin-per-second-boost').style['display'] = 'block'
+    document.getElementById('coin-per-second-boost').textContent = '+ ' + this.boostCoinPerSecond
 
     /* 60초간 부스트 */
     this.boostTime = 60
@@ -352,8 +353,6 @@ class Game {
    */
   boostCoinUpdate () {
     this.boostCoinPerSecond = (this.coinPerSecond * (this.coinBoostPercent/100)).toFixed(3)
-    document.getElementById('coin-per-second-boost').style['display'] = 'block'
-    document.getElementById('coin-per-second-boost').textContent = '+ ' + this.boostCoinPerSecond
   }
 
   /**
@@ -451,9 +450,9 @@ class Game {
     let vgaLv = this.store.getData('vgaLv')
 
     /* 오버클럭 비용 */
-    this.cpuOverclock = cpu[cpuIdx] ? Math.floor((cpuLv + 1) * 0.2 * cpu[cpuIdx].price) : 0
-    this.ramOverclock = ram[ramIdx] ? Math.floor((ramLv + 1) * 0.2 * ram[ramIdx].price) : 0
-    this.vgaOverclock = vga[vgaIdx] ? Math.floor((vgaLv + 1) * 0.2 * vga[vgaIdx].price) : 0
+    this.cpuOverclock = cpu[cpuIdx] ? Math.floor((cpuLv + 1) * 0.05 * cpu[cpuIdx].price) : 0
+    this.ramOverclock = ram[ramIdx] ? Math.floor((ramLv + 1) * 0.05 * ram[ramIdx].price) : 0
+    this.vgaOverclock = vga[vgaIdx] ? Math.floor((vgaLv + 1) * 0.05 * vga[vgaIdx].price) : 0
 
     document.getElementById('psu-level').textContent = this.store.getData('psu')
 
