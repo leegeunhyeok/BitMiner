@@ -181,7 +181,7 @@ class Game {
           this.store.setData('cpuLv', this.store.getData('cpuLv') + 1)
 
           /* 초당 채굴량 계산 */
-          this.calcCoinPerSecond ()
+          this.calcCoinPerSecond()
 
           this.updateHeaderInfo()
 
@@ -209,12 +209,12 @@ class Game {
 
           /* 비용 차감 */
           this.store.setData('money', this.store.getData('money') - this.ramOverclock)
-          
+
           /* 오버클럭 레벨 증가 */
           this.store.setData('ramLv', this.store.getData('ramLv') + 1)
 
           /* 초당 채굴량 계산 */
-          this.calcCoinPerSecond ()
+          this.calcCoinPerSecond()
 
           this.updateHeaderInfo()
 
@@ -231,10 +231,10 @@ class Game {
     /* 그래픽카드 오버클럭 버튼 */
     document.getElementById('vga-overclock').onclick = () => {
       if (!this.checkOverclock()) {
-        this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 오버클럭 할 수 있습니다.')
+        this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 오버클럭 할 z수 있습니다.')
         return
       }
-      
+
       if (this.store.getData('money') - this.vgaOverclock >= 0) {
         if (this.store.getData('vgaLv') + 1 <= 10) {
           const sound = new Audio('./static/sound/coin.mp3')
@@ -242,12 +242,12 @@ class Game {
 
           /* 비용 차감 */
           this.store.setData('money', this.store.getData('money') - this.vgaOverclock)
-          
+
           /* 오버클럭 레벨 증가 */
           this.store.setData('vgaLv', this.store.getData('vgaLv') + 1)
 
           /* 초당 채굴량 계산 */
-          this.calcCoinPerSecond ()
+          this.calcCoinPerSecond()
 
           this.updateHeaderInfo()
 
@@ -270,7 +270,7 @@ class Game {
     const ramLv = this.store.getData('ramLv')
     const vgaLv = this.store.getData('vgaLv')
 
-    return (cpuLv > -1 && cpuLv > -1 && cpuLv > -1)
+    return (cpuLv > -1 && ramLv > -1 && vgaLv > -1)
   }
 
   /**
@@ -424,7 +424,7 @@ class Game {
             this.showNotify('갯수는 1개 이상 입력해주세요')
             return
           }
-          
+
           /* 코인 효과음 재생 */
           const sound = new Audio('./static/sound/coin.mp3')
           sound.play()
@@ -517,7 +517,7 @@ class Game {
       itemPrice.classList.add('store-sub-item')
       itemPrice.appendChild(itemPriceText)
 
-      let levelLimit = document.createElement("div")
+      let levelLimit = document.createElement('div')
       let levelLimitText = document.createTextNode(`PSU 제한 레벨: ${data.level}`)
       levelLimit.classList.add('store-limit')
       levelLimit.appendChild(levelLimitText)
