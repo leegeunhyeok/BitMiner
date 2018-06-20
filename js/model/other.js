@@ -18,16 +18,26 @@ module.exports = [
     psu: 2,
     level: 1,
     always: false,
-    src: 'other/1.png'
+    src: 'psu/2.png'
   },
   {
-    name: '서멀컴파운드',
+    name: '저렴한 서멀컴파운드',
     price: 100,
     info: '1분간 채굴량 +10%',
     duplicate: false,
     boost: 10,
     level: 1,
     always: true,
-    src: 'other/1.png'
+    src: 'other/t_1.png'
+  },
+  {
+    name: '쓸만한 서멀컴파운드',
+    price: 300,
+    info: '1분간 채굴량 +25%',
+    duplicate: false,
+    boost: 25,
+    level: 1,
+    always: true,
+    src: 'other/t_2.png'
   }
 ]
