@@ -21,7 +21,20 @@ window.onload = function () {
 
   /* 정보 버튼 이벤트 등록 */
   document.getElementById('info-button').onclick = function () {
-    console.log('정보 버튼 눌림')
+    document.getElementById('dialog').style['display'] = 'none'
+    document.getElementById('menu-button-area').style['display'] = 'none'
+    document.getElementById('information').style['display'] = 'block'
+  }
+
+  /* 최신 버전 확인 */
+  document.getElementById('lastest-version').onclick = function () {
+    electron.remote.shell.openExternal('https://github.com/leegeunhyeok/BitMiner/releases/latest')
+  }
+
+  /* 정보 닫기 버튼 이벤트 등록 */
+  document.getElementById('information-exit').onclick = function () {
+    document.getElementById('menu-button-area').style['display'] = 'block'
+    document.getElementById('information').style['display'] = 'none'
   }
 
   /* 종료 버튼 이벤트 등록 */

@@ -53,10 +53,10 @@
 #dialog-no {
     background-color: #e45641;
     color: #fff;
+    border: 1px solid #e45641;
 }
 
 #dialog-no:hover {
     background-color: #fff;
     color: #e45641;
-    border: 1px solid #e45641;
 }
