@@ -7,7 +7,13 @@
 </div>
 
 # BitMiner
+<div align="center">
+
 ## 코인을 채굴하고, 장비를 업그레이드하고, 돈을 모아보세요! 
+
+[게임 다운로드](https://github.com/leegeunhyeok/BitMiner/releases/latest)
+
+</div>
 
 <div align="center">
 
