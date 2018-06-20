@@ -41,6 +41,11 @@ class Game {
     /* Interval 반복 객체 */
     this.loop = null
 
+    /* 부품별 1초당 코인 채굴량 */
+    this.cpuCoin = 0
+    this.ramCoin = 0
+    this.vgaCoin = 0
+
     /* 오버클럭 비용 */
     this.cpuOverclock = 0
     this.ramOverclock = 0
@@ -349,11 +354,15 @@ class Game {
     /* 부품 번호 중 -1이 하나도 없을 경우 */
     if (cpuNum !== -1 && vgaNum !== -1 && ramNum !== -1) {
       /* 오버클럭 레벨 1당 해당 부품의 채굴량 10% 증가 */
-      const cpuCoin = cpu[cpuNum].coin + cpu[cpuNum].coin * ((cpuLv) / 10)
-      const ramCoin = ram[ramNum].coin + ram[ramNum].coin * ((ramLv) / 10)
-      const vgaCoin = vga[vgaNum].coin + vga[vgaNum].coin * ((vgaLv) / 10)
+      this.cpuCoin = (cpu[cpuNum].coin * ((cpuLv) / 10)).toFixed(3)
+      this.ramCoin = (ram[ramNum].coin * ((ramLv) / 10)).toFixed(3)
+      this.vgaCoin = (vga[vgaNum].coin * ((vgaLv) / 10)).toFixed(3)
 
-      this.coinPerSecond = (cpuCoin + ramCoin + vgaCoin).toFixed(3)
+      const cpuTotal = cpu[cpuNum].coin + this.cpuCoin
+      const ramTotal = ram[ramNum].coin + this.ramCoin
+      const vgaTotal = vga[vgaNum].coin + this.vgaCoin
+
+      this.coinPerSecond = parseFloat(cpuTotal + ramTotal + vgaTotal).toFixed(3)
     } else {
       this.coinPerSecond = 0
     }
@@ -427,19 +436,19 @@ class Game {
 
     document.getElementById('my-cpu-image').src = './static/' + (cpu[cpuIdx] ? cpu[cpuIdx].src : 'broken.png')
     document.getElementById('cpu-name-info').textContent = cpu[cpuIdx] ? cpu[cpuIdx].name : '고장 남'
-    document.getElementById('cpu-coin').textContent = cpu[cpuIdx] ? cpu[cpuIdx].coin : 0
+    document.getElementById('cpu-coin').textContent = cpu[cpuIdx] ? this.cpuCoin : 0
     document.getElementById('cpu-level').textContent = cpuLv
     document.getElementById('cpu-levelup-price').textContent = this.cpuOverclock
 
     document.getElementById('my-ram-image').src = './static/' + (ram[ramIdx] ? ram[ramIdx].src : 'broken.png')
     document.getElementById('ram-name-info').textContent = ram[ramIdx] ? ram[ramIdx].name : '고장 남'
-    document.getElementById('ram-coin').textContent = ram[ramIdx] ? ram[ramIdx].coin : 0
+    document.getElementById('ram-coin').textContent = ram[ramIdx] ? this.ramCoin : 0
     document.getElementById('ram-level').textContent = ramLv
     document.getElementById('ram-levelup-price').textContent = this.ramOverclock
 
     document.getElementById('my-vga-image').src = './static/' + (vga[vgaIdx] ? vga[vgaIdx].src : 'broken.png')
     document.getElementById('vga-name-info').textContent = vga[vgaIdx] ? vga[vgaIdx].name : '고장 남'
-    document.getElementById('vga-coin').textContent = vga[vgaIdx] ? vga[vgaIdx].coin : 0
+    document.getElementById('vga-coin').textContent = vga[vgaIdx] ? this.vgaCoin : 0
     document.getElementById('vga-level').textContent = vgaLv
     document.getElementById('vga-levelup-price').textContent = this.vgaOverclock
   }
@@ -581,10 +590,14 @@ class Game {
         itemCoin.appendChild(itemCoinText)
       } else {
         itemDuplicate = document.createElement('div')
-        itemDuplicateText = document.createTextNode(data.duplicate ? '중복사용 가능' : '중복 사용 불가능')
         itemDuplicate.classList.add('store-sub-item-2')
+        if (data.duplicate === undefined) {
+          itemDuplicateText = document.createTextNode('한정판매 상품')
+        } else {
+          itemDuplicateText = document.createTextNode(data.duplicate ? '중복사용 가능' : '중복 사용 불가능')
+        }
         itemDuplicate.appendChild(itemDuplicateText)
-        
+
         itemCoin = document.createElement('div')
         itemCoinText = document.createTextNode(data.info)
         itemCoin.classList.add('store-sub-item')
@@ -713,7 +726,7 @@ class Game {
       item.appendChild(itemName)
       item.appendChild(itemCoin)
       /* 소모품인 경우만 중복가능 텍스트 추가 */
-      if (store === 'other' && data.psu === undefined) {
+      if (store === 'other') {
         item.appendChild(itemDuplicate)
       }
       item.appendChild(itemPrice)
