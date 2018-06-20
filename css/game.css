@@ -42,15 +42,21 @@
     display: none;
 }
 
-#boost-percent {
-    position: absolute;
-    top: 5px;
-    left: 10px;
-    background-color: #c54040;
+.header-boost {
+    margin: 10px 5px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     padding: 5px 10px;
-    float: right;
+    color: #fff;
+    float: left;
+}
+
+#boost-percent {
+    background-color: #c54040;
+}
+
+#boost-time {
+    background-color: #50b970;
 }
 
 /* 실내 */

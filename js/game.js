@@ -15,8 +15,11 @@ class Game {
     /* 1초당 코인 갯수 */
     this.coinPerSecond = 0
 
+    /* 보너스 코인 갯수 */
+    this.boostCoinPerSecond = 0
+
     /* 보너스 코인 % */
-    this.boost = 0
+    this.coinBoostPercent = 0
 
     /* 부스트 지속 시간 */
     this.boostTime = 0
@@ -189,7 +192,7 @@ class Game {
 
     /* CPU 오버클럭 버튼 */
     document.getElementById('cpu-overclock').onclick = () => {
-      if (!this.checkOverclock()) {
+      if (!this.checkModules()) {
         this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 오버클럭 할 수 있습니다.')
         return
       }
@@ -221,7 +224,7 @@ class Game {
 
     /* 램 오버클럭 버튼 */
     document.getElementById('ram-overclock').onclick = () => {
-      if (!this.checkOverclock()) {
+      if (!this.checkModules()) {
         this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 오버클럭 할 수 있습니다.')
         return
       }
@@ -253,7 +256,7 @@ class Game {
 
     /* 그래픽카드 오버클럭 버튼 */
     document.getElementById('vga-overclock').onclick = () => {
-      if (!this.checkOverclock()) {
+      if (!this.checkModules()) {
         this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 오버클럭 할 z수 있습니다.')
         return
       }
@@ -285,12 +288,12 @@ class Game {
   }
 
   /**
-   * @description 오버클럭 가능 여부 확인
+   * @description 모든 부품 보유 여부
    */
-  checkOverclock () {
-    const cpuLv = this.store.getData('cpuLv')
-    const ramLv = this.store.getData('ramLv')
-    const vgaLv = this.store.getData('vgaLv')
+  checkModules () {
+    const cpuLv = this.store.getData('cpu')
+    const ramLv = this.store.getData('ram')
+    const vgaLv = this.store.getData('vga')
 
     return (cpuLv > -1 && ramLv > -1 && vgaLv > -1)
   }
@@ -303,13 +306,21 @@ class Game {
   coinBoost (percent, duplicate) {
     /* 중복 가능 부스트인 경우 누적 */
     if (duplicate) {
-      this.coinBoost += percent
-      this.showNotify(percent + ' % 부스트가 누적되었습니다.')
+      this.coinBoostPercent += percent
+      this.showNotify(percent + ' % 부스트가 추가되었습니다.')
     } else {
       /* 중복 불가능 부스트인 경우 % 대체 */
-      this.coinBoost = percent
+      this.coinBoostPercent = percent
       this.showNotify(percent + ' % 부스트가 적용되었습니다.')
     }
+
+    /* 상단에 추가 코인 정보 업데이트 */
+    this.boostCoinPerSecond = this.coinPerSecond * (this.coinBoostPercent/100).toFixed(3)
+    document.getElementById('coin-per-second-boost').style['display'] = 'block'
+    document.getElementById('coin-per-second-boost').textContent = '+ ' + this.boostCoinPerSecond
+
+    console.log(this.boostCoinPerSecond)
+
     /* 60초간 부스트 */
     this.boostTime = 60
   }
@@ -445,6 +456,12 @@ class Game {
 
       /* 예상 수익금 */
       document.getElementById('sell-count').onkeyup = () => {
+        const count = document.getElementById('sell-count').value
+        const prediction = parseInt(count) * this.coinPrice
+        document.getElementById('prediction-money').textContent = isNaN(prediction) ? 0 : prediction
+      }
+
+      document.getElementById('sell-count').change = () => {
         const count = document.getElementById('sell-count').value
         const prediction = parseInt(count) * this.coinPrice
         document.getElementById('prediction-money').textContent = isNaN(prediction) ? 0 : prediction
@@ -635,6 +652,14 @@ class Game {
 
         /* 구매 버튼 */
         buyButton.onclick = () => {
+          console.log(!this.checkModules())
+          if (!this.checkModules()) {
+            this.showNotify('CPU, 램, 그래픽카드가 모두 있어야 구매할 수 있습니다.')
+            return
+          }
+
+          console.log('buy')
+
           const money = this.store.getData('money')
           const psu = this.store.getData('psu')
           const psuLevel = data.psu
@@ -705,6 +730,9 @@ class Game {
     document.getElementById('own-money').textContent = this.store.getData('money') + ' 원'
     document.getElementById('own-coin').textContent = this.store.getData('coin') + ' BTC'
     document.getElementById('coin-per-second').textContent = this.coinPerSecond + ' BTC/s'
+
+    document.getElementById('boost-percent').textContent = (this.boostTime > 0 && this.coinBoostPercent > 0 ? this.coinBoostPercent : 0) + ' %'
+    document.getElementById('boost-time').textContent = this.boostTime + ' 초'
   }
 
   /**
@@ -828,11 +856,15 @@ class Game {
     /* 1초당 코인 수 만큼 누적 */
     const defaultCoin = parseFloat(this.coinPerSecond)
 
-    /* 추가 부스트 코인 */
-    const boostCoin = this.boostTime > 0 ? (defaultCoin * this.coinBoost) : 0
-    this.store.setData('coin', (parseFloat(this.store.getData('coin')) + defaultCoin + boostCoin).toFixed(3))
+    this.store.setData('coin', (parseFloat(this.store.getData('coin')) + defaultCoin + this.boostCoinPerSecond).toFixed(3))
 
     this.updateHeaderInfo()
+
+    if (this.boostTime === 0) {
+      this.coinBoostPercent = 0
+      this.boostCoinPerSecond = 0
+      document.getElementById('coin-per-second-boost').style['display'] = 'none';
+    }
   }
 
   /**
