@@ -46,6 +46,11 @@ class Game {
     this.ramCoin = 0
     this.vgaCoin = 0
 
+    /* 부품별 오버클럭 추가 코인 채굴량 */
+    this.cpuBoostCoin = 0
+    this.ramBoostCoin = 0
+    this.vgaBoostCoin = 0
+
     /* 오버클럭 비용 */
     this.cpuOverclock = 0
     this.ramOverclock = 0
@@ -223,6 +228,8 @@ class Game {
           /* 초당 채굴량 계산 */
           this.calcCoinPerSecond()
 
+          this.boostCoinUpdate()
+
           this.updateHeaderInfo()
 
           this.updateComputerPopup()
@@ -243,7 +250,7 @@ class Game {
       }
 
       if (this.store.getData('money') - this.ramOverclock >= 0) {
-        if (this.store.getData('vgaLv') + 1 <= 10) {
+        if (this.store.getData('ramLv') + 1 <= 10) {
           this.coinSound.play()
 
           /* 비용 차감 */
@@ -254,6 +261,8 @@ class Game {
 
           /* 초당 채굴량 계산 */
           this.calcCoinPerSecond()
+
+          this.boostCoinUpdate()
 
           this.updateHeaderInfo()
 
@@ -287,6 +296,8 @@ class Game {
           /* 초당 채굴량 계산 */
           this.calcCoinPerSecond()
 
+          this.boostCoinUpdate()
+
           this.updateHeaderInfo()
 
           this.updateComputerPopup()
@@ -314,7 +325,7 @@ class Game {
   /**
    * @description 오버클럭 가능 여부 확인
    * @param {number} percent 코인 부스트 %
-   * @param {boolean} duplicate 코인 부스트 %
+   * @param {boolean} duplicate 코인 부스트 중복 가능 여부
    */
   coinBoost (percent, duplicate) {
     /* 중복 가능 부스트인 경우 누적 */
@@ -328,14 +339,21 @@ class Game {
     }
 
     /* 상단에 추가 코인 정보 업데이트 */
-    this.boostCoinPerSecond = this.coinPerSecond * (this.coinBoostPercent/100).toFixed(3)
-    document.getElementById('coin-per-second-boost').style['display'] = 'block'
-    document.getElementById('coin-per-second-boost').textContent = '+ ' + this.boostCoinPerSecond
+    this.boostCoinUpdate()
 
     console.log(this.boostCoinPerSecond)
 
     /* 60초간 부스트 */
     this.boostTime = 60
+  }
+
+  /**
+   * @description 부스트로 얻는 코인 량 계산
+   */
+  boostCoinUpdate () {
+    this.boostCoinPerSecond = (this.coinPerSecond * (this.coinBoostPercent/100)).toFixed(3)
+    document.getElementById('coin-per-second-boost').style['display'] = 'block'
+    document.getElementById('coin-per-second-boost').textContent = '+ ' + this.boostCoinPerSecond
   }
 
   /**
@@ -353,14 +371,19 @@ class Game {
 
     /* 부품 번호 중 -1이 하나도 없을 경우 */
     if (cpuNum !== -1 && vgaNum !== -1 && ramNum !== -1) {
-      /* 오버클럭 레벨 1당 해당 부품의 채굴량 10% 증가 */
-      this.cpuCoin = (cpu[cpuNum].coin * ((cpuLv) / 10)).toFixed(3)
-      this.ramCoin = (ram[ramNum].coin * ((ramLv) / 10)).toFixed(3)
-      this.vgaCoin = (vga[vgaNum].coin * ((vgaLv) / 10)).toFixed(3)
+      /* 부품 기본 채굴량 */
+      this.cpuCoin = cpu[cpuNum].coin
+      this.ramCoin = ram[ramNum].coin
+      this.vgaCoin = vga[vgaNum].coin
 
-      const cpuTotal = cpu[cpuNum].coin + this.cpuCoin
-      const ramTotal = ram[ramNum].coin + this.ramCoin
-      const vgaTotal = vga[vgaNum].coin + this.vgaCoin
+      /* 오버클럭 레벨 1당 해당 부품의 채굴량 10% 증가 */
+      this.cpuBoostCoin = cpu[cpuNum].coin * ((cpuLv) / 10)
+      this.ramBoostCoin = ram[ramNum].coin * ((ramLv) / 10)
+      this.vgaBoostCoin = vga[vgaNum].coin * ((vgaLv) / 10)
+
+      const cpuTotal = this.cpuCoin + this.cpuBoostCoin
+      const ramTotal = this.ramCoin + this.ramBoostCoin
+      const vgaTotal = this.vgaCoin + this.vgaBoostCoin
 
       this.coinPerSecond = parseFloat(cpuTotal + ramTotal + vgaTotal).toFixed(3)
     } else {
@@ -436,19 +459,19 @@ class Game {
 
     document.getElementById('my-cpu-image').src = './static/' + (cpu[cpuIdx] ? cpu[cpuIdx].src : 'broken.png')
     document.getElementById('cpu-name-info').textContent = cpu[cpuIdx] ? cpu[cpuIdx].name : '고장 남'
-    document.getElementById('cpu-coin').textContent = cpu[cpuIdx] ? this.cpuCoin : 0
+    document.getElementById('cpu-coin').textContent = cpu[cpuIdx] ? (this.cpuCoin + this.cpuBoostCoin).toFixed(3) : 0
     document.getElementById('cpu-level').textContent = cpuLv
     document.getElementById('cpu-levelup-price').textContent = this.cpuOverclock
 
     document.getElementById('my-ram-image').src = './static/' + (ram[ramIdx] ? ram[ramIdx].src : 'broken.png')
     document.getElementById('ram-name-info').textContent = ram[ramIdx] ? ram[ramIdx].name : '고장 남'
-    document.getElementById('ram-coin').textContent = ram[ramIdx] ? this.ramCoin : 0
+    document.getElementById('ram-coin').textContent = ram[ramIdx] ? (this.ramCoin + this.ramBoostCoin).toFixed(3) : 0
     document.getElementById('ram-level').textContent = ramLv
     document.getElementById('ram-levelup-price').textContent = this.ramOverclock
 
     document.getElementById('my-vga-image').src = './static/' + (vga[vgaIdx] ? vga[vgaIdx].src : 'broken.png')
     document.getElementById('vga-name-info').textContent = vga[vgaIdx] ? vga[vgaIdx].name : '고장 남'
-    document.getElementById('vga-coin').textContent = vga[vgaIdx] ? this.vgaCoin : 0
+    document.getElementById('vga-coin').textContent = vga[vgaIdx] ? (this.vgaCoin + this.vgaBoostCoin).toFixed(3) : 0
     document.getElementById('vga-level').textContent = vgaLv
     document.getElementById('vga-levelup-price').textContent = this.vgaOverclock
   }
@@ -873,8 +896,9 @@ class Game {
   update () {
     /* 1초당 코인 수 만큼 누적 */
     const defaultCoin = parseFloat(this.coinPerSecond)
+    const boostCoin = parseFloat(this.boostCoinPerSecond)
 
-    this.store.setData('coin', (parseFloat(this.store.getData('coin')) + defaultCoin + this.boostCoinPerSecond).toFixed(3))
+    this.store.setData('coin', (parseFloat(this.store.getData('coin')) + defaultCoin + boostCoin).toFixed(3))
 
     this.updateHeaderInfo()
 

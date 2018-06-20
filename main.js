@@ -9,7 +9,7 @@ function createWindow () {
     resizable: false
   })
 
-  mainWindow.setMenu(null)
+  // mainWindow.setMenu(null)
 
   mainWindow.loadFile('index.html')
 

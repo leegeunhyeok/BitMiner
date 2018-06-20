@@ -11,7 +11,7 @@ module.exports = [
   {
     name: 'AND Radeo',
     price: 3500,
-    coin: 0.15,
+    coin: 0.25,
     level: 1,
     src: 'vga/1.png'
   }
