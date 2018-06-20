@@ -40,22 +40,22 @@
     <!-- 튜토리얼 영역 -->
     <div id="tutorial">
       <div id="tutorial-1">
-        <div id="tutorial-info">
+        <div id="tutorial-info" class="tutorial">
           보유중인 현금과 코인, 1초당 채굴되는 코인 수를 확인하실 수 있습니다.
         </div>
-        <div id="tutorial-computer">
+        <div id="tutorial-computer" class="tutorial">
           내 컴퓨터를 누르면<br>
           컴퓨터 부품 정보와<br>
-          오버클럭을<br>
+          오버클럭(강화)을<br>
           할 수 있습니다.
         </div>
-        <div id="tutorial-phone">
+        <div id="tutorial-phone" class="tutorial">
           스마트폰을 누른 후<br>
           가상화폐 거래소에서<br>
           보유중인 코인을<br>
           판매할 수 있습니다<br>
         </div>
-        <div id="tutorial-door">
+        <div id="tutorial-door" class="tutorial">
           현관문을 눌러서<br>
           외출할 수 있습니다.<br>
           컴퓨터 부품과<br>
@@ -64,7 +64,14 @@
         </div>
       </div>
       <div id="tutorial-2">
-        <div id="tutorial-store">
+        <div id="tutorial-boost" class="tutorial">
+          부스트 아이템 구매 시 일정 %의 코인이 추가로 채굴됩니다.<br>
+          <br>
+          부스트 아이템은 1분 동안 지속됩니다.
+        </div>
+      </div>
+      <div id="tutorial-3">
+        <div id="tutorial-store" class="tutorial">
           각 매장에서 컴퓨터 부품을<br>
           구매할 수 있습니다.<br>
           <br>
@@ -215,6 +222,7 @@
       </div>
       <!-- 매점 팝업 영역 END -->
       <div id="header">
+        <span id="coin-per-second-boost">+ 0</span>
         <!-- 1초당 코인 -->
         <span id="coin-per-second" class="header-info">BTC/s</span>
         <!-- 보유중인 코인 -->

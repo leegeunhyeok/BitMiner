@@ -11,6 +11,15 @@
     display: none;
 }
 
+.tutorial {
+    position: absolute;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+}
+
 /* 튜토리얼 다음 버튼 */
 #tutorial-next {
   cursor: pointer;
@@ -58,58 +67,33 @@
 }
 
 #tutorial-info {
-    position: absolute;
-    display: inline-block;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #000;
     top: 5px;
     left: 5px;
-    padding: 10px;
 }
 
 #tutorial-computer {
-    position: absolute;
-    display: inline-block;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #000;
     top: 230px;
     left: 45px;
-    padding: 10px;
 }
 
 #tutorial-phone {
-    position: absolute;
-    display: inline-block;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #000;
     bottom: 40px;
     left: 380px;
-    padding: 10px;
 }
 
 #tutorial-door {
-    position: absolute;
-    display: inline-block;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #000;
     top: 200px;
     right: 15px;
-    padding: 10px;
+}
+
+#tutorial-boost {
+    top: 50px;
+    left: 10px;
 }
 
 #tutorial-store {
-    position: absolute;
-    display: inline-block;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #000;
     top: 140px;
     left: 270px;
-    padding: 10px;
 }
 
 .tutorial-hide {

@@ -9,6 +9,9 @@ class Game {
   constructor () {
     this.store = new Store('user.dat')
 
+    /* 튜토리얼 1, 2, 3 진행 체크 */
+    this.tutorialIdx = 0
+
     /* 1초당 코인 갯수 */
     this.coinPerSecond = 0
 
@@ -83,17 +86,24 @@ class Game {
 
     /* 튜토리얼 영역 */
     if (this.store.getData('tutorial') === 1) {
+      this.tutorialIdx = 0
       document.getElementById('tutorial').style['display'] = 'block'
-      document.getElementById('tutorial-1').style['display'] = 'block'
       document.getElementById('tutorial-2').classList.add('tutorial-hide')
+      document.getElementById('tutorial-3').classList.add('tutorial-hide')
       document.getElementById('tutorial-exit').classList.add('tutorial-hide')
 
       /* 튜토리얼 다음 버튼 */
       document.getElementById('tutorial-next').onclick = () => {
-        this.city()
-        document.getElementById('tutorial-1').style['display'] = 'none'
-        document.getElementById('tutorial-2').classList.remove('tutorial-hide')
-        document.getElementById('tutorial-exit').classList.remove('tutorial-hide')
+        if (this.tutorialIdx === 0) {
+          document.getElementById('tutorial-1').classList.add('tutorial-hide')
+          document.getElementById('tutorial-2').classList.remove('tutorial-hide')
+          this.tutorialIdx = 1
+        } else {
+          this.city()
+          document.getElementById('tutorial-2').classList.add('tutorial-hide')
+          document.getElementById('tutorial-3').classList.remove('tutorial-hide')
+          document.getElementById('tutorial-exit').classList.remove('tutorial-hide')
+        }
       }
     }
 
@@ -149,6 +159,7 @@ class Game {
       this.store.setData('tutorial', 0)
       document.getElementById('tutorial').style['display'] = 'none'
       this.home()
+      this.showNotify('지급된 5000원으로 CPU, 램, 그래픽카드를 구매하세요!')
     }
 
     /* 램 매장 클릭시 이벤트 */

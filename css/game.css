@@ -29,7 +29,20 @@
     float: right;
 }
 
-.header-boost {
+/* 부스트 활성화 시 추가 코인 량 */
+#coin-per-second-boost {
+    position: absolute;
+    top: 45px;
+    right: 5px;
+    background-color: #c54040;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    display: none;
+}
+
+#boost-percent {
     position: absolute;
     top: 5px;
     left: 10px;
