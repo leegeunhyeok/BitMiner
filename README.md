@@ -11,9 +11,9 @@
 
 <div align="center">
 
-  <img src="./sample/game-home_0.0.4.png">
+  <img src="./sample/game-home_0.0.6.png">
 
-  <img src="./sample/game-city_0.0.4.png">
+  <img src="./sample/game-store_0.0.6.png">
 
 </div>
 
