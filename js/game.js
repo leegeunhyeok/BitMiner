@@ -366,14 +366,17 @@ class Game {
 
     document.getElementById('psu-level').textContent = this.store.getData('psu')
 
+    document.getElementById('my-cpu-image').src = './static/' + (cpu[cpuIdx] ? cpu[cpuIdx].src : 'broken.png')
     document.getElementById('cpu-name-info').textContent = cpu[cpuIdx] ? cpu[cpuIdx].name : '고장 남'
     document.getElementById('cpu-level').textContent = cpuLv
     document.getElementById('cpu-levelup-price').textContent = this.cpuOverclock
 
+    document.getElementById('my-ram-image').src = './static/' + (ram[ramIdx] ? ram[ramIdx].src : 'broken.png')
     document.getElementById('ram-name-info').textContent = ram[ramIdx] ? ram[ramIdx].name : '고장 남'
     document.getElementById('ram-level').textContent = ramLv
     document.getElementById('ram-levelup-price').textContent = this.ramOverclock
 
+    document.getElementById('my-vga-image').src = './static/' + (vga[vgaIdx] ? vga[vgaIdx].src : 'broken.png')
     document.getElementById('vga-name-info').textContent = vga[vgaIdx] ? vga[vgaIdx].name : '고장 남'
     document.getElementById('vga-level').textContent = vgaLv
     document.getElementById('vga-levelup-price').textContent = this.vgaOverclock
