@@ -118,6 +118,9 @@
         <div id="popup-computer-content" class="popup-content">
           <div class="popup-item">
             <b class="computer-module-type">파워서플라이</b>
+            <br>
+            <img src="./static/psu/1.png" id="my-psu-image" class="my-computer-image">
+            <br>
             <div class="module-name"></div>
             <div class="popup-sub-item">
               레벨: <b id="psu-level"></b>
@@ -125,6 +128,9 @@
           </div>
           <div class="popup-item">
             <b class="computer-module-type">CPU</b>
+            <br>
+            <img src="./static/cpu/1.png" id="my-cpu-image" class="my-computer-image">
+            <br>
             <div id="cpu-name-info" class="module-name"></div>
             <div class="popup-sub-item">
               오버클럭 레벨: <b id="cpu-level"></b>
@@ -138,6 +144,9 @@
           </div>
           <div class="popup-item">
             <b class="computer-module-type">램</b>
+            <br>
+            <img src="./static/ram/1.png" id="my-ram-image" class="my-computer-image">
+            <br>
             <div id="ram-name-info" class="module-name"></div>
             <div class="popup-sub-item">
               오버클럭 레벨: <b id="ram-level"></b>
@@ -151,6 +160,9 @@
           </div>
           <div class="popup-item">
             <b class="computer-module-type">그래픽카드</b>
+            <br>
+            <img src="./static/vga/1.png" id="my-vga-image" class="my-computer-image">
+            <br>
             <div id="vga-name-info" class="module-name"></div>
             <div class="popup-sub-item">
               오버클럭 레벨: <b id="vga-level"></b>
@@ -224,6 +236,9 @@
             <img src="./static/arrow.png">
           </div>
         </div>
+        <div id="game-exit">
+          <!-- 종료 버튼 -->
+        </div>
       </div>
       <!-- 집 안 영역 END -->
       <!-- 야외 영역 -->
@@ -255,9 +270,6 @@
         <div id="go-to-home"></div>
       </div>
       <!-- 야외 영역 END -->
-      <div id="game-exit">
-        <!-- 종료 버튼 -->
-      </div>
     </div>
     <script>
       require('./js/renderer.js')

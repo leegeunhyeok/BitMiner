@@ -18,7 +18,7 @@
     cursor: pointer;
     position: absolute;
     bottom: 5px;
-    left: 5px;
+    right: 5px;
     background-color: #c54040;
     border: 1px solid #c54040;
     color: #fff;

@@ -52,6 +52,11 @@
     animation: arrow 1s alternate infinite;
 }
 
+.my-computer-image {
+  width: 100px;
+  height: 100px;
+}
+
 /* 핸드폰 영역 */
 #phone {
   cursor: pointer;
