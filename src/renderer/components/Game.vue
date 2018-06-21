@@ -1,16 +1,26 @@
 <template>
   <div id="game">
+    <audio src="./static/sound/coin.mp3" id="coin-effect"></audio>
+    <audio src="./static/sound/computer.mp3" id="computer-effect"></audio>
+    <audio src="./static/sound/door.mp3" id="door-effect"></audio>
+    <audio src="./static/sound/phone.mp3" id="phone-effect"></audio>
+    <audio src="./static/sound/shop.mp3" id="shop-effect"></audio>
     <game-header></game-header>
-    <tutorial v-if="tutorialShow" @exitTutorial="exitTutorial"></tutorial>
+    <tutorial v-if="tutorialShow" @exitTutorial="exitTutorial" @changeLocation="changeLocation" @notify="showNotify"></tutorial>
     <game-home v-if="location === 'home'" @changeLocation="changeLocation" @openPopup="openPopup" @openPhone="openPhone"></game-home>
-    <game-city v-if="location === 'city'" @changeLocation="changeLocation"></game-city>
-    <popup @closePopup="popup = false" v-if="popup" :type="popupType"></popup>
+    <game-city v-if="location === 'city'" @changeLocation="changeLocation" @openPopup="openPopup"></game-city>
+    <popup @closePopup="popup = false" v-if="popup" :type="popupType" :title="popupTitle" @notify="showNotify"></popup>
     <phone @closePhone="phone = false" v-if="phone"></phone>
+    <notify v-if="notify" :message="notifyMessage"></notify>
     <button id="game-exit" v-if="location === 'home'" @click="gameExit">종료</button>
   </div>
 </template>
 
 <script>
+import cpu from '../models/cpu.js'
+import ram from '../models/ram.js'
+import vga from '../models/vga.js'
+
 export default {
   name: 'game',
   data () {
@@ -19,6 +29,9 @@ export default {
       location: 'home',
       popup: false,
       popupType: '',
+      popupTitle: '',
+      notify: false,
+      notifyMessage: '',
       phone: false,
       loop: null
     }
@@ -29,7 +42,8 @@ export default {
     'game-home': require('@/components/GameHome').default,
     'game-city': require('@/components/GameCity').default,
     'popup': require('@/components/Popup').default,
-    'phone': require('@/components/PopupPhone').default
+    'phone': require('@/components/PopupPhone').default,
+    'notify': require('@/components/Notify').default
   },
   computed: {
     tutorial () {
@@ -49,6 +63,7 @@ export default {
     }
   },
   created () {
+    this.calcCoinPerSecond()
     this.location = 'home'
     this.tutorialShow = this.tutorial
   },
@@ -57,27 +72,48 @@ export default {
   },
   methods: {
     start () {
+      let time = 0
       this.loop = setInterval(() => {
-        console.log('hello')
+        // const coin = this.$store.state.userdata.data.coin
+        // const coinPerSecond = this.$store.state.info.coinPerSecond
+        // const coinPerSecondBoost = this.$store.state.info.coinPerSecondBoost
+        this.$store.commit('BOOST_TIME_DOWN')
+        this.$store.commit('SET_DATA', {key: 'coin', value: 0})
+        if (time % 60 === 0) {
+          this.$emit('save')
+        }
       }, 1000)
     },
     changeLocation (location) {
+      if (location === 'city') {
+        this.playEffectSound('door')
+      }
       this.popup = this.phone = false
       this.location = location
     },
+    playEffectSound (name) {
+      document.getElementById(name + '-effect').play()
+    },
     exitTutorial () {
-      this.$store.commit('SET_DATA', 'tutorial', 0)
+      this.$store.commit('SET_DATA', {key: 'tutorial', value: 0})
       this.$emit('save')
     },
     gameExit () {
       this.$emit('openDialog', {type: 'exit', message: '정말 종료하시겠습니까?'})
     },
-    openPopup (type) {
+    openPopup (type, title) {
       if (!this.popup) {
+        if (type === 'computer') {
+          document.getElementById('computer-effect').play()
+        } else if (type.search('store')) {
+          document.getElementById('shop-effect').play()
+        }
+
         if (this.phone) {
           this.phone = false
         }
         this.popupType = type
+        this.popupTitle = title
         this.popup = true
       } else {
         this.popup = false
@@ -85,12 +121,49 @@ export default {
     },
     openPhone () {
       if (!this.phone) {
+        document.getElementById('phone-effect').play()
         if (this.popup) {
           this.popup = false
         }
         this.phone = true
       } else {
         this.phone = false
+      }
+    },
+    showNotify (message) {
+      this.notifyMessage = message
+      this.notify = true
+
+      setTimeout(() => {
+        this.notify = false
+      }, 2500)
+    },
+    calcCoinPerSecond () {
+      const cpuNum = this.$store.state.userdata.data.cpu
+      const ramNum = this.$store.state.userdata.data.ram
+      const vgaNum = this.$store.state.userdata.data.vga
+
+      const cpuLv = this.$store.state.userdata.data.cpuLv
+      const ramLv = this.$store.state.userdata.data.ramLv
+      const vgaLv = this.$store.state.userdata.data.vgaLv
+
+      if (cpuNum !== -1 && vgaNum !== -1 && ramNum !== -1) {
+        const cpuCoin = cpu[cpuNum].coin
+        const ramCoin = ram[ramNum].coin
+        const vgaCoin = vga[vgaNum].coin
+
+        const cpuBoostCoin = cpu[cpuNum].coin * ((cpuLv) / 10)
+        const ramBoostCoin = ram[ramNum].coin * ((ramLv) / 10)
+        const vgaBoostCoin = vga[vgaNum].coin * ((vgaLv) / 10)
+
+        const cpuTotal = cpuCoin + cpuBoostCoin
+        const ramTotal = ramCoin + ramBoostCoin
+        const vgaTotal = vgaCoin + vgaBoostCoin
+
+        this.$store.commit('MODULE_TOTAL_COIN', {cpu: cpuTotal, ram: ramTotal, vga: vgaTotal})
+        this.$store.commit('COIN_PER_SECOND', parseFloat(cpuTotal + ramTotal + vgaTotal).toFixed(3))
+      } else {
+        this.$store.commit('COIN_PER_SECOND', 0)
       }
     }
   }

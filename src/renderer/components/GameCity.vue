@@ -1,24 +1,24 @@
 <template>
   <div id="city">
-    <div id="ram-store" class="store">
+    <div id="ram-store" class="store" @click="$emit('openPopup', 'ramStore', '램 매장')">
       <div id="ram-icon">
         <div class="arrow-area">램 매장</div>
         <img src="~@/assets/arrow.png">
       </div>
     </div>
-    <div id="cpu-store" class="store">
+    <div id="cpu-store" class="store" @click="$emit('openPopup', 'cpuStore', 'CPU 매장')">
       <div id="cpu-icon">
         <div class="arrow-area">CPU 매장</div>
         <img src="~@/assets/arrow.png">
       </div>
     </div>
-    <div id="vga-store" class="store">
+    <div id="vga-store" class="store" @click="$emit('openPopup', 'vgaStore', '그래픽카드 매장')">
       <div id="vga-icon">
         <div class="arrow-area">그래픽카드 매장</div>
         <img src="~@/assets/arrow.png">
       </div>
     </div>
-    <div id="other-store" class="store">
+    <div id="other-store" class="store" @click="$emit('openPopup', 'otherStore', '기타 소모품 매장')">
       <div id="other-icon">
         <div class="arrow-area">기타 소모품 매장</div>
         <img src="~@/assets/arrow.png">

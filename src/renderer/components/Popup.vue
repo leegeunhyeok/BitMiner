@@ -4,9 +4,9 @@
     <div class="popup-title">{{ title }}</div>
     <div class="popup-content">
       <!-- 팝업 내용 영역 -->
-      <popup-computer v-if="type === 'computer'"></popup-computer>
-      <popup-store v-if="type === 'store'"></popup-store>
-      <popup-other-store v-if="type === 'other'"></popup-other-store>
+      <popup-computer v-if="type === 'computer'" @notify="notify"></popup-computer>
+      <popup-other-store v-else-if="other" @notify="notify"></popup-other-store>
+      <popup-store v-else-if="store" :type="type" @notify="notify"></popup-store>
     </div>
   </div>
 </template>
@@ -18,10 +18,23 @@ export default {
   date () {
     return {}
   },
+  computed: {
+    store () {
+      return this.type.toLowerCase().search('store') !== -1
+    },
+    other () {
+      return this.type.toLowerCase().search('other') !== -1
+    }
+  },
   components: {
     'popup-computer': require('@/components/PopupComputer').default,
     'popup-store': require('@/components/PopupStore').default,
     'popup-other-store': require('@/components/PopupOther').default
+  },
+  methods: {
+    notify (message) {
+      this.$emit('notify', message)
+    }
   }
 }
 </script>
@@ -81,5 +94,28 @@ export default {
 .popup-content::-webkit-scrollbar-thumb {
   background-color: rgb(175, 175, 175);
 }
+
+/* 팝업 내 아이템 */
+.popup-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+}
+
+/* 팝업 아이템 내의 하위 항목 (상세정보) */
+.popup-sub-item {
+  margin: 5px 0;
+}
+
+.popup-sub-item-2 {
+  margin: 5px 0;
+  color: #e45641;
+}
+
+/* 컴퓨터 부품 명 */
+.module-name {
+  margin: 10px 0;
+  color: #44b3c2;
+}
+
 
 </style>

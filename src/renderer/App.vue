@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <audio src="./static/sound/bgm.mp3" autoplay loop></audio>
     <router-view @openDialog="openDialog" @save="fileSave"></router-view>
     <dialog-view v-if="dialog" :message="message" @closeDialog="closeDialog"></dialog-view>
   </div>

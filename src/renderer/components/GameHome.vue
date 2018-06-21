@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <div id="my-computer" @click="$emit('openPopup', 'computer')">
+    <div id="my-computer" @click="$emit('openPopup', 'computer', '내 컴퓨터')">
       <div id="computer-icon">
         <div class="arrow-area">내 컴퓨터</div>
         <img src="~@/assets/arrow.png">

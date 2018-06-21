@@ -1,7 +1,7 @@
 <template>
   <div id="header">
     <!-- 부스트로 얻는 추가 코인 량 -->
-    <span id="coin-per-second-boost">+ {{ $store.state.info.coinPerSecondBoost }}</span>
+    <span id="coin-per-second-boost" v-if="boost">+ {{ $store.state.info.coinPerSecondBoost }}</span>
     <!-- 1초당 코인 -->
     <span id="coin-per-second" class="header-info">{{ $store.state.info.coinPerSecond }} BTC/s</span>
     <!-- 보유중인 코인 -->
@@ -17,7 +17,12 @@
 
 <script>
 export default {
-  name: 'game-header'
+  name: 'game-header',
+  computed: {
+    boost () {
+      return this.$store.state.info.boostTime > 0 && this.$store.state.info.boostPercent > 0
+    }
+  }
 }
 </script>
 
@@ -51,7 +56,6 @@ export default {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   padding: 2px 6px;
   font-size: 0.8rem;
-  display: none;
 }
 
 .header-boost {

@@ -6,8 +6,8 @@ const mutations = {
   LOAD_DATA (state, data) {
     state.data = data
   },
-  SET_DATA (state, key, value) {
-    state.data[key] = value
+  SET_DATA (state, data) {
+    state.data[data.key] = data.value
   }
 }
 

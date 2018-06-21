@@ -131,11 +131,12 @@ export default {
   },
   methods: {
     moduleImagesUpdate () {
+      const psuLevel = this.$store.state.userdata.data.psu
       const cpuIdx = this.$store.state.userdata.data.cpu
       const ramIdx = this.$store.state.userdata.data.ram
       const vgaIdx = this.$store.state.userdata.data.vga
 
-      this.psuImage = './static/broken.png'
+      this.psuImage = './static/psu/' + psuLevel + '.png'
       this.cpuImage = cpuIdx !== -1 ? './static/' + this.cpu[cpuIdx].src : './static/broken.png'
       this.ramImage = ramIdx !== -1 ? './static/' + this.ram[ramIdx].src : './static/broken.png'
       this.vgaImage = vgaIdx !== -1 ? './static/' + this.vga[vgaIdx].src : './static/broken.png'
@@ -154,38 +155,93 @@ export default {
       this.vgaOverClockCost = this.vga[vgaIdx] ? Math.floor((vgaLv + 1) * 0.05 * this.vga[vgaIdx].price) : 0
     },
     overclock (moduleName) {
-      console.log(moduleName)
-      console.log(this.cpuOverClockCost, this.ramOverClockCost, this.vgaOverClockCost)
+      const money = this.$store.state.userdata.data.money
+
+      const cpuIdx = this.$store.state.userdata.data.cpu
+      const ramIdx = this.$store.state.userdata.data.ram
+      const vgaIdx = this.$store.state.userdata.data.vga
+
+      const cpuLv = this.$store.state.userdata.data.cpuLv
+      const ramLv = this.$store.state.userdata.data.ramLv
+      const vgaLv = this.$store.state.userdata.data.vgaLv
+
+      if (cpuIdx > -1 && ramIdx > -1 && vgaIdx > -1) {
+        if (moduleName === 'cpu') {
+          if (money - this.cpuOverClockCost >= 0) {
+            if (cpuLv + 1 <= 10) {
+              this.$store.commit('SET_DATA', {key: 'money', value: money - this.cpuOverClockCost})
+              this.$store.commit('SET_DATA', {key: 'cpuLv', value: cpuLv + 1})
+            } else {
+              this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
+            }
+          } else {
+            this.$emit('notify', '보유하고있는 현금이 부족합니다.')
+          }
+        } else if (moduleName === 'ram') {
+          if (money - this.ramOverClockCost >= 0) {
+            if (ramLv + 1 <= 10) {
+              this.$store.commit('SET_DATA', {key: 'money', value: money - this.ramOverClockCost})
+              this.$store.commit('SET_DATA', {key: 'ramLv', value: ramLv + 1})
+            } else {
+              this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
+            }
+          } else {
+            this.$emit('notify', '보유하고있는 현금이 부족합니다.')
+          }
+        } else if (moduleName === 'vga') {
+          if (money - this.vgaOverClockCost >= 0) {
+            if (vgaLv + 1 <= 10) {
+              this.$store.commit('SET_DATA', {key: 'money', value: money - this.vgaOverClockCost})
+              this.$store.commit('SET_DATA', {key: 'vgaLv', value: vgaLv + 1})
+              this.calcCoinPerSecond()
+            } else {
+              this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
+            }
+          } else {
+            this.$emit('notify', '보유하고있는 현금이 부족합니다.')
+          }
+        }
+        this.moduleImagesUpdate()
+        this.overclockCostUpdate()
+      } else {
+        this.$emit('notify', 'CPU, 램, 그래픽카드가 모두 있어야 오버클럭할 수 있습니다.')
+      }
+    },
+    calcCoinPerSecond () {
+      const cpuNum = this.$store.state.userdata.data.cpu
+      const ramNum = this.$store.state.userdata.data.ram
+      const vgaNum = this.$store.state.userdata.data.vga
+
+      const cpuLv = this.$store.state.userdata.data.cpuLv
+      const ramLv = this.$store.state.userdata.data.ramLv
+      const vgaLv = this.$store.state.userdata.data.vgaLv
+
+      if (cpuNum !== -1 && vgaNum !== -1 && ramNum !== -1) {
+        const cpuCoin = Cpu[cpuNum].coin
+        const ramCoin = Ram[ramNum].coin
+        const vgaCoin = Vga[vgaNum].coin
+
+        const cpuBoostCoin = Cpu[cpuNum].coin * ((cpuLv) / 10)
+        const ramBoostCoin = Ram[ramNum].coin * ((ramLv) / 10)
+        const vgaBoostCoin = Vga[vgaNum].coin * ((vgaLv) / 10)
+
+        const cpuTotal = cpuCoin + cpuBoostCoin
+        const ramTotal = ramCoin + ramBoostCoin
+        const vgaTotal = vgaCoin + vgaBoostCoin
+
+        this.$store.commit('MODULE_TOTAL_COIN', {cpu: cpuTotal, ram: ramTotal, vga: vgaTotal})
+        this.$store.commit('COIN_PER_SECOND', parseFloat(cpuTotal + ramTotal + vgaTotal).toFixed(3))
+      } else {
+        this.$store.commit('COIN_PER_SECOND', 0)
+      }
     }
   }
 }
 </script>
 
 <style>
-/* 팝업 내 아이템 */
-.popup-item {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  margin-top: 20px;
-}
-
 .computer-module-type {
-font-size: 1.2rem;
-}
-
-/* 팝업 아이템 내의 하위 항목 (상세정보) */
-.popup-sub-item {
-  margin: 5px 0;
-}
-
-.popup-sub-item-2 {
-  margin: 5px 0;
-  color: #e45641;
-}
-
-/* 컴퓨터 부품 명 */
-.module-name {
-  margin: 10px 0;
-  color: #44b3c2;
+  font-size: 1.2rem;
 }
 
 /* 오버클럭 버튼 */

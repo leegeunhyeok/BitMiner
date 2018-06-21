@@ -67,8 +67,13 @@ export default {
   methods: {
     next () {
       this.tutorial++
+      if (this.tutorial === 4) {
+        this.$emit('changeLocation', 'city')
+      }
     },
     exit () {
+      this.$emit('changeLocation', 'home')
+      this.$emit('notify', '지급된 5000원으로 CPU, 램, 그래픽카드를 구매하세요!')
       this.$emit('exitTutorial')
     }
   }
