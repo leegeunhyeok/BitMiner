@@ -12,15 +12,6 @@
 
 module.exports = [
   {
-    name: '파워서플라이 Lv.2',
-    price: 15000,
-    info: '코인 최대 시세 +10',
-    psu: 2,
-    level: 1,
-    always: false,
-    src: 'psu/2.png'
-  },
-  {
     name: '저렴한 서멀컴파운드',
     price: 100,
     info: '1분간 채굴량 +10%',
@@ -39,5 +30,23 @@ module.exports = [
     level: 1,
     always: true,
     src: 'other/t_2.png'
+  },
+  {
+    name: '파워서플라이 Lv.2',
+    price: 15000,
+    info: '코인 최대 시세 +10',
+    psu: 2,
+    level: 1,
+    always: false,
+    src: 'psu/2.png'
+  },
+  {
+    name: '파워서플라이 Lv.3',
+    price: 75000,
+    info: '코인 최대 시세 +10',
+    psu: 3,
+    level: 2,
+    always: false,
+    src: 'psu/3.png'
   }
 ]

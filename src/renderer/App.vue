@@ -18,7 +18,7 @@ const defaultSaveData = {
   /* 보유 코인 수 */
   'coin': 0,
   /* 보유 현금 */
-  'money': 5000,
+  'money': 3000,
   /* CPU 종류 */
   'cpu': -1,
   /* CPU 레벨 */

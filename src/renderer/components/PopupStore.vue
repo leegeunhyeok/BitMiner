@@ -4,7 +4,7 @@
       <div class="popup-item" v-for="(data, i) in dataList" :key="i">
         <img class="store-item-img" :src="'./static/' + data.src">
         <div class="store-item-name"> {{ data.name }} </div>
-        <div class="store-sub-item">채굴량: {{ data.coin }} BTC/s</div>
+        <div class="store-sub-item">채굴량: <b class="mine-power">{{ data.coin }}</b> BTC/s</div>
         <div class="store-sub-item">가격: {{ data.price }} 원</div>
         <div class="store-limit">PSU 제한: {{ data.level }} 레벨 </div>
         <button class="buy-button" @click="buy(i, data.price, data.level, data.name)" v-if="ownIndex < i">구매</button>
@@ -45,9 +45,22 @@ export default {
     }
   },
   methods: {
+    check () {
+      const cpu = this.$store.state.userdata.data.cpu
+      const ram = this.$store.state.userdata.data.ram
+      const vga = this.$store.state.userdata.data.vga
+
+      return (cpu !== -1 && ram !== -1 && vga !== -1)
+    },
     buy (index, price, limit, name) {
       const money = this.$store.state.userdata.data.money
       const psu = this.$store.state.userdata.data.psu
+
+      if (index > 0 && !this.check()) {
+        this.$emit('notify', 'CPU, 램, 그래픽카드 모두 첫 번째 항목으로 구매하세요!')
+        return
+      }
+
       if (limit > psu) {
         this.$emit('notify', '파워서플라이 레벨이 낮습니다.')
         return
@@ -57,6 +70,7 @@ export default {
         document.getElementById('coin-effect').play()
         this.$store.commit('SET_DATA', {key: 'money', value: (money - price)})
         this.$store.commit('SET_DATA', {key: this.module, value: index})
+        this.$store.commit('SET_DATA', {key: this.module + 'Lv', value: 0})
         this.$store.commit('COIN_PER_SECOND')
         this.$emit('notify', name + ' 구매 완료')
         this.calcCoinPerSecond()
@@ -142,5 +156,9 @@ export default {
   color: #e45641;
   font-size: 0.8rem;
   margin-top: 5px;
+}
+
+.mine-power {
+  color: #44b3c2;
 }
 </style>

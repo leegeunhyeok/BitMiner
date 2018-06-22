@@ -111,7 +111,7 @@ export default {
     cpuMiningPower () {
       const cpu = this.cpu[this.$store.state.userdata.data.cpu]
       const cpuLv = this.$store.state.userdata.data.cpuLv
-      return cpu === undefined ? 0 : (cpu.coin + (cpu.coin * cpuLv / 10)).toFixed(3)
+      return cpu === undefined ? 0 : (cpu.coin + (cpu.coin * cpuLv / 5)).toFixed(3)
     },
     ramName () {
       const ram = this.ram[this.$store.state.userdata.data.ram]
@@ -120,7 +120,7 @@ export default {
     ramMiningPower () {
       const ram = this.ram[this.$store.state.userdata.data.ram]
       const ramLv = this.$store.state.userdata.data.ramLv
-      return ram === undefined ? 0 : (ram.coin + (ram.coin * ramLv / 10)).toFixed(3)
+      return ram === undefined ? 0 : (ram.coin + (ram.coin * ramLv / 5)).toFixed(3)
     },
     vgaName () {
       const vga = this.vga[this.$store.state.userdata.data.vga]
@@ -129,7 +129,7 @@ export default {
     vgaMiningPower () {
       const vga = this.vga[this.$store.state.userdata.data.vga]
       const vgaLv = this.$store.state.userdata.data.vgaLv
-      return vga === undefined ? 0 : (vga.coin + (vga.coin * vgaLv / 10)).toFixed(3)
+      return vga === undefined ? 0 : (vga.coin + (vga.coin * vgaLv / 5)).toFixed(3)
     }
   },
   created () {
@@ -174,43 +174,36 @@ export default {
 
       if (cpuIdx > -1 && ramIdx > -1 && vgaIdx > -1) {
         if (moduleName === 'cpu') {
-          if (money - this.cpuOverClockCost >= 0) {
-            if (cpuLv + 1 <= 10) {
-              document.getElementById('coin-effect').play()
-              this.$store.commit('SET_DATA', {key: 'money', value: money - this.cpuOverClockCost})
-              this.$store.commit('SET_DATA', {key: 'cpuLv', value: cpuLv + 1})
-            } else {
-              this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
-            }
-          } else {
-            this.$emit('notify', '보유하고있는 현금이 부족합니다.')
+          if (cpuLv + 1 > 10) {
+            this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
+          } else if (money - this.cpuOverClockCost >= 0) {
+            document.getElementById('coin-effect').play()
+            this.$store.commit('SET_DATA', {key: 'money', value: money - this.cpuOverClockCost})
+            this.$store.commit('SET_DATA', {key: 'cpuLv', value: cpuLv + 1})
           }
         } else if (moduleName === 'ram') {
-          if (money - this.ramOverClockCost >= 0) {
-            if (ramLv + 1 <= 10) {
-              document.getElementById('coin-effect').play()
-              this.$store.commit('SET_DATA', {key: 'money', value: money - this.ramOverClockCost})
-              this.$store.commit('SET_DATA', {key: 'ramLv', value: ramLv + 1})
-            } else {
-              this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
-            }
+          if (ramLv + 1 > 10) {
+            this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
+          } else if (money - this.ramOverClockCost >= 0) {
+            document.getElementById('coin-effect').play()
+            this.$store.commit('SET_DATA', {key: 'money', value: money - this.ramOverClockCost})
+            this.$store.commit('SET_DATA', {key: 'ramLv', value: ramLv + 1})
           } else {
             this.$emit('notify', '보유하고있는 현금이 부족합니다.')
           }
         } else if (moduleName === 'vga') {
-          if (money - this.vgaOverClockCost >= 0) {
-            if (vgaLv + 1 <= 10) {
-              document.getElementById('coin-effect').play()
-              this.$store.commit('SET_DATA', {key: 'money', value: money - this.vgaOverClockCost})
-              this.$store.commit('SET_DATA', {key: 'vgaLv', value: vgaLv + 1})
-            } else {
-              this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
-            }
+          if (vgaLv + 1 > 10) {
+            this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
+          } else if (money - this.vgaOverClockCost >= 0) {
+            document.getElementById('coin-effect').play()
+            this.$store.commit('SET_DATA', {key: 'money', value: money - this.vgaOverClockCost})
+            this.$store.commit('SET_DATA', {key: 'vgaLv', value: vgaLv + 1})
           } else {
             this.$emit('notify', '보유하고있는 현금이 부족합니다.')
           }
         }
         this.$emit('save')
+        this.$store.commit('BOOST_UPDATE')
         this.calcCoinPerSecond()
         this.moduleImagesUpdate()
         this.overclockCostUpdate()
@@ -232,9 +225,9 @@ export default {
         const ramCoin = Ram[ramNum].coin
         const vgaCoin = Vga[vgaNum].coin
 
-        const cpuBoostCoin = Cpu[cpuNum].coin * ((cpuLv) / 10)
-        const ramBoostCoin = Ram[ramNum].coin * ((ramLv) / 10)
-        const vgaBoostCoin = Vga[vgaNum].coin * ((vgaLv) / 10)
+        const cpuBoostCoin = Cpu[cpuNum].coin * ((cpuLv) / 5)
+        const ramBoostCoin = Ram[ramNum].coin * ((ramLv) / 5)
+        const vgaBoostCoin = Vga[vgaNum].coin * ((vgaLv) / 5)
 
         const cpuTotal = cpuCoin + cpuBoostCoin
         const ramTotal = ramCoin + ramBoostCoin

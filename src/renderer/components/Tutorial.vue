@@ -28,7 +28,7 @@
       <div id="tutorial-overclock" class="tutorial">
         컴퓨터 부품을 오버클럭하면<br>
         해당 부품 채굴량의<br>
-        10% 만큼 효과가 증가합니다.
+        20% 만큼 효과가 증가합니다.
       </div>
     </div>
     <div id="tutorial-3" v-if="tutorial === 3">
@@ -73,7 +73,7 @@ export default {
     },
     exit () {
       this.$emit('changeLocation', 'home')
-      this.$emit('notify', '지급된 5000원으로 CPU, 램, 그래픽카드를 구매하세요!')
+      this.$emit('notify', '지급된 현금으로 CPU, 램, 그래픽카드를 구매하세요!')
       this.$emit('exitTutorial')
     }
   }

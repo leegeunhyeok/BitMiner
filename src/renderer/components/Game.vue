@@ -16,7 +16,7 @@
       <notify v-if="notify" :message="notifyMessage"></notify>
     </transition>
     <transition name="phone" mode="in-out">
-      <phone @closePhone="phone = false" v-if="phone" @save="$emit('save')"></phone>
+      <phone @closePhone="phone = false" v-if="phone" @notify="showNotify" @save="$emit('save')"></phone>
     </transition>
     <button id="game-exit" v-if="location === 'home'" @click="gameExit">종료</button>
   </div>

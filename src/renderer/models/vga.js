@@ -10,9 +10,16 @@
 module.exports = [
   {
     name: 'AND Radeo',
-    price: 3500,
+    price: 1500,
     coin: 0.25,
     level: 1,
     src: 'vga/1.png'
+  },
+  {
+    name: 'Nvidio GT100',
+    price: 2000,
+    coin: 1,
+    level: 1,
+    src: 'vga/2.png'
   }
 ]
