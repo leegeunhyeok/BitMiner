@@ -59,6 +59,7 @@ export default {
         this.$store.commit('COIN_PER_SECOND')
         this.$emit('notify', name + ' 구매 완료')
         this.calcCoinPerSecond()
+        this.$emit('save')
       } else {
         this.$emit('notify', '보유중인 현금이 부족합니다.')
       }

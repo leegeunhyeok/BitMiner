@@ -32,7 +32,7 @@ module.exports = [
   },
   {
     name: '쓸만한 서멀컴파운드',
-    price: 300,
+    price: 500,
     info: '1분간 채굴량 +25%',
     duplicate: false,
     boost: 25,

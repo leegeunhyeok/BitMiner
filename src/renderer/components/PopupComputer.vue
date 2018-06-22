@@ -106,7 +106,8 @@ export default {
     },
     cpuMiningPower () {
       const cpu = this.cpu[this.$store.state.userdata.data.cpu]
-      return cpu === undefined ? 0 : cpu.coin
+      const cpuLv = this.$store.state.userdata.data.cpuLv
+      return cpu === undefined ? 0 : (cpu.coin + (cpu.coin * cpuLv / 10)).toFixed(3)
     },
     ramName () {
       const ram = this.ram[this.$store.state.userdata.data.ram]
@@ -114,7 +115,8 @@ export default {
     },
     ramMiningPower () {
       const ram = this.ram[this.$store.state.userdata.data.ram]
-      return ram === undefined ? 0 : ram.coin
+      const ramLv = this.$store.state.userdata.data.ramLv
+      return ram === undefined ? 0 : (ram.coin + (ram.coin * ramLv / 10)).toFixed(3)
     },
     vgaName () {
       const vga = this.vga[this.$store.state.userdata.data.vga]
@@ -122,7 +124,8 @@ export default {
     },
     vgaMiningPower () {
       const vga = this.vga[this.$store.state.userdata.data.vga]
-      return vga === undefined ? 0 : vga.coin
+      const vgaLv = this.$store.state.userdata.data.vgaLv
+      return vga === undefined ? 0 : (vga.coin + (vga.coin * vgaLv / 10)).toFixed(3)
     }
   },
   created () {
@@ -201,6 +204,8 @@ export default {
             this.$emit('notify', '보유하고있는 현금이 부족합니다.')
           }
         }
+        this.$emit('save')
+        this.calcCoinPerSecond()
         this.moduleImagesUpdate()
         this.overclockCostUpdate()
       } else {

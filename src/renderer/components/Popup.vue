@@ -4,9 +4,9 @@
     <div class="popup-title">{{ title }}</div>
     <div class="popup-content">
       <!-- 팝업 내용 영역 -->
-      <popup-computer v-if="type === 'computer'" @notify="notify"></popup-computer>
-      <popup-other-store v-else-if="other" @notify="notify"></popup-other-store>
-      <popup-store v-else-if="store" :type="type" @notify="notify"></popup-store>
+      <popup-computer v-if="type === 'computer'" @notify="notify" @save="$emit('save')"></popup-computer>
+      <popup-other-store v-else-if="other" @notify="notify" @save="$emit('save')"></popup-other-store>
+      <popup-store v-else-if="store" :type="type" @notify="notify" @save="$emit('save')"></popup-store>
     </div>
   </div>
 </template>
@@ -45,7 +45,7 @@ export default {
 #popup {
   position: absolute;
   width: 350px;
-  height: 250px;
+  height: 300px;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
@@ -82,7 +82,7 @@ export default {
 
 /* 팝업 내용 */
 .popup-content {
-  height: 180px;
+  height: 230px;
   overflow-y: auto;
 }
 
@@ -98,7 +98,7 @@ export default {
 /* 팝업 내 아이템 */
 .popup-item {
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  margin-top: 20px;
+  margin-bottom: 5px;
 }
 
 /* 팝업 아이템 내의 하위 항목 (상세정보) */

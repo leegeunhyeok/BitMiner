@@ -77,27 +77,27 @@ export default {
 #ram-store {
   top: 50px;
   left: 195px;
-  height: 150px;
+  height: 200px;
 }
 
 /* CPU 매장 영역 */
 #cpu-store {
   top: 270px;
   left: 50px;
-  height: 180px;
+  height: 220px;
 }
 
 /* VGA 매장 영역 */
 #vga-store {
   top: 290px;
   left: 186px;
-  height: 180px;
+  height: 250px;
 }
 
 /* 기타 소모품 매장 영역 */
 #other-store {
   top: 250px;
   right: 4px;
-  height: 150px;
+  height: 200px;
 }
 </style>

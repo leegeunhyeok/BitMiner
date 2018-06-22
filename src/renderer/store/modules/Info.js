@@ -1,5 +1,6 @@
 const state = {
   mineAvailable: false,
+  coinPrice: 0,
   coinPerSecond: 0,
   boostCoinPerSecond: 0,
   boostPercent: 0,
@@ -13,6 +14,9 @@ const state = {
 const mutations = {
   MINING (state) {
     state.mineAvailable = true
+  },
+  SET_COIN_PRICE (state, level) {
+    state.coinPrice = Math.floor(Math.random() * (level * 10)) + 1
   },
   EXIT (state) {
     state.exit = !state.exit
@@ -30,7 +34,7 @@ const mutations = {
     state.boostTime = 60
   },
   BOOST_UPDATE (state) {
-    state.boostCoinPerSecond = parseFloat(state.coinPerSecond * (state.boostPercent / 100)).toFixed(3)
+    state.boostCoinPerSecond = parseFloat(state.coinPerSecond * (state.boostPercent / 100).toFixed(3))
   },
   BOOST_TIME_DOWN (state) {
     if (state.boostTime > 0) {

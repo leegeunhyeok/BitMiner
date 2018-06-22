@@ -7,12 +7,12 @@
         <div class="phone-footer">
           <h5>코인 시세는 1분마다 갱신됩니다.</h5>
           <div>
-            1 BTC = <b id="coin-price">0</b>원
+            1 BTC = <b id="coin-price"> {{ $store.state.info.coinPrice }} </b>원
           </div>
-          <input id="sell-count" type="number" placeholder="개">
-          <button id="sell-button">매도</button>
+          <input id="sell-count" type="number" placeholder="개" v-model="count">
+          <button id="sell-button" @click="sell">매도</button>
           <div>
-            예상: <b id="prediction-money">0</b>원
+            예상: <b id="prediction-money"> {{ prediction }} </b>원
           </div>
         </div>
       </div>
@@ -23,7 +23,31 @@
 
 <script>
 export default {
-  name: 'phone'
+  name: 'phone',
+  data () {
+    return {
+      count: ''
+    }
+  },
+  computed: {
+    prediction () {
+      return this.count * this.$store.state.info.coinPrice
+    }
+  },
+  methods: {
+    sell () {
+      const coin = this.$store.state.userdata.data.coin
+      const money = this.$store.state.userdata.data.money + this.prediction
+      if (coin - this.count >= 0) {
+        document.getElementById('coin-effect').play()
+        this.$store.commit('SET_DATA', {key: 'coin', value: coin - this.count})
+        this.$store.commit('SET_DATA', {key: 'money', value: money})
+        this.count = ''
+      } else {
+        this.$emit('notify', '최대 매도가능 갯수를 초과하였습니다.')
+      }
+    }
+  }
 }
 </script>
 

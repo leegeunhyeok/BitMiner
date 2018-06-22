@@ -88,7 +88,9 @@ export default {
       try {
         const fs = require('fs')
         const path = require('path')
-        this.$store.commit('LOAD_DATA', JSON.parse(fs.readFileSync(path.join(this.userDataPath, this.fileName))))
+        const data = JSON.parse(fs.readFileSync(path.join(this.userDataPath, this.fileName)))
+        console.log(data)
+        this.$store.commit('LOAD_DATA', data)
       } catch (e) {
         console.log(e)
       }

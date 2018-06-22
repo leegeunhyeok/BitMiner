@@ -8,7 +8,7 @@
         <div class="store-sub-item">가격: {{ data.price }} 원</div>
         <div class="store-limit">PSU 제한: {{ data.level }} 레벨 </div>
         <div class="store-duplicate"> {{ data.duplicate ? '중복사용 가능' : '' }} </div>
-        <button class="buy-button" @click="buy(data)" v-if="data.always || psuLevel >= data.psu">구매</button>
+        <button class="buy-button" @click="buy(data)" v-if="data.always || psuLevel < data.psu">구매</button>
         <button class="buy-button" disabled v-else>매진</button>
       </div>
     </div>
@@ -62,7 +62,9 @@ export default {
             this.$store.commit('BOOST', data.boost)
             this.$emit('notify', `${data.boost} % 부스트가 적용되었습니다.`)
           }
+          this.$store.commit('BOOST_UPDATE')
         }
+        this.$emit('save')
       } else {
         this.$emit('notify', '보유중인 현금이 부족합니다.')
       }

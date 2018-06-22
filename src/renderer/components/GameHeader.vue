@@ -1,11 +1,11 @@
 <template>
   <div id="header">
     <!-- 부스트로 얻는 추가 코인 량 -->
-    <span id="coin-per-second-boost" v-if="boost">+ {{ $store.state.info.coinPerSecondBoost }}</span>
+    <span id="coin-per-second-boost" v-if="boost">+ {{ $store.state.info.boostCoinPerSecond.toFixed(3) }}</span>
     <!-- 1초당 코인 -->
-    <span id="coin-per-second" class="header-info">{{ $store.state.info.coinPerSecond }} BTC/s</span>
+    <span id="coin-per-second" class="header-info">{{ $store.state.info.coinPerSecond.toFixed(3) }} BTC/s</span>
     <!-- 보유중인 코인 -->
-    <span id="own-coin" class="header-info">{{ $store.state.userdata.data.coin }} BTC</span>
+    <span id="own-coin" class="header-info">{{ $store.state.userdata.data.coin.toFixed(3) }} BTC</span>
     <!-- 보유중인 현금 -->
     <span id="own-money" class="header-info">{{ $store.state.userdata.data.money }} 원</span>
     <!-- 부스트 -->

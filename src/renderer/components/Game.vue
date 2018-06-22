@@ -9,8 +9,8 @@
     <tutorial v-if="tutorialShow" @exitTutorial="exitTutorial" @changeLocation="changeLocation" @notify="showNotify"></tutorial>
     <game-home v-if="location === 'home'" @changeLocation="changeLocation" @openPopup="openPopup" @openPhone="openPhone"></game-home>
     <game-city v-if="location === 'city'" @changeLocation="changeLocation" @openPopup="openPopup"></game-city>
-    <popup @closePopup="popup = false" v-if="popup" :type="popupType" :title="popupTitle" @notify="showNotify"></popup>
-    <phone @closePhone="phone = false" v-if="phone"></phone>
+    <popup @closePopup="popup = false" v-if="popup" :type="popupType" :title="popupTitle" @notify="showNotify" @save="$emit('save')"></popup>
+    <phone @closePhone="phone = false" v-if="phone" @save="$emit('save')"></phone>
     <notify v-if="notify" :message="notifyMessage"></notify>
     <button id="game-exit" v-if="location === 'home'" @click="gameExit">종료</button>
   </div>
@@ -64,6 +64,7 @@ export default {
   },
   created () {
     this.calcCoinPerSecond()
+    this.$store.commit('SET_COIN_PRICE', this.$store.state.userdata.data.psu)
     this.location = 'home'
     this.tutorialShow = this.tutorial
   },
@@ -74,25 +75,25 @@ export default {
     start () {
       let time = 0
       this.loop = setInterval(() => {
-        // const coin = this.$store.state.userdata.data.coin
-        // const coinPerSecond = this.$store.state.info.coinPerSecond
-        // const coinPerSecondBoost = this.$store.state.info.coinPerSecondBoost
+        const coin = this.$store.state.userdata.data.coin
+        const coinPerSecond = this.$store.state.info.coinPerSecond
+        const coinPerSecondBoost = this.$store.state.info.boostCoinPerSecond
+        const totalCoin = coin + coinPerSecond + coinPerSecondBoost
         this.$store.commit('BOOST_TIME_DOWN')
-        this.$store.commit('SET_DATA', {key: 'coin', value: 0})
+        this.$store.commit('SET_DATA', {key: 'coin', value: totalCoin})
         if (time % 60 === 0) {
           this.$emit('save')
+          this.$store.commit('SET_COIN_PRICE', this.$store.state.userdata.data.psu)
         }
+        time++
       }, 1000)
     },
     changeLocation (location) {
       if (location === 'city') {
-        this.playEffectSound('door')
+        document.getElementById('door-effect').play()
       }
       this.popup = this.phone = false
       this.location = location
-    },
-    playEffectSound (name) {
-      document.getElementById(name + '-effect').play()
     },
     exitTutorial () {
       this.$store.commit('SET_DATA', {key: 'tutorial', value: 0})
