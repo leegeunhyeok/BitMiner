@@ -24,10 +24,10 @@
 </div>
 
 # 개발 설정
-의존성 모듈들을 설치한 후 `start` 스크립트 실행
+의존성 모듈들을 설치한 후 `dev` 스크립트 실행
 ```bash
-npm i
-npm start #npm run start
+npm i # npm install
+npm run dev
 ```
 
 # 빌드
@@ -40,4 +40,5 @@ npm run build
 
 # 정보
 - [Electron](https://electronjs.org/) 기반의 웹 게임
+- 리소스 [출처](https://github.com/leegeunhyeok/BitMiner/blob/master/RESORCES.md)
 - 개발자: 이근혁(lghlove0509@naver.com)

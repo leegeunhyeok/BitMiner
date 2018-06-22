@@ -13,8 +13,8 @@
 module.exports = [
   {
     name: '파워서플라이 Lv.2',
-    price: 10000,
-    info: '레벨 업',
+    price: 15000,
+    info: '코인 최대 시세 +10',
     psu: 2,
     level: 1,
     always: false,

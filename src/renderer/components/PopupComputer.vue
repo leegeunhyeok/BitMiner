@@ -6,7 +6,7 @@
         <br>
         <img :src="psuImage" id="my-psu-image" class="my-computer-image">
         <br>
-        <div class="module-name"></div>
+        <div class="module-name">코인 시세 변동폭: 1 ~ {{ coinPriceScope }} 원</div>
         <div class="popup-sub-item">
           레벨: <b> {{ $store.state.userdata.data.psu }} </b>
         </div>
@@ -100,6 +100,10 @@ export default {
     }
   },
   computed: {
+    coinPriceScope () {
+      const psuLv = this.$store.state.userdata.data.psu
+      return 10 * psuLv
+    },
     cpuName () {
       const cpu = this.cpu[this.$store.state.userdata.data.cpu]
       return cpu === undefined ? '고장 남' : cpu.name
