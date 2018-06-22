@@ -98,7 +98,7 @@ export default {
 /* 팝업 내 아이템 */
 .popup-item {
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  margin-bottom: 5px;
+  margin: 5px 0px;
 }
 
 /* 팝업 아이템 내의 하위 항목 (상세정보) */

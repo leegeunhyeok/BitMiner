@@ -2,7 +2,7 @@
   <div id="popup-store" class="popup">
     <div id="popup-store-list" class="popup-content">
       <div class="popup-item" v-for="(data, i) in dataList" :key="i">
-        <img :src="'./static/' + data.src" class="item-img">
+        <img class="store-item-img" :src="'./static/' + data.src">
         <div class="store-item-name"> {{ data.name }} </div>
         <div class="store-sub-item">채굴량: {{ data.coin }} BTC/s</div>
         <div class="store-sub-item">가격: {{ data.price }} 원</div>
@@ -97,6 +97,14 @@ export default {
 </script>
 
 <style>
+
+.store-item-img {
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin-top: 6px;
+  margin-left: 20px;
+}
 
 /* 구매 버튼 */
 .buy-button {

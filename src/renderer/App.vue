@@ -2,7 +2,9 @@
   <div id="app">
     <audio src="./static/sound/bgm.mp3" autoplay loop></audio>
     <router-view @openDialog="openDialog" @save="fileSave"></router-view>
-    <dialog-view v-if="dialog" :message="message" @closeDialog="closeDialog"></dialog-view>
+    <transition name="fade">
+      <dialog-view v-if="dialog" :message="message" @closeDialog="closeDialog"></dialog-view>
+    </transition>
   </div>
 </template>
 
@@ -136,5 +138,12 @@ html, body, #app {
 /* BODY 폰트를 위에서 불러온 pixel로 지정 */
 body, button, input {
   font-family: 'pixel';
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -58,9 +58,8 @@ export default {
   position: absolute;
   width: 320px;
   height: 400px;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  left: calc(50% - 160px);
+  top: 100px;
   border-radius: 24px;
   background-color: #222;
   padding: 25px 20px;

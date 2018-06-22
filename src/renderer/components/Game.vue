@@ -9,9 +9,15 @@
     <tutorial v-if="tutorialShow" @exitTutorial="exitTutorial" @changeLocation="changeLocation" @notify="showNotify"></tutorial>
     <game-home v-if="location === 'home'" @changeLocation="changeLocation" @openPopup="openPopup" @openPhone="openPhone"></game-home>
     <game-city v-if="location === 'city'" @changeLocation="changeLocation" @openPopup="openPopup"></game-city>
-    <popup @closePopup="popup = false" v-if="popup" :type="popupType" :title="popupTitle" @notify="showNotify" @save="$emit('save')"></popup>
-    <phone @closePhone="phone = false" v-if="phone" @save="$emit('save')"></phone>
-    <notify v-if="notify" :message="notifyMessage"></notify>
+    <transition name="fade">
+      <popup @closePopup="popup = false" v-if="popup" :type="popupType" :title="popupTitle" @notify="showNotify" @save="$emit('save')"></popup>
+    </transition>
+    <transition name="fade" mode="out-in">
+      <notify v-if="notify" :message="notifyMessage"></notify>
+    </transition>
+    <transition name="phone" mode="in-out">
+      <phone @closePhone="phone = false" v-if="phone" @save="$emit('save')"></phone>
+    </transition>
     <button id="game-exit" v-if="location === 'home'" @click="gameExit">종료</button>
   </div>
 </template>
@@ -213,5 +219,13 @@ export default {
 #game-exit:hover {
   background-color: #fff;
   color: #c54040;
+}
+
+.phone-enter-active, .phone-leave-active {
+  transition: all .5s;
+}
+.phone-enter, .phone-leave-to {
+  opacity: 0;
+  transform: translateY(50px);
 }
 </style>
