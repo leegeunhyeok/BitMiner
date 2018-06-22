@@ -22,8 +22,9 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "bitminer",
-    "appId": "org.simulatedgreg.electron-vue",
+    "productName": "Bit Miner",
+    "appId": "com.electron.bitminer",
+    "copyright": "Copyright © 2018 Geunhyeok LEE",
     "directories": {
       "output": "build"
     },
