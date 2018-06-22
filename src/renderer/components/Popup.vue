@@ -45,7 +45,7 @@ export default {
 #popup {
   position: absolute;
   width: 350px;
-  height: 300px;
+  height: 320px;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
@@ -82,7 +82,7 @@ export default {
 
 /* 팝업 내용 */
 .popup-content {
-  height: 230px;
+  height: 250px;
   overflow-y: auto;
 }
 

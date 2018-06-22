@@ -172,6 +172,7 @@ export default {
         if (moduleName === 'cpu') {
           if (money - this.cpuOverClockCost >= 0) {
             if (cpuLv + 1 <= 10) {
+              document.getElementById('coin-effect').play()
               this.$store.commit('SET_DATA', {key: 'money', value: money - this.cpuOverClockCost})
               this.$store.commit('SET_DATA', {key: 'cpuLv', value: cpuLv + 1})
             } else {
@@ -183,6 +184,7 @@ export default {
         } else if (moduleName === 'ram') {
           if (money - this.ramOverClockCost >= 0) {
             if (ramLv + 1 <= 10) {
+              document.getElementById('coin-effect').play()
               this.$store.commit('SET_DATA', {key: 'money', value: money - this.ramOverClockCost})
               this.$store.commit('SET_DATA', {key: 'ramLv', value: ramLv + 1})
             } else {
@@ -194,9 +196,9 @@ export default {
         } else if (moduleName === 'vga') {
           if (money - this.vgaOverClockCost >= 0) {
             if (vgaLv + 1 <= 10) {
+              document.getElementById('coin-effect').play()
               this.$store.commit('SET_DATA', {key: 'money', value: money - this.vgaOverClockCost})
               this.$store.commit('SET_DATA', {key: 'vgaLv', value: vgaLv + 1})
-              this.calcCoinPerSecond()
             } else {
               this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
             }

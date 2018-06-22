@@ -44,7 +44,7 @@ export default {
   position: absolute;
   top: 150px;
   left: 230px;
-  height: 150px;
+  height: 180px;
   text-align: center;
   animation: arrow 1s alternate infinite;
 }
@@ -60,7 +60,7 @@ export default {
   position: absolute;
   top: 250px;
   right: 296px;
-  height: 150px;
+  height: 180px;
   text-align: center;
   animation: arrow 1s alternate infinite;
 }
@@ -71,7 +71,7 @@ export default {
   position: absolute;
   top: 70px;
   right: 185px;
-  height: 250px;
+  height: 280px;
   text-align: center;
   animation: arrow 1s alternate infinite;
 }

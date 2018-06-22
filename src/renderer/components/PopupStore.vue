@@ -54,6 +54,7 @@ export default {
       }
 
       if (money - price >= 0) {
+        document.getElementById('coin-effect').play()
         this.$store.commit('SET_DATA', {key: 'money', value: (money - price)})
         this.$store.commit('SET_DATA', {key: this.module, value: index})
         this.$store.commit('COIN_PER_SECOND')

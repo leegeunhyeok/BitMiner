@@ -20,6 +20,8 @@ const mutations = {
   },
   EXIT (state) {
     state.exit = !state.exit
+    state.boostPercent = 0
+    state.boostTime = 0
   },
   MODULE_TOTAL_COIN (state, totals) {
     state.cpuCoin = totals['cpu']
