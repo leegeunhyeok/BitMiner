@@ -1,17 +1,12 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
+name: 기능 및 밸런스 조절 요청
+about: 본 프로젝트를 발전시켜주세요!
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**기능 요청**
+추가하기 원하는 기능을 자세하게 작성해주세요
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**밸런스 조절**
+어느 부분에서 문제점(또는 어려움)을 겪고있는지 자세하게 작성해주세요
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
