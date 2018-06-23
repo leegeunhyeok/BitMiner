@@ -17,9 +17,9 @@
 
 <div align="center">
 
-  <img src="./sample/game-home_0.0.6.png">
+  <img src="./sample/game-home_0.0.10.png">
 
-  <img src="./sample/game-store_0.0.6.png">
+  <img src="./sample/game-store_0.0.10.png">
 
 </div>
 
