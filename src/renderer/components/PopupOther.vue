@@ -50,6 +50,7 @@ export default {
       }
 
       if (money - data.price >= 0) {
+        document.getElementById('coin-effect').play()
         this.$store.commit('SET_DATA', {key: 'money', value: (money - data.price)})
         if (data.psu) {
           this.$store.commit('SET_DATA', {key: 'psu', value: data.psu})

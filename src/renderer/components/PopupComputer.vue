@@ -25,12 +25,15 @@
         <div class="popup-sub-item">
           오버클럭 레벨: <b> {{ $store.state.userdata.data.cpuLv }} </b>
         </div>
-        <div>
-          오버클럭 비용: <b> {{ cpuOverClockCost }} </b>원
+        <div v-if="$store.state.userdata.data.cpuLv < 10">
+          <div>
+            오버클럭 비용: <b> {{ cpuOverClockCost }} </b>원
+          </div>
+          <div class="popup-sub-item">
+            <button class="overclock-button" @click="overclock('cpu')">오버클럭</button>
+          </div>
         </div>
-        <div class="popup-sub-item">
-          <button class="overclock-button" @click="overclock('cpu')">오버클럭</button>
-        </div>
+        <b class="max-level" v-else>MAX</b>
       </div>
       <div class="popup-item">
         <b class="computer-module-type">램</b>
@@ -46,12 +49,15 @@
         <div class="popup-sub-item">
           오버클럭 레벨: <b> {{ $store.state.userdata.data.ramLv }} </b>
         </div>
-        <div>
-          오버클럭 비용: <b> {{ ramOverClockCost }} </b>원
+        <div v-if="$store.state.userdata.data.ramLv < 10">
+          <div>
+            오버클럭 비용: <b> {{ ramOverClockCost }} </b>원
+          </div>
+          <div class="popup-sub-item">
+            <button class="overclock-button" @click="overclock('ram')">오버클럭</button>
+          </div>
         </div>
-        <div class="popup-sub-item">
-          <button class="overclock-button" @click="overclock('ram')">오버클럭</button>
-        </div>
+        <b class="max-level" v-else>MAX</b>
       </div>
       <div class="popup-item">
         <b class="computer-module-type">그래픽카드</b>
@@ -67,12 +73,15 @@
         <div class="popup-sub-item">
           오버클럭 레벨: <b> {{ $store.state.userdata.data.vgaLv }}</b>
         </div>
-        <div>
-          오버클럭 비용: <b> {{ vgaOverClockCost }} </b>원
+        <div v-if="$store.state.userdata.data.vgaLv < 10">
+          <div>
+            오버클럭 비용: <b> {{ vgaOverClockCost }} </b>원
+          </div>
+          <div class="popup-sub-item">
+            <button class="overclock-button" @click="overclock('vga')">오버클럭</button>
+          </div>
         </div>
-        <div class="popup-sub-item">
-          <button class="overclock-button" @click="overclock('vga')">오버클럭</button>
-        </div>
+        <b class="max-level" v-else>MAX</b>
       </div>
     </div>
   </div>
@@ -111,7 +120,7 @@ export default {
     cpuMiningPower () {
       const cpu = this.cpu[this.$store.state.userdata.data.cpu]
       const cpuLv = this.$store.state.userdata.data.cpuLv
-      return cpu === undefined ? 0 : (cpu.coin + (cpu.coin * cpuLv / 5)).toFixed(3)
+      return cpu === undefined ? 0 : (cpu.coin + (cpu.coin * cpuLv / 10)).toFixed(3)
     },
     ramName () {
       const ram = this.ram[this.$store.state.userdata.data.ram]
@@ -120,7 +129,7 @@ export default {
     ramMiningPower () {
       const ram = this.ram[this.$store.state.userdata.data.ram]
       const ramLv = this.$store.state.userdata.data.ramLv
-      return ram === undefined ? 0 : (ram.coin + (ram.coin * ramLv / 5)).toFixed(3)
+      return ram === undefined ? 0 : (ram.coin + (ram.coin * ramLv / 10)).toFixed(3)
     },
     vgaName () {
       const vga = this.vga[this.$store.state.userdata.data.vga]
@@ -129,7 +138,7 @@ export default {
     vgaMiningPower () {
       const vga = this.vga[this.$store.state.userdata.data.vga]
       const vgaLv = this.$store.state.userdata.data.vgaLv
-      return vga === undefined ? 0 : (vga.coin + (vga.coin * vgaLv / 5)).toFixed(3)
+      return vga === undefined ? 0 : (vga.coin + (vga.coin * vgaLv / 10)).toFixed(3)
     }
   },
   created () {
@@ -157,9 +166,9 @@ export default {
       const ramLv = this.$store.state.userdata.data.ramLv
       const vgaLv = this.$store.state.userdata.data.vgaLv
 
-      this.cpuOverClockCost = this.cpu[cpuIdx] ? Math.floor((cpuLv + 1) * 0.05 * this.cpu[cpuIdx].price) : 0
-      this.ramOverClockCost = this.ram[ramIdx] ? Math.floor((ramLv + 1) * 0.05 * this.ram[ramIdx].price) : 0
-      this.vgaOverClockCost = this.vga[vgaIdx] ? Math.floor((vgaLv + 1) * 0.05 * this.vga[vgaIdx].price) : 0
+      this.cpuOverClockCost = this.cpu[cpuIdx] ? Math.floor((cpuLv + 1) * 0.02 * this.cpu[cpuIdx].price) : 0
+      this.ramOverClockCost = this.ram[ramIdx] ? Math.floor((ramLv + 1) * 0.02 * this.ram[ramIdx].price) : 0
+      this.vgaOverClockCost = this.vga[vgaIdx] ? Math.floor((vgaLv + 1) * 0.02 * this.vga[vgaIdx].price) : 0
     },
     overclock (moduleName) {
       const money = this.$store.state.userdata.data.money
@@ -225,9 +234,9 @@ export default {
         const ramCoin = Ram[ramNum].coin
         const vgaCoin = Vga[vgaNum].coin
 
-        const cpuBoostCoin = Cpu[cpuNum].coin * ((cpuLv) / 5)
-        const ramBoostCoin = Ram[ramNum].coin * ((ramLv) / 5)
-        const vgaBoostCoin = Vga[vgaNum].coin * ((vgaLv) / 5)
+        const cpuBoostCoin = Cpu[cpuNum].coin * ((cpuLv) / 10)
+        const ramBoostCoin = Ram[ramNum].coin * ((ramLv) / 10)
+        const vgaBoostCoin = Vga[vgaNum].coin * ((vgaLv) / 10)
 
         const cpuTotal = cpuCoin + cpuBoostCoin
         const ramTotal = ramCoin + ramBoostCoin
@@ -264,5 +273,10 @@ export default {
 .overclock-button:hover {
   background-color: #fff;
   color: #da9841;
+}
+
+.max-level {
+  color: #da9841;
+  margin-bottom: 10px;
 }
 </style>

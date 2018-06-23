@@ -33,28 +33,28 @@ module.exports = [
     name: 'AND Athlom K7',
     price: 2500,
     coin: 0.55,
-    level: 2,
+    level: 1,
     src: 'cpu/4.png'
   },
   {
     name: 'Intal Pantom 3',
-    price: 3000,
-    coin: 0.66,
+    price: 10000,
+    coin: 1.2,
     level: 2,
     src: 'cpu/5.png'
   },
   {
     name: 'AND Athlom 64',
-    price: 3200,
-    coin: 0.74,
+    price: 14000,
+    coin: 1.4,
     level: 2,
     src: 'cpu/6.png'
   },
   {
     name: 'Intal Pantom 4',
-    price: 4000,
-    coin: 1,
-    level: 3,
+    price: 26000,
+    coin: 1.95,
+    level: 2,
     src: 'cpu/7.png'
   }
 ]

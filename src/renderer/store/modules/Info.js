@@ -1,4 +1,5 @@
 const state = {
+  bgm: true,
   mineAvailable: false,
   coinPrice: 0,
   coinPerSecond: 0,
@@ -12,6 +13,9 @@ const state = {
 }
 
 const mutations = {
+  BGM_TOGGLE (state) {
+    state.bgm = !state.bgm
+  },
   MINING (state) {
     state.mineAvailable = true
   },

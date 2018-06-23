@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <audio src="./static/sound/bgm.mp3" autoplay loop></audio>
+    <audio src="./static/sound/bgm.mp3" id="bgm" autoplay loop></audio>
     <router-view @openDialog="openDialog" @save="fileSave"></router-view>
     <transition name="fade">
       <dialog-view v-if="dialog" :message="message" @closeDialog="closeDialog"></dialog-view>
     </transition>
+    <button id="bgm-button" @click="bgmToggle">{{ bgm }}</button>
   </div>
 </template>
 
@@ -45,6 +46,11 @@ export default {
       fileName: 'user.dat',
       dialog: false,
       message: ''
+    }
+  },
+  computed: {
+    bgm () {
+      return this.$store.state.info.bgm ? '배경음악 끄기' : '배경음악 켜기'
     }
   },
   components: {
@@ -106,6 +112,18 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+    bgmToggle () {
+      this.$store.commit('BGM_TOGGLE')
+      const bgm = document.getElementById('bgm')
+      const on = this.$store.state.info.bgm
+
+      if (on) {
+        bgm.play()
+      } else {
+        bgm.pause()
+        bgm.currentTime = 0
+      }
     }
   }
 }
@@ -143,7 +161,26 @@ body, button, input {
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
 }
+
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+#bgm-button {
+  cursor: pointer;
+  outline: none;
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  font-family: 'pixel';
+  background-color: #779ecb;
+  color: #fff;
+}
+
+#bgm-button:hover {
+  background-color: #6384aa;
 }
 </style>

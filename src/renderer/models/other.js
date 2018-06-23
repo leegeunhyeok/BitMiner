@@ -33,7 +33,7 @@ module.exports = [
   },
   {
     name: '파워서플라이 Lv.2',
-    price: 15000,
+    price: 20000,
     info: '코인 최대 시세 +10',
     psu: 2,
     level: 1,
@@ -42,7 +42,7 @@ module.exports = [
   },
   {
     name: '파워서플라이 Lv.3',
-    price: 75000,
+    price: 275000,
     info: '코인 최대 시세 +10',
     psu: 3,
     level: 2,

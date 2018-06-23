@@ -28,7 +28,7 @@
       <div id="tutorial-overclock" class="tutorial">
         컴퓨터 부품을 오버클럭하면<br>
         해당 부품 채굴량의<br>
-        20% 만큼 효과가 증가합니다.
+        10% 만큼 효과가 증가합니다.
       </div>
     </div>
     <div id="tutorial-3" v-if="tutorial === 3">
