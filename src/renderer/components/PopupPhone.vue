@@ -9,8 +9,11 @@
           <div>
             1 BTC = <b id="coin-price"> {{ $store.state.info.coinPrice }} </b>원
           </div>
-          <input id="sell-count" type="number" placeholder="개" v-model="count">
-          <button id="sell-button" @click="sell">매도</button>
+          <div>
+            <button id="all-coin-button" @click="all">전체</button>
+            <input id="sell-count" type="number" placeholder="개" v-model="count">
+            <button id="sell-button" @click="sell">매도</button>
+          </div>
           <div>
             예상: <b id="prediction-money"> {{ prediction }} </b>원
           </div>
@@ -37,6 +40,12 @@ export default {
     }
   },
   methods: {
+    /**
+     * @description 전체 코인 량 설정
+     */
+    all () {
+      this.count = parseInt(this.$store.state.userdata.data.coin)
+    },
     /**
      * @description 매도 버튼
      */
@@ -136,8 +145,28 @@ export default {
   border-top: 2px solid #f0aa28;
 }
 
+/* 매도 버튼 */
+#all-coin-button {
+  cursor: pointer;
+  outline: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 5px 0px;
+  background-color: #4cbd35;
+  border: 1px solid #4cbd35;
+  color: #000;
+  transition: .5s;
+}
+
+#all-coin-button:hover {
+  background-color: #fff;
+  color: #3f972d;
+}
+
 /* 판매 갯수 입력폼 */
 #sell-count {
+  width: 56%;
+  padding: 2px 5px;
   cursor: text;
   outline: none;
   border-radius: 5px;
