@@ -31,16 +31,37 @@ module.exports = [
   },
   {
     name: 'Sasung DDR2-400',
-    price: 3500,
+    price: 10000,
     coin: 0.4,
     level: 2,
     src: 'ram/4.png'
   },
   {
     name: 'Hinix DDR2-800',
-    price: 6000,
+    price: 25000,
     coin: 0.75,
     level: 2,
     src: 'ram/5.png'
+  },
+  {
+    name: 'Hinix DDR3-800D',
+    price: 42000,
+    coin: 1,
+    level: 2,
+    src: 'ram/6.png'
+  },
+  {
+    name: 'Sasung DDR3-1333',
+    price: 120000,
+    coin: 1.8,
+    level: 3,
+    src: 'ram/7.png'
+  },
+  {
+    name: 'Hinix DDR3-1866',
+    price: 200000,
+    coin: 2.5,
+    level: 3,
+    src: 'ram/8.png'
   }
 ]

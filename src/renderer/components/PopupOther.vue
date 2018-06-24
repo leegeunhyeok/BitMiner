@@ -5,7 +5,7 @@
         <img :src="'./static/' + data.src" class="item-img">
         <div class="store-item-name"> {{ data.name }} </div>
         <div class="store-sub-item"> {{ data.info }} </div>
-        <div class="store-sub-item">가격: {{ data.price }} 원</div>
+        <div class="store-sub-item">가격: {{ data.price.toLocaleString('en') }} 원</div>
         <div class="store-limit">PSU 제한: {{ data.level }} 레벨 </div>
         <div class="store-duplicate"> {{ data.duplicate ? '중복사용 가능' : '' }} </div>
         <button class="buy-button" @click="buy(data)" v-if="data.always || psuLevel < data.psu">구매</button>

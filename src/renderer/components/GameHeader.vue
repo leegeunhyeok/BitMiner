@@ -7,7 +7,7 @@
     <!-- 보유중인 코인 -->
     <span id="own-coin" class="header-info">{{ $store.state.userdata.data.coin.toFixed(3) }} BTC</span>
     <!-- 보유중인 현금 -->
-    <span id="own-money" class="header-info">{{ $store.state.userdata.data.money }} 원</span>
+    <span id="own-money" class="header-info">{{ this.$store.state.userdata.data.money.toLocaleString('en') }} 원</span>
     <!-- 부스트 -->
     <span id="boost-percent" class="header-boost">{{ $store.state.info.boostPercent }} %</span>
     <!-- 부스트 남은 시간 -->

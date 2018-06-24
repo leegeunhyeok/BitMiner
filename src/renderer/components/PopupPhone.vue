@@ -36,7 +36,7 @@ export default {
   computed: {
     /* 예상 수익 계산 */
     prediction () {
-      return this.count * this.$store.state.info.coinPrice
+      return parseInt((this.count * this.$store.state.info.coinPrice).toLocaleString('en'))
     }
   },
   methods: {

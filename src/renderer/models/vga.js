@@ -38,23 +38,44 @@ module.exports = [
   },
   {
     name: 'AND Radeo X1800',
-    price: 30000,
+    price: 35000,
     coin: 6.5,
     level: 2,
     src: 'vga/5.png'
   },
   {
     name: 'Nvidio GTS250',
-    price: 50000,
+    price: 70000,
     coin: 9,
     level: 2,
     src: 'vga/6.png'
   },
   {
     name: 'AND Radeo HD4570',
-    price: 100000,
+    price: 150000,
     coin: 13.5,
     level: 2,
     src: 'vga/7.png'
+  },
+  {
+    name: 'Nvidio GTS450',
+    price: 275000,
+    coin: 19,
+    level: 2,
+    src: 'vga/8.png'
+  },
+  {
+    name: 'AND Radeo HD6570',
+    price: 400000,
+    coin: 27,
+    level: 2,
+    src: 'vga/9.png'
+  },
+  {
+    name: 'Nvidio GTX580',
+    price: 900000,
+    coin: 40,
+    level: 3,
+    src: 'vga/10.png'
   }
 ]

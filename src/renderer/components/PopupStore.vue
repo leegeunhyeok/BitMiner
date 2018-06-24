@@ -5,7 +5,7 @@
         <img class="store-item-img" :src="'./static/' + data.src">
         <div class="store-item-name"> {{ data.name }} </div>
         <div class="store-sub-item">채굴량: <b class="mine-power">{{ data.coin }}</b> BTC/s</div>
-        <div class="store-sub-item">가격: {{ data.price }} 원</div>
+        <div class="store-sub-item">가격: {{ data.price.toLocaleString('en') }} 원</div>
         <div class="store-limit">PSU 제한: {{ data.level }} 레벨 </div>
         <button class="buy-button" @click="buy(i, data.price, data.level, data.name)" v-if="ownIndex < i">구매</button>
         <button class="buy-button" disabled v-else>매진</button>

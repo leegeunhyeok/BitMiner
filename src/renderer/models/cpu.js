@@ -56,5 +56,47 @@ module.exports = [
     coin: 1.95,
     level: 2,
     src: 'cpu/7.png'
+  },
+  {
+    name: 'AND Athlom X2',
+    price: 30000,
+    coin: 2.6,
+    level: 2,
+    src: 'cpu/8.png'
+  },
+  {
+    name: 'Intal Core2 Duo',
+    price: 150000,
+    coin: 7,
+    level: 3,
+    src: 'cpu/9.png'
+  },
+  {
+    name: 'AND Phanon X9000',
+    price: 245000,
+    coin: 9,
+    level: 3,
+    src: 'cpu/10.png'
+  },
+  {
+    name: 'Intal Core2 Quad',
+    price: 300000,
+    coin: 11,
+    level: 3,
+    src: 'cpu/11.png'
+  },
+  {
+    name: 'AND Phanon2 X4',
+    price: 450000,
+    coin: 15,
+    level: 3,
+    src: 'cpu/12.png'
+  },
+  {
+    name: 'Intal Core2 Extreme',
+    price: 800000,
+    coin: 25,
+    level: 3,
+    src: 'cpu/13.png'
   }
 ]
