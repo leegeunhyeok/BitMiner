@@ -26,18 +26,25 @@ export default {
   name: 'phone',
   data () {
     return {
+      /* 매도할 코인 수 */
       count: ''
     }
   },
   computed: {
+    /* 예상 수익 계산 */
     prediction () {
       return this.count * this.$store.state.info.coinPrice
     }
   },
   methods: {
+    /**
+     * @description 매도 버튼
+     */
     sell () {
       const coin = this.$store.state.userdata.data.coin
       const money = this.$store.state.userdata.data.money + this.prediction
+
+      /* 매도할 코인 갯수가 보유중인 갯수를 초과하지 않은 경우 */
       if (coin - this.count >= 0) {
         document.getElementById('coin-effect').play()
         this.$store.commit('SET_DATA', {key: 'coin', value: coin - this.count})
@@ -52,8 +59,8 @@ export default {
 </script>
 
 <style>
-/* 핸드폰 영역 */
 
+/* 핸드폰 영역 */
 #popup-phone {
   position: absolute;
   width: 320px;
@@ -102,6 +109,7 @@ export default {
   background-color: #aaa;
 }
 
+/* 핸드폰 화면 상단 영역 */
 .phone-header {
   position: absolute;
   top: 0;
@@ -114,6 +122,7 @@ export default {
   font-weight: bold;
 }
 
+/* 핸드폰 내용 영역 */
 .phone-content {
   width: 100%;
   height: 100%;
@@ -121,11 +130,13 @@ export default {
   background-color: #efe3af;
 }
 
+/* 핸드폰 화면 하단 영역 */
 .phone-footer {
   background-color: #fff;
   border-top: 2px solid #f0aa28;
 }
 
+/* 판매 갯수 입력폼 */
 #sell-count {
   cursor: text;
   outline: none;

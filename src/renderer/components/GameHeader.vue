@@ -19,6 +19,7 @@
 export default {
   name: 'game-header',
   computed: {
+    /* 부스트 지속시간 및 부스트 퍼센트가 0 이상인지 확인 */
     boost () {
       return this.$store.state.info.boostTime > 0 && this.$store.state.info.boostPercent > 0
     }
@@ -58,6 +59,7 @@ export default {
   font-size: 0.8rem;
 }
 
+/* 상단의 부스트 영역 (%, 지속시간) */
 .header-boost {
   margin: 10px 5px;
   border-radius: 10px;

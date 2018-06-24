@@ -31,14 +31,23 @@ export default {
   name: 'game',
   data () {
     return {
+      /* 튜토리얼 보이기 여부 */
       tutorialShow: false,
+      /* 게임내의 위치 */
       location: 'home',
+      /* 팝업 보여주기 여부 (매장) */
       popup: false,
+      /* 팝업 유형 */
       popupType: '',
+      /* 팝업 타이틀 */
       popupTitle: '',
+      /* 알림 보여주기 여부 */
       notify: false,
+      /* 알림에 보여질 메시지 */
       notifyMessage: '',
+      /* 핸드폰 팝업 보여주기 여부 */
       phone: false,
+      /* 게임 시작 시 Interval 객체 */
       loop: null
     }
   },
@@ -52,17 +61,21 @@ export default {
     'notify': require('@/components/Notify').default
   },
   computed: {
+    /* Vuex 유저 데이터에 저장된 튜토리얼 보이기 여부 */
     tutorial () {
       return this.$store.state.userdata.data.tutorial === 1
     },
+    /* 게임 종료 여부 */
     exitStatus () {
       return this.$store.state.info.exit
     }
   },
   watch: {
+    /* 튜토리얼 보이기 여부가 변경된 후 튜토리얼 보이기/숨기기 지정 */
     tutorial (newVal, oldVal) {
       this.tutorialShow = newVal === 1
     },
+    /* 게임 종료 여부 감시(데이터 변경이 감지되면 메인으로 이동) */
     exitStatus (newVal, oldVal) {
       clearInterval(this.loop)
       this.$router.push({name: 'main'})
@@ -78,6 +91,9 @@ export default {
     this.start()
   },
   methods: {
+    /**
+     * @description 게임 시작 (setInterval을 통해 1초마다 데이터 갱신)
+     */
     start () {
       let time = 0
       this.loop = setInterval(() => {
@@ -94,6 +110,9 @@ export default {
         time++
       }, 1000)
     },
+    /**
+     * @description 게임 내 위치 변경
+     */
     changeLocation (location) {
       if (location === 'city') {
         document.getElementById('door-effect').play()
@@ -101,14 +120,26 @@ export default {
       this.popup = this.phone = false
       this.location = location
     },
+    /**
+     * @description 튜토리얼 닫기
+     */
     exitTutorial () {
       this.$store.commit('SET_DATA', {key: 'tutorial', value: 0})
       this.$emit('save')
     },
+    /**
+     * @description 게임 종료 버튼 클릭 시 대화창 띄우기
+     */
     gameExit () {
       this.$emit('openDialog', {type: 'exit', message: '정말 종료하시겠습니까?'})
     },
+    /**
+     * @description 팝업 토글 (상점 팝업)
+     * @param {string} type 상점 유형
+     * @param {string} title 상점 타이틀
+     */
     openPopup (type, title) {
+      /* 팝업이 닫혀있는 경우 열기 */
       if (!this.popup) {
         if (type === 'computer') {
           document.getElementById('computer-effect').play()
@@ -116,6 +147,7 @@ export default {
           document.getElementById('shop-effect').play()
         }
 
+        /* 핸드폰 팝업이 열려있는 경우 닫기 */
         if (this.phone) {
           this.phone = false
         }
@@ -123,28 +155,44 @@ export default {
         this.popupTitle = title
         this.popup = true
       } else {
+        /* 열려있는 경우 닫기 */
         this.popup = false
       }
     },
+    /**
+     * @description 핸드폰 팝업 토글
+     */
     openPhone () {
+      /* 핸드폰 팝업이 닫혀있는 경우 열기 */
       if (!this.phone) {
         document.getElementById('phone-effect').play()
+
+        /* 다른 팝업이 열려있는 경우 닫기 */
         if (this.popup) {
           this.popup = false
         }
         this.phone = true
       } else {
+        /* 핸드폰 팝업이 열려있는 경우 닫기 */
         this.phone = false
       }
     },
+    /**
+     * @description 알림 띄우기
+     * @param {string} 알림에 표시할 메시지
+     */
     showNotify (message) {
       this.notifyMessage = message
       this.notify = true
 
+      /* 알림은 2.5초 뒤 닫기 */
       setTimeout(() => {
         this.notify = false
       }, 2500)
     },
+    /**
+     * @description 1초당 채굴되는 코인 량 계산
+     */
     calcCoinPerSecond () {
       const cpuNum = this.$store.state.userdata.data.cpu
       const ramNum = this.$store.state.userdata.data.ram
@@ -221,9 +269,11 @@ export default {
   color: #c54040;
 }
 
+/* 핸드폰 팝업 트렌지션 */
 .phone-enter-active, .phone-leave-active {
   transition: all .5s;
 }
+
 .phone-enter, .phone-leave-to {
   opacity: 0;
   transform: translateY(50px);

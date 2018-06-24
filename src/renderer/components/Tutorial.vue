@@ -58,20 +58,31 @@ export default {
   name: 'tutorial',
   data () {
     return {
+      /* 튜토리얼 화면 번호 (1~4까지 존재) */
       tutorial: 1
     }
   },
   created () {
+    /* 초기에는 1로 설정 */
     this.tutorial = 1
   },
   methods: {
+    /**
+     * @description 다음 버튼 이벤트
+     */
     next () {
+      /* 화면 번호 1증가 */
       this.tutorial++
+      /* 화면4 에서는 도시 화면으로 전환 */
       if (this.tutorial === 4) {
         this.$emit('changeLocation', 'city')
       }
     },
+    /**
+     * @description 튜토리얼 종료 버튼
+     */
     exit () {
+      /* 집으로 이동, 알림 표시 */
       this.$emit('changeLocation', 'home')
       this.$emit('notify', '지급된 현금으로 CPU, 램, 그래픽카드를 구매하세요!')
       this.$emit('exitTutorial')
@@ -81,23 +92,24 @@ export default {
 </script>
 
 <style>
+
 #tutorial {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 9999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
 }
 
 .tutorial {
-    position: absolute;
-    display: inline-block;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #000;
-    padding: 10px;
+  position: absolute;
+  display: inline-block;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000;
+  padding: 10px;
 }
 
 /* 튜토리얼 다음 버튼 */
@@ -181,7 +193,4 @@ export default {
   left: 270px;
 }
 
-.tutorial-hide {
-  display: none;
-}
 </style>

@@ -96,40 +96,45 @@ export default {
   name: 'computer-popup',
   data () {
     return {
+      /* 부품 데이터 리스트 */
       cpu: Cpu,
       ram: Ram,
       vga: Vga,
+      /* 부품 이미지 경로 */
       psuImage: '',
       cpuImage: '',
       ramImage: '',
       vgaImage: '',
+      /* 오버클럭 비용 */
       cpuOverClockCost: 0,
       ramOverClockCost: 0,
       vgaOverClockCost: 0
     }
   },
   computed: {
+    /* PSU 레벨에 따른 1코인의 최대 가격 */
     coinPriceScope () {
       const psuLv = this.$store.state.userdata.data.psu
       return 10 * psuLv
     },
+    /* CPU 명 */
     cpuName () {
       const cpu = this.cpu[this.$store.state.userdata.data.cpu]
       return cpu === undefined ? '고장 남' : cpu.name
     },
+    /* CPU 채굴량(오버클럭 레벨 포함) */
     cpuMiningPower () {
       const cpu = this.cpu[this.$store.state.userdata.data.cpu]
-      const cpuLv = this.$store.state.userdata.data.cpuLv
-      return cpu === undefined ? 0 : (cpu.coin + (cpu.coin * cpuLv / 10)).toFixed(3)
+      return cpu === undefined ? 0 : this.$store.state.info.cpuCoin.toFixed(3)
     },
+    /* 램, 그래픽카드 모두 CPU와 동일 */
     ramName () {
       const ram = this.ram[this.$store.state.userdata.data.ram]
       return ram === undefined ? '고장 남' : ram.name
     },
     ramMiningPower () {
       const ram = this.ram[this.$store.state.userdata.data.ram]
-      const ramLv = this.$store.state.userdata.data.ramLv
-      return ram === undefined ? 0 : (ram.coin + (ram.coin * ramLv / 10)).toFixed(3)
+      return ram === undefined ? 0 : this.$store.state.info.ramCoin.toFixed(3)
     },
     vgaName () {
       const vga = this.vga[this.$store.state.userdata.data.vga]
@@ -137,8 +142,7 @@ export default {
     },
     vgaMiningPower () {
       const vga = this.vga[this.$store.state.userdata.data.vga]
-      const vgaLv = this.$store.state.userdata.data.vgaLv
-      return vga === undefined ? 0 : (vga.coin + (vga.coin * vgaLv / 10)).toFixed(3)
+      return vga === undefined ? 0 : this.$store.state.info.vgaCoin.toFixed(3)
     }
   },
   created () {
@@ -146,6 +150,9 @@ export default {
     this.overclockCostUpdate()
   },
   methods: {
+    /**
+     * @description 부품 이미지 설정
+     */
     moduleImagesUpdate () {
       const psuLevel = this.$store.state.userdata.data.psu
       const cpuIdx = this.$store.state.userdata.data.cpu
@@ -157,6 +164,9 @@ export default {
       this.ramImage = ramIdx !== -1 ? './static/' + this.ram[ramIdx].src : './static/broken.png'
       this.vgaImage = vgaIdx !== -1 ? './static/' + this.vga[vgaIdx].src : './static/broken.png'
     },
+    /**
+     * @description 오버클럭 비용 설정
+     */
     overclockCostUpdate () {
       const cpuIdx = this.$store.state.userdata.data.cpu
       const ramIdx = this.$store.state.userdata.data.ram
@@ -166,10 +176,15 @@ export default {
       const ramLv = this.$store.state.userdata.data.ramLv
       const vgaLv = this.$store.state.userdata.data.vgaLv
 
+      /* 오버클럭 비용은 구매 가격의 2% */
       this.cpuOverClockCost = this.cpu[cpuIdx] ? Math.floor((cpuLv + 1) * 0.02 * this.cpu[cpuIdx].price) : 0
       this.ramOverClockCost = this.ram[ramIdx] ? Math.floor((ramLv + 1) * 0.02 * this.ram[ramIdx].price) : 0
       this.vgaOverClockCost = this.vga[vgaIdx] ? Math.floor((vgaLv + 1) * 0.02 * this.vga[vgaIdx].price) : 0
     },
+    /**
+     * @description 오버클럭 버튼
+     * @param {string} moduleName 부품 유형 (cpu, ram, vga)
+     */
     overclock (moduleName) {
       const money = this.$store.state.userdata.data.money
 
@@ -220,6 +235,9 @@ export default {
         this.$emit('notify', 'CPU, 램, 그래픽카드가 모두 있어야 오버클럭할 수 있습니다.')
       }
     },
+    /**
+     * @description 1초당 채굴하는 코인 량 계산
+     */
     calcCoinPerSecond () {
       const cpuNum = this.$store.state.userdata.data.cpu
       const ramNum = this.$store.state.userdata.data.ram
@@ -234,9 +252,9 @@ export default {
         const ramCoin = Ram[ramNum].coin
         const vgaCoin = Vga[vgaNum].coin
 
-        const cpuBoostCoin = Cpu[cpuNum].coin * ((cpuLv) / 10)
-        const ramBoostCoin = Ram[ramNum].coin * ((ramLv) / 10)
-        const vgaBoostCoin = Vga[vgaNum].coin * ((vgaLv) / 10)
+        const cpuBoostCoin = Cpu[cpuNum].coin * (cpuLv / 10)
+        const ramBoostCoin = Ram[ramNum].coin * (ramLv / 10)
+        const vgaBoostCoin = Vga[vgaNum].coin * (vgaLv / 10)
 
         const cpuTotal = cpuCoin + cpuBoostCoin
         const ramTotal = ramCoin + ramBoostCoin

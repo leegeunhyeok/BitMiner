@@ -38,6 +38,7 @@ export default {
   name: 'main-menu',
   data () {
     return {
+      /* 메인메뉴, 정보 창 여부 */
       menu: true
     }
   },
@@ -45,42 +46,65 @@ export default {
     this.menu = true
   },
   mounted () {
+    /* 유저 데이터가 없을 경우 이어서 하기 버튼에 클래스 추가 */
     if (this.$store.state.userdata.data === null) {
-      this.continue = false
       document.getElementById('continue').classList.add('disable-text')
     }
   },
   computed: {
+    /* Vuex의 유저 데이터 감시를 위해 선언 */
     continueAvaiable () {
       return this.$store.state.userdata.data
     }
   },
   watch: {
+    /* 유저 데이터의 변경이 감시될 경우 이어서하기 버튼 클래스 삭제 및 게임 이어서 진행 */
     continueAvaiable (newVal, oldVal) {
-      this.continue = true
       document.getElementById('continue').classList.remove('disable-text')
       this.continueGame()
     }
   },
   methods: {
+    /**
+     * @description 게임 이어서 하기
+     */
     continueGame () {
+      /* 유저 데이터가 있는 경우 */
       if (this.$store.state.userdata.data) {
         this.$router.push({name: 'game'})
       }
     },
+    /**
+     * @description 새 게임 시작
+     */
     newGame () {
+      /* 대화창 띄우기 */
       this.$emit('openDialog', {type: 'new', message: '정말 새로 시작하시겠습니까?'})
     },
+    /**
+     * @description 정보 화면 보여주기
+     */
     information () {
       this.menu = false
     },
+    /**
+     * @description 최신 버전 확인
+     */
     lastestVersion () {
+      /* 컴퓨터의 웹 브라우저로 띄워주기 */
       this.$electron.shell.openExternal('https://github.com/leegeunhyeok/BitMiner/releases/latest')
     },
+    /**
+     * @description 메인 화면 보여주기
+     */
     main () {
       this.menu = true
     },
+    /**
+     * @description 게임 종료
+     */
     exit () {
+      /* Electrong 윈도우를 닫습니다 */
       this.$electron.remote.getCurrentWindow().close()
     }
   }
@@ -205,6 +229,7 @@ export default {
   color: #e45641;
 }
 
+/* 비활성화 텍스트 (이어하기 못할 경우 추가되는 클래스) */
 .disable-text {
   cursor: default;
   color: #525252;

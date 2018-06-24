@@ -13,6 +13,7 @@
 <script>
 export default {
   name: 'dialog-view',
+  /* 대화창에 표시될 메시지 */
   props: ['message']
 }
 </script>

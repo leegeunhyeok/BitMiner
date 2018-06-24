@@ -5,6 +5,7 @@
 <script>
 export default {
   name: 'notify',
+  /* 알림에 표시할 데이터 */
   props: ['message']
 }
 </script>

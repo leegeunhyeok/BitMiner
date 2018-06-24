@@ -22,15 +22,22 @@ export default {
   name: 'store-other',
   data () {
     return {
+      /* 기타 매장 데이터 */
       dataList: Other
     }
   },
   computed: {
+    /* 유저의 PSU 레벨 */
     psuLevel () {
       return this.$store.state.userdata.data.psu
     }
   },
   methods: {
+    /**
+     * @description 구매 버튼
+     * @param {any} 구매한 제품 데이터 객체
+     * 객체 형식은 ../models/other.js 에서 확인 가능
+     */
     buy (data) {
       const money = this.$store.state.userdata.data.money
       const psu = this.$store.state.userdata.data.psu
@@ -107,12 +114,14 @@ export default {
   color: #000;
 }
 
+/* PSU 레벨 제한 */
 .store-limit {
   color: #e45641;
   font-size: 0.8rem;
   margin-top: 5px;
 }
 
+/* 부스트 아이템 중복 사용가능 여부 */
 .store-duplicate {
   color: #44b3c2;
   font-size: 0.8rem;

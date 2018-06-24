@@ -21,18 +21,22 @@ import Vga from '../models/vga.js'
 
 export default {
   name: 'store',
+  /* 상점 유형 */
   props: ['type'],
   data () {
     return {
+      /* 상품 리스트 */
       dataList: []
     }
   },
   computed: {
+    /* 유저가 보유하고 있는 상품의 인덱스 */
     ownIndex () {
       return this.$store.state.userdata.data[this.module]
     }
   },
   created () {
+    /* 상품 리스트를 타입에 알맞는 데이터로 지정 */
     if (this.type === 'cpuStore') {
       this.module = 'cpu'
       this.dataList = Cpu
@@ -45,6 +49,10 @@ export default {
     }
   },
   methods: {
+    /**
+     * @description 보유한 부품 종류가 -1 이 아닌지 확인
+     * @return {boolean} 모든 부품이 -1이 아닌지에 대한 여부
+     */
     check () {
       const cpu = this.$store.state.userdata.data.cpu
       const ram = this.$store.state.userdata.data.ram
@@ -52,20 +60,31 @@ export default {
 
       return (cpu !== -1 && ram !== -1 && vga !== -1)
     },
+    /**
+     * @description 구매 버튼
+     * @param {number} index 구매 할 제품 인덱스
+     * @param {number} price 구매 할 제품 가격
+     * @param {number} limit 구매 할 제품의 PSU 제한 레벨
+     * @param {string} name 구매 할 제품의 상품 명
+     */
     buy (index, price, limit, name) {
+      /* 유저가 보유한 현금 및 PSU 레벨 */
       const money = this.$store.state.userdata.data.money
       const psu = this.$store.state.userdata.data.psu
 
+      /* 게임 첫 시작시 첫 번째 부품을 구매하지 않고 상위 부품을 구매할 경우 */
       if (index > 0 && !this.check()) {
         this.$emit('notify', 'CPU, 램, 그래픽카드 모두 첫 번째 항목으로 구매하세요!')
         return
       }
 
+      /* 유저의 PSU 레벨이 제한 레벨보다 낮을 경우 */
       if (limit > psu) {
         this.$emit('notify', '파워서플라이 레벨이 낮습니다.')
         return
       }
 
+      /* 보유한 현금으로 구매가 가능한 경우 */
       if (money - price >= 0) {
         document.getElementById('coin-effect').play()
         this.$store.commit('SET_DATA', {key: 'money', value: (money - price)})
@@ -79,6 +98,9 @@ export default {
         this.$emit('notify', '보유중인 현금이 부족합니다.')
       }
     },
+    /**
+     * @description 1초당 채굴량 계산
+     */
     calcCoinPerSecond () {
       const cpuNum = this.$store.state.userdata.data.cpu
       const ramNum = this.$store.state.userdata.data.ram
@@ -93,9 +115,9 @@ export default {
         const ramCoin = Ram[ramNum].coin
         const vgaCoin = Vga[vgaNum].coin
 
-        const cpuBoostCoin = Cpu[cpuNum].coin * ((cpuLv) / 10)
-        const ramBoostCoin = Ram[ramNum].coin * ((ramLv) / 10)
-        const vgaBoostCoin = Vga[vgaNum].coin * ((vgaLv) / 10)
+        const cpuBoostCoin = Cpu[cpuNum].coin * (cpuLv / 10)
+        const ramBoostCoin = Ram[ramNum].coin * (ramLv / 10)
+        const vgaBoostCoin = Vga[vgaNum].coin * (vgaLv / 10)
 
         const cpuTotal = cpuCoin + cpuBoostCoin
         const ramTotal = ramCoin + ramBoostCoin

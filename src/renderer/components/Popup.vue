@@ -14,14 +14,14 @@
 <script>
 export default {
   name: 'popup',
+  /* 팝업 제목, 유형 */
   props: ['title', 'type'],
-  date () {
-    return {}
-  },
   computed: {
+    /* type에 store 문자가 있는지 확인 */
     store () {
       return this.type.toLowerCase().search('store') !== -1
     },
+    /* type에 other 문자가 있는지 확인 */
     other () {
       return this.type.toLowerCase().search('other') !== -1
     }
@@ -32,6 +32,10 @@ export default {
     'popup-other-store': require('@/components/PopupOther').default
   },
   methods: {
+    /**
+     * @description 상위 컴포넌트에게 message 와 함께 notify 이벤트를 발생
+     * @param {string} message 알림에 표시할 문자열
+     */
     notify (message) {
       this.$emit('notify', message)
     }
