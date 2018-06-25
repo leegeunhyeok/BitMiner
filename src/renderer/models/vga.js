@@ -77,5 +77,19 @@ module.exports = [
     coin: 40,
     level: 3,
     src: 'vga/10.png'
+  },
+  {
+    name: 'AND Radeo R9 280X',
+    price: 1500000,
+    coin: 52,
+    level: 3,
+    src: 'vga/11.png'
+  },
+  {
+    name: 'Nvidio GTX780ti',
+    price: 2400000,
+    coin: 65,
+    level: 3,
+    src: 'vga/12.png'
   }
 ]

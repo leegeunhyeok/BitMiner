@@ -57,5 +57,14 @@ module.exports = [
     level: 3,
     always: false,
     src: 'psu/4.png'
+  },
+  {
+    name: '파워서플라이 Lv.5',
+    price: 10000000,
+    info: '코인 최대 시세 +10',
+    psu: 5,
+    level: 4,
+    always: false,
+    src: 'psu/5.png'
   }
 ]

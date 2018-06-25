@@ -80,23 +80,37 @@ module.exports = [
   },
   {
     name: 'Intal Core2 Quad',
-    price: 300000,
+    price: 400000,
     coin: 11,
     level: 3,
     src: 'cpu/11.png'
   },
   {
     name: 'AND Phanon2 X4',
-    price: 450000,
+    price: 675000,
     coin: 15,
     level: 3,
     src: 'cpu/12.png'
   },
   {
     name: 'Intal Core2 Extreme',
-    price: 800000,
+    price: 900000,
     coin: 25,
     level: 3,
     src: 'cpu/13.png'
+  },
+  {
+    name: 'Intal i7-980',
+    price: 1800000,
+    coin: 40,
+    level: 4,
+    src: 'cpu/14.png'
+  },
+  {
+    name: 'AND FX-8350',
+    price: 3000000,
+    coin: 55,
+    level: 4,
+    src: 'cpu/15.png'
   }
 ]

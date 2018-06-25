@@ -63,5 +63,12 @@ module.exports = [
     coin: 2.5,
     level: 3,
     src: 'ram/8.png'
+  },
+  {
+    name: 'Corsor DDR3-2133 Dominator',
+    price: 360000,
+    coin: 3.6,
+    level: 3,
+    src: 'ram/9.png'
   }
 ]
