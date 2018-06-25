@@ -15,7 +15,7 @@
             <button id="sell-button" @click="sell">매도</button>
           </div>
           <div>
-            예상: <b id="prediction-money"> {{ prediction }} </b>원
+            예상: <b id="prediction-money"> {{ prediction.toLocaleString('en') }} </b>원
           </div>
         </div>
       </div>
@@ -30,13 +30,13 @@ export default {
   data () {
     return {
       /* 매도할 코인 수 */
-      count: ''
+      count: 0
     }
   },
   computed: {
     /* 예상 수익 계산 */
     prediction () {
-      return parseInt((this.count * this.$store.state.info.coinPrice).toLocaleString('en'))
+      return this.count * this.$store.state.info.coinPrice
     }
   },
   methods: {
@@ -58,7 +58,7 @@ export default {
         document.getElementById('coin-effect').play()
         this.$store.commit('SET_DATA', {key: 'coin', value: coin - this.count})
         this.$store.commit('SET_DATA', {key: 'money', value: money})
-        this.count = ''
+        this.count = 0
       } else {
         this.$emit('notify', '최대 매도가능 갯수를 초과하였습니다.')
       }
