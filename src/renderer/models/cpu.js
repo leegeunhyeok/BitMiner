@@ -10,35 +10,35 @@
 module.exports = [
   {
     name: 'Intal Pantom',
-    price: 1000,
+    price: 300,
     coin: 0.15,
     level: 1,
     src: 'cpu/1.png'
   },
   {
     name: 'AND Athlom K5',
-    price: 1500,
+    price: 700,
     coin: 0.3,
     level: 1,
     src: 'cpu/2.png'
   },
   {
     name: 'Intal Pantom 2',
-    price: 1800,
+    price: 1200,
     coin: 0.4,
     level: 1,
     src: 'cpu/3.png'
   },
   {
     name: 'AND Athlom K7',
-    price: 2500,
+    price: 2000,
     coin: 0.55,
     level: 1,
     src: 'cpu/4.png'
   },
   {
     name: 'Intal Pantom 3',
-    price: 10000,
+    price: 9000,
     coin: 1.2,
     level: 2,
     src: 'cpu/5.png'

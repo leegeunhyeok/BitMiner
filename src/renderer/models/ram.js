@@ -10,7 +10,7 @@
 module.exports = [
   {
     name: 'Hinix DDR-200',
-    price: 500,
+    price: 200,
     coin: 0.1,
     level: 1,
     src: 'ram/1.png'
@@ -24,7 +24,7 @@ module.exports = [
   },
   {
     name: 'Sasung DDR-333',
-    price: 1000,
+    price: 2000,
     coin: 0.2,
     level: 1,
     src: 'ram/3.png'
@@ -38,35 +38,35 @@ module.exports = [
   },
   {
     name: 'Hinix DDR2-800',
-    price: 25000,
+    price: 30000,
     coin: 0.75,
     level: 2,
     src: 'ram/5.png'
   },
   {
     name: 'Hinix DDR3-800D',
-    price: 42000,
+    price: 60000,
     coin: 1,
     level: 2,
     src: 'ram/6.png'
   },
   {
     name: 'Sasung DDR3-1333',
-    price: 120000,
+    price: 180000,
     coin: 1.8,
     level: 3,
     src: 'ram/7.png'
   },
   {
     name: 'Hinix DDR3-1866',
-    price: 200000,
+    price: 300000,
     coin: 2.5,
     level: 3,
     src: 'ram/8.png'
   },
   {
     name: 'Corsor DDR3-2133 Dominator',
-    price: 360000,
+    price: 462000,
     coin: 3.6,
     level: 3,
     src: 'ram/9.png'
