@@ -7,6 +7,13 @@
  * src: 이미지 경로
  */
 
+/**
+ * 증가 폭: (0.15 * psu) * 아이템 순번
+ * */
+/**
+ * PSU 레벨 증가
+ * 이전 가격 * 2
+ * */
 module.exports = [
   {
     name: 'Intal Pantom',
@@ -25,14 +32,14 @@ module.exports = [
   {
     name: 'Intal Pantom 2',
     price: 1200,
-    coin: 0.4,
+    coin: 0.45,
     level: 1,
     src: 'cpu/3.png'
   },
   {
     name: 'AND Athlom K7',
     price: 2000,
-    coin: 0.55,
+    coin: 0.6,
     level: 1,
     src: 'cpu/4.png'
   },
@@ -46,70 +53,70 @@ module.exports = [
   {
     name: 'AND Athlom 64',
     price: 14000,
-    coin: 1.4,
+    coin: 1.5,
     level: 2,
     src: 'cpu/6.png'
   },
   {
     name: 'Intal Pantom 4',
     price: 26000,
-    coin: 1.95,
+    coin: 1.8,
     level: 2,
     src: 'cpu/7.png'
   },
   {
     name: 'AND Athlom X2',
     price: 30000,
-    coin: 2.6,
+    coin: 2.1,
     level: 2,
     src: 'cpu/8.png'
   },
   {
     name: 'Intal Core2 Duo',
     price: 150000,
-    coin: 7,
+    coin: 4.2,
     level: 3,
     src: 'cpu/9.png'
   },
   {
     name: 'AND Phanon X9000',
     price: 245000,
-    coin: 9,
+    coin: 4.65,
     level: 3,
     src: 'cpu/10.png'
   },
   {
     name: 'Intal Core2 Quad',
     price: 400000,
-    coin: 11,
+    coin: 5.1,
     level: 3,
     src: 'cpu/11.png'
   },
   {
     name: 'AND Phanon2 X4',
     price: 675000,
-    coin: 15,
+    coin: 5.55,
     level: 3,
     src: 'cpu/12.png'
   },
   {
     name: 'Intal Core2 Extreme',
     price: 900000,
-    coin: 25,
+    coin: 6,
     level: 3,
     src: 'cpu/13.png'
   },
   {
     name: 'Intal i7-980',
     price: 1800000,
-    coin: 40,
+    coin: 12,
     level: 4,
     src: 'cpu/14.png'
   },
   {
     name: 'AND FX-8350',
     price: 3000000,
-    coin: 55,
+    coin: 12.6,
     level: 4,
     src: 'cpu/15.png'
   }

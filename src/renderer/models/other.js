@@ -42,7 +42,7 @@ module.exports = [
   },
   {
     name: '파워서플라이 Lv.3',
-    price: 275000,
+    price: 200000,
     info: '코인 최대 시세 +10',
     psu: 3,
     level: 2,
@@ -51,7 +51,7 @@ module.exports = [
   },
   {
     name: '파워서플라이 Lv.4',
-    price: 3000000,
+    price: 1000000,
     info: '코인 최대 시세 +10',
     psu: 4,
     level: 3,
@@ -60,7 +60,7 @@ module.exports = [
   },
   {
     name: '파워서플라이 Lv.5',
-    price: 10000000,
+    price: 2500000,
     info: '코인 최대 시세 +10',
     psu: 5,
     level: 4,
