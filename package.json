@@ -1,6 +1,6 @@
 {
   "name": "bitminer",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "author": "Leegeunhyeok <lghlove0509@naver.com>",
   "description": "An electron-vue project",
   "license": "MIT",

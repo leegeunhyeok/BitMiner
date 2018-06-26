@@ -75,7 +75,7 @@ export default {
       this.tutorial++
       /* 화면4 에서는 도시 화면으로 전환 */
       if (this.tutorial === 4) {
-        this.$emit('changeLocation', 'city')
+        this.$emit('changeLocation', 'city1')
       }
     },
     /**

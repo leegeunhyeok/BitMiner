@@ -5,6 +5,7 @@
     <div class="popup-content">
       <!-- 팝업 내용 영역 -->
       <popup-computer v-if="type === 'computer'" @notify="notify" @save="$emit('save')"></popup-computer>
+      <popup-estate v-else-if="type === 'estate'" @notify="notify" @save="$emit('save')"></popup-estate>
       <popup-other-store v-else-if="other" @notify="notify" @save="$emit('save')"></popup-other-store>
       <popup-store v-else-if="store" :type="type" @notify="notify" @save="$emit('save')"></popup-store>
     </div>
@@ -28,6 +29,7 @@ export default {
   },
   components: {
     'popup-computer': require('@/components/PopupComputer').default,
+    'popup-estate': require('@/components/PopupEstate').default,
     'popup-store': require('@/components/PopupStore').default,
     'popup-other-store': require('@/components/PopupOther').default
   },
@@ -121,5 +123,36 @@ export default {
   color: #44b3c2;
 }
 
+
+/* 구매 버튼 */
+.buy-button {
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #50b970;
+  background-color: #50b970;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 10px 0px;
+  transition: .5s;
+}
+
+.buy-button:hover {
+  background-color: #fff;
+  color: #50b970;
+}
+
+/* 구매 버튼 비활성화 */
+.buy-button:disabled {
+  cursor: unset;
+  background-color: #888;
+  border: 1px solid #888;
+  color: #000;
+}
+
+.buy-button:disabled:hover {
+  background-color: #888;
+  color: #000;
+}
 
 </style>

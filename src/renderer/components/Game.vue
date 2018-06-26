@@ -9,7 +9,8 @@
     <tutorial v-if="tutorialShow" @exitTutorial="exitTutorial" @changeLocation="changeLocation" @notify="showNotify"></tutorial>
     <game-home-1 v-if="location === 'home1'" @changeLocation="changeLocation" @openPopup="openPopup" @openPhone="openPhone"></game-home-1>
     <game-home-2 v-if="location === 'home2'" @changeLocation="changeLocation" @openPopup="openPopup" @openMonitor="openMonitor"></game-home-2>
-    <game-city v-if="location === 'city'" @changeLocation="changeLocation" @openPopup="openPopup"></game-city>
+    <game-city-1 v-if="location === 'city1'" @changeLocation="changeLocation" @openPopup="openPopup"></game-city-1>
+    <game-city-2 v-if="location === 'city2'" @changeLocation="changeLocation" @openPopup="openPopup"></game-city-2>
     <transition name="fade">
       <popup @closePopup="popup = false" v-if="popup" :type="popupType" :title="popupTitle" @notify="showNotify" @save="$emit('save')"></popup>
     </transition>
@@ -62,7 +63,8 @@ export default {
     'game-header': require('@/components/GameHeader').default,
     'game-home-1': require('@/components/GameHome1').default,
     'game-home-2': require('@/components/GameHome2').default,
-    'game-city': require('@/components/GameCity').default,
+    'game-city-1': require('@/components/GameCity1').default,
+    'game-city-2': require('@/components/GameCity2').default,
     'popup': require('@/components/Popup').default,
     'phone': require('@/components/PopupPhone').default,
     'monitor': require('@/components/PopupMonitor').default,
@@ -95,7 +97,7 @@ export default {
   created () {
     this.calcCoinPerSecond()
     this.$store.commit('SET_COIN_PRICE', this.$store.state.userdata.data.psu)
-    this.location = 'home' + this.$store.state.userdata.data.home
+    this.location = 'home' + (this.$store.state.userdata.data.home + 1)
     this.tutorialShow = this.tutorial
   },
   mounted () {
@@ -125,10 +127,8 @@ export default {
      * @description 게임 내 위치 변경
      */
     changeLocation (location) {
-      if (location === 'city') {
-        document.getElementById('door-effect').play()
-      } else if (location === 'home') {
-        location += (this.$store.state.userdata.data.home || '1')
+      if (location === 'home') {
+        location = 'home' + (this.$store.state.userdata.data.home + 1 || '1')
       }
       this.popup = this.phone = this.monitor = false
       this.location = location

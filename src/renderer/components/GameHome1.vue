@@ -12,7 +12,7 @@
         <img src="~@/assets/arrow.png">
       </div>
     </div>
-    <div id="door" @click="$emit('changeLocation', 'city')">
+    <div id="door" @click="goToCity">
       <div id="door-icon">
         <div class="arrow-area">외출하기</div>
         <img src="~@/assets/arrow.png">
@@ -23,7 +23,16 @@
 
 <script>
 export default {
-  name: 'home1'
+  name: 'home1',
+  methods: {
+    /**
+     * @description 도시로 외출
+     */
+    goToCity () {
+      document.getElementById('door-effect').play()
+      this.$emit('changeLocation', 'city1')
+    }
+  }
 }
 </script>
 

@@ -1,5 +1,6 @@
 <template>
   <div id="popup-monitor">
+    <button id="monitor-exit" @click="$emit('closeMonitor')">x</button>
     <div class="monitor-screen">
       <div class="monitor-header">코인샵</div>
       <div class="monitor-content">
@@ -11,8 +12,8 @@
           </div>
           <div>
             <button id="all-coin-button" @click="all">전체</button>
-            <input id="sell-count" type="number" placeholder="개" v-model="count">
-            <button id="sell-button" @click="sell">매도</button>
+            <input id="monitor-sell-count" type="number" placeholder="개" v-model="count">
+            <button id="monitor-sell-button" @click="sell">매도</button>
           </div>
           <div>
             예상: <b id="prediction-money"> {{ prediction.toLocaleString('en') }} </b>원
@@ -20,7 +21,6 @@
         </div>
       </div>
     </div>
-    <div id="monitor-exit" @click="$emit('closeMonitor')"></div>
   </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
       const money = this.$store.state.userdata.data.money + this.prediction
 
       /* 매도할 코인 갯수가 보유중인 갯수를 초과하지 않은 경우 */
-      if (coin - this.count >= 0) {
+      if (coin - this.count >= 0 && this.count > 0) {
         document.getElementById('coin-effect').play()
         this.$store.commit('SET_DATA', {key: 'coin', value: coin - this.count})
         this.$store.commit('SET_DATA', {key: 'money', value: money})
@@ -69,7 +69,7 @@ export default {
 
 <style>
 
-/* 핸드폰 영역 */
+/* 모니터 영역 */
 #popup-monitor {
   position: absolute;
   width: 600px;
@@ -85,45 +85,29 @@ export default {
   z-index: 4;
 }
 
-/* 핸드폰 스크린 */
+/* 모니터 스크린 */
 .monitor-screen {
-  position: relative;
-  width: 100%;
-  height: 90%;
+  padding: 10px 0px;
   border: 2px solid #000;
   background-color: #fff;
 }
 
-/* 핸드폰 닫기 버튼 */
+/* 모니터 닫기 버튼 */
 #monitor-exit {
-  position: absolute;
+  outline: none;
   cursor: pointer;
-  bottom: 10px;
-  left: 50%;
-  width: 50px;
-  height: 50px;
-  transform: translateX(-50%);
-  text-align: center;
-  background-color: #ddd;
-  border-radius: 50%;
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  color: #e45641;
   font-weight: bold;
-  font-size: 1.8rem;
-  padding-top: 4px;
-  padding-left: 2px;
-  color: #c54040;
-}
-
-#monitor-exit::before {
-  content: 'x'
-}
-
-#monitor-exit:hover {
-  background-color: #aaa;
+  font-size: 1.3rem;
+  border: none;
+  background-color: #fff;
 }
 
 /* 핸드폰 화면 상단 영역 */
 .monitor-header {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -137,7 +121,7 @@ export default {
 /* 핸드폰 내용 영역 */
 .monitor-content {
   width: 100%;
-  padding-top: 15px;
+  padding-top: 5px;
   background-color: #efe3af;
 }
 
@@ -166,7 +150,7 @@ export default {
 }
 
 /* 판매 갯수 입력폼 */
-#sell-count {
+#monitor-sell-count {
   width: 56%;
   padding: 2px 5px;
   cursor: text;
@@ -176,7 +160,7 @@ export default {
 }
 
 /* 매도 버튼 */
-#sell-button {
+#monitor-sell-button {
   cursor: pointer;
   outline: none;
   border-radius: 5px;
@@ -188,7 +172,7 @@ export default {
   transition: .5s;
 }
 
-#sell-button:hover {
+#monitor-sell-button:hover {
   background-color: #fff;
   color: #f0aa28;
 }

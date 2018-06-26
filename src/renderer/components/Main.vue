@@ -21,7 +21,13 @@
       <div id="information" class="hide" v-else>
         <div id="information-info">
           Design &amp; Develop<br>
-          <b>Leegeunhyeok</b>
+          <b class="thank" @click="profile('https://github.com/leegeunhyeok')">Leegeunhyeok</b>
+          <br>
+          <br>
+          Thanks To<br>
+          <b class="thank" @click="profile('https://github.com/JeehoKim')">JeehoKim</b>
+          <br>
+          <b class="thank" @click="profile('https://github.com/introduce131')">introduce131</b>
           <br>
           <br>
           <button id="lastest-version" @click="lastestVersion">최신버전</button>
@@ -29,7 +35,7 @@
         <button id="information-exit" @click="main">메인으로</button>
       </div>
       <!-- 버전 -->
-      <div id="version">0.0.13 Beta</div>
+      <div id="version">0.0.14 Beta</div>
   </div>
 </template>
 
@@ -93,6 +99,13 @@ export default {
     lastestVersion () {
       /* 컴퓨터의 웹 브라우저로 띄워주기 */
       this.$electron.shell.openExternal('https://github.com/leegeunhyeok/BitMiner/releases/latest')
+    },
+    /**
+     * @description 도움을 주신 분 프로필
+     */
+    profile (url) {
+      /* 컴퓨터의 웹 브라우저로 띄워주기 */
+      this.$electron.shell.openExternal(url)
     },
     /**
      * @description 메인 화면 보여주기
@@ -187,7 +200,7 @@ export default {
 
 /* 개발자, 디자이너 정보 */
 #information-info {
-  padding: 20px 15px;
+  padding: 20px 25px;
   background-color: #fff;
   border-radius: 10px;
 }
@@ -238,4 +251,9 @@ export default {
 .disable-text:hover {
   color: #525252;
 }
+
+.thank {
+  cursor: pointer;
+}
+
 </style>

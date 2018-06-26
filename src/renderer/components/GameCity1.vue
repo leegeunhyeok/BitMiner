@@ -1,5 +1,5 @@
 <template>
-  <div id="city">
+  <div id="city1">
     <div id="ram-store" class="store" @click="$emit('openPopup', 'ramStore', '램 매장')">
       <div id="ram-icon">
         <div class="arrow-area">램 매장</div>
@@ -24,19 +24,25 @@
         <img src="~@/assets/arrow.png">
       </div>
     </div>
+    <div id="go-to-city-2" class="store" @click="$emit('changeLocation', 'city2')">
+      <div id="city2-icon">
+        <div class="arrow-area">옆 동네</div>
+        <img src="~@/assets/arrow.png">
+      </div>
+    </div>
     <button id="go-to-home" @click="$emit('changeLocation', 'home')">돌아가기</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'city'
+  name: 'city-1'
 }
 </script>
 
 <style>
 
-#city {
+#city1 {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -100,4 +106,12 @@ export default {
   right: 4px;
   height: 200px;
 }
+
+/* City2 이동 */
+#go-to-city-2 {
+  bottom: 20px;
+  right: 70px;
+  height: 180px;
+}
+
 </style>

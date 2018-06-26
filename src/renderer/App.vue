@@ -40,7 +40,7 @@ const defaultSaveData = {
   /* 튜토리얼 여부 */
   'tutorial': 1,
   /* 소유중인 집 유형 */
-  'home': '1',
+  'home': 0,
   /* 소유중인 모니터 유형 */
   'monitor': 0
 }

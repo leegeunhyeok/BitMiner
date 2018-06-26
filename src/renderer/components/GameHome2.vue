@@ -13,7 +13,7 @@
         <img src="~@/assets/arrow.png">
       </div>
     </div>
-    <div id="door-2" @click="$emit('changeLocation', 'city')">
+    <div id="door-2" @click="goToCity">
       <div id="door-icon">
         <div class="arrow-area">외출하기</div>
         <img src="~@/assets/arrow.png">
@@ -27,6 +27,7 @@ export default {
   name: 'home2',
   data () {
     return {
+      /* 현재 사용중인 모니터 이미지 경로 */
       monitor: ''
     }
   },
@@ -34,8 +35,18 @@ export default {
     this.monitorImageUpdate()
   },
   methods: {
+    /**
+     * @description 모니터 이미지 갱신
+     */
     monitorImageUpdate () {
       this.monitor = '/static/monitor/' + ((this.$store.state.userdata.data.monitor || 0) + 1) + '.png'
+    },
+    /**
+     * @description 도시로 외출
+     */
+    goToCity () {
+      document.getElementById('door-effect').play()
+      this.$emit('changeLocation', 'city1')
     }
   }
 }
