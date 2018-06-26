@@ -27,7 +27,7 @@
           Thanks To<br>
           <b class="thank" @click="profile('https://github.com/JeehoKim')">JeehoKim</b>
           <br>
-          <b class="thank" @click="profile('https://github.com/introduce131')">introduce131</b>
+          <b class="thank" @click="profile('https://github.com/introduce131')">JongwonBaek</b>
           <br>
           <br>
           <button id="lastest-version" @click="lastestVersion">최신버전</button>
