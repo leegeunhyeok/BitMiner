@@ -1,10 +1,10 @@
 <template>
-  <div id="popup-phone">
-    <div class="phone-screen">
-      <div class="phone-header">코인샵</div>
-      <div class="phone-content">
+  <div id="popup-monitor">
+    <div class="monitor-screen">
+      <div class="monitor-header">코인샵</div>
+      <div class="monitor-content">
         <img src="~@/assets/chart.png">
-        <div class="phone-footer">
+        <div class="monitor-footer">
           <h5>코인 시세는 1분마다 갱신됩니다.</h5>
           <div>
             1 BTC = <b id="coin-price"> {{ $store.state.info.coinPrice }} </b>원
@@ -20,13 +20,13 @@
         </div>
       </div>
     </div>
-    <div id="phone-exit" @click="$emit('closePhone')"></div>
+    <div id="monitor-exit" @click="$emit('closeMonitor')"></div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'phone',
+  name: 'monitor',
   data () {
     return {
       /* 매도할 코인 수 */
@@ -70,29 +70,32 @@ export default {
 <style>
 
 /* 핸드폰 영역 */
-#popup-phone {
+#popup-monitor {
   position: absolute;
-  width: 320px;
+  width: 600px;
   height: 400px;
-  left: calc(50% - 160px);
-  top: 100px;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
   border-radius: 24px;
-  background-color: #222;
+  border: 2px solid #222;
+  background-color: #fff;
   padding: 25px 20px;
   padding-bottom: 70px;
   z-index: 4;
 }
 
 /* 핸드폰 스크린 */
-.phone-screen {
+.monitor-screen {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 90%;
+  border: 2px solid #000;
   background-color: #fff;
 }
 
 /* 핸드폰 닫기 버튼 */
-#phone-exit {
+#monitor-exit {
   position: absolute;
   cursor: pointer;
   bottom: 10px;
@@ -110,16 +113,16 @@ export default {
   color: #c54040;
 }
 
-#phone-exit::before {
+#monitor-exit::before {
   content: 'x'
 }
 
-#phone-exit:hover {
+#monitor-exit:hover {
   background-color: #aaa;
 }
 
 /* 핸드폰 화면 상단 영역 */
-.phone-header {
+.monitor-header {
   position: absolute;
   top: 0;
   left: 0;
@@ -132,15 +135,14 @@ export default {
 }
 
 /* 핸드폰 내용 영역 */
-.phone-content {
+.monitor-content {
   width: 100%;
-  height: 100%;
-  padding-top: 55px;
+  padding-top: 15px;
   background-color: #efe3af;
 }
 
 /* 핸드폰 화면 하단 영역 */
-.phone-footer {
+.monitor-footer {
   background-color: #fff;
   border-top: 2px solid #f0aa28;
 }

@@ -7,7 +7,8 @@
     <audio src="./static/sound/shop.mp3" id="shop-effect"></audio>
     <game-header></game-header>
     <tutorial v-if="tutorialShow" @exitTutorial="exitTutorial" @changeLocation="changeLocation" @notify="showNotify"></tutorial>
-    <game-home v-if="location === 'home'" @changeLocation="changeLocation" @openPopup="openPopup" @openPhone="openPhone"></game-home>
+    <game-home-1 v-if="location === 'home1'" @changeLocation="changeLocation" @openPopup="openPopup" @openPhone="openPhone"></game-home-1>
+    <game-home-2 v-if="location === 'home2'" @changeLocation="changeLocation" @openPopup="openPopup" @openMonitor="openMonitor"></game-home-2>
     <game-city v-if="location === 'city'" @changeLocation="changeLocation" @openPopup="openPopup"></game-city>
     <transition name="fade">
       <popup @closePopup="popup = false" v-if="popup" :type="popupType" :title="popupTitle" @notify="showNotify" @save="$emit('save')"></popup>
@@ -15,10 +16,13 @@
     <transition name="fade" mode="out-in">
       <notify v-if="notify" :message="notifyMessage"></notify>
     </transition>
-    <transition name="phone" mode="in-out">
-      <phone @closePhone="phone = false" v-if="phone" @notify="showNotify" @save="$emit('save')"></phone>
+    <transition name="fade" mode="out-in">
+      <monitor v-if="monitor" @closeMonitor="monitor = false"></monitor>
     </transition>
-    <button id="game-exit" v-if="location === 'home'" @click="gameExit">종료</button>
+    <transition name="phone" mode="in-out">
+      <phone v-if="phone" @closePhone="phone = false" @notify="showNotify" @save="$emit('save')"></phone>
+    </transition>
+    <button id="game-exit" v-if="isHome" @click="gameExit">종료</button>
   </div>
 </template>
 
@@ -34,7 +38,7 @@ export default {
       /* 튜토리얼 보이기 여부 */
       tutorialShow: false,
       /* 게임내의 위치 */
-      location: 'home',
+      location: '',
       /* 팝업 보여주기 여부 (매장) */
       popup: false,
       /* 팝업 유형 */
@@ -47,6 +51,8 @@ export default {
       notifyMessage: '',
       /* 핸드폰 팝업 보여주기 여부 */
       phone: false,
+      /* 모니터 팝업 보여주기 여부 */
+      monitor: false,
       /* 게임 시작 시 Interval 객체 */
       loop: null
     }
@@ -54,10 +60,12 @@ export default {
   components: {
     'tutorial': require('@/components/Tutorial').default,
     'game-header': require('@/components/GameHeader').default,
-    'game-home': require('@/components/GameHome').default,
+    'game-home-1': require('@/components/GameHome1').default,
+    'game-home-2': require('@/components/GameHome2').default,
     'game-city': require('@/components/GameCity').default,
     'popup': require('@/components/Popup').default,
     'phone': require('@/components/PopupPhone').default,
+    'monitor': require('@/components/PopupMonitor').default,
     'notify': require('@/components/Notify').default
   },
   computed: {
@@ -68,6 +76,9 @@ export default {
     /* 게임 종료 여부 */
     exitStatus () {
       return this.$store.state.info.exit
+    },
+    isHome () {
+      return this.location.search('home') !== -1
     }
   },
   watch: {
@@ -84,7 +95,7 @@ export default {
   created () {
     this.calcCoinPerSecond()
     this.$store.commit('SET_COIN_PRICE', this.$store.state.userdata.data.psu)
-    this.location = 'home'
+    this.location = 'home' + this.$store.state.userdata.data.home
     this.tutorialShow = this.tutorial
   },
   mounted () {
@@ -116,8 +127,10 @@ export default {
     changeLocation (location) {
       if (location === 'city') {
         document.getElementById('door-effect').play()
+      } else if (location === 'home') {
+        location += (this.$store.state.userdata.data.home || '1')
       }
-      this.popup = this.phone = false
+      this.popup = this.phone = this.monitor = false
       this.location = location
     },
     /**
@@ -147,9 +160,10 @@ export default {
           document.getElementById('shop-effect').play()
         }
 
-        /* 핸드폰 팝업이 열려있는 경우 닫기 */
-        if (this.phone) {
+        /* 핸드폰 또는 모니터 팝업이 열려있는 경우 닫기 */
+        if (this.phone || this.monitor) {
           this.phone = false
+          this.monitor = false
         }
         this.popupType = type
         this.popupTitle = title
@@ -168,13 +182,33 @@ export default {
         document.getElementById('phone-effect').play()
 
         /* 다른 팝업이 열려있는 경우 닫기 */
-        if (this.popup) {
+        if (this.popup || this.monitor) {
           this.popup = false
+          this.monitor = false
         }
         this.phone = true
       } else {
         /* 핸드폰 팝업이 열려있는 경우 닫기 */
         this.phone = false
+      }
+    },
+    /**
+     * @description 모니터 팝업 토글
+     */
+    openMonitor () {
+      /* 핸드폰 팝업이 닫혀있는 경우 열기 */
+      if (!this.monitor) {
+        document.getElementById('phone-effect').play()
+
+        /* 다른 팝업이 열려있는 경우 닫기 */
+        if (this.popup || this.phone) {
+          this.popup = false
+          this.phone = false
+        }
+        this.monitor = true
+      } else {
+        /* 핸드폰 팝업이 열려있는 경우 닫기 */
+        this.monitor = false
       }
     },
     /**

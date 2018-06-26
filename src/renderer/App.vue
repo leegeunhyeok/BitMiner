@@ -38,7 +38,11 @@ const defaultSaveData = {
   /* 파워서플라이 레벨 */
   'psu': 1,
   /* 튜토리얼 여부 */
-  'tutorial': 1
+  'tutorial': 1,
+  /* 소유중인 집 유형 */
+  'home': '1',
+  /* 소유중인 모니터 유형 */
+  'monitor': 0
 }
 
 export default {
@@ -128,6 +132,16 @@ export default {
         const fs = require('fs')
         const path = require('path')
         const data = JSON.parse(fs.readFileSync(path.join(this.userDataPath, this.fileName)))
+
+        /* 0.0.13 Beta 추가 됨 */
+        if (data['home'] === undefined) {
+          data['home'] = '1'
+        }
+
+        if (data['monitor'] === undefined) {
+          data['monitor'] = 0
+        }
+
         console.log(data)
         this.$store.commit('LOAD_DATA', data)
       } catch (e) {
