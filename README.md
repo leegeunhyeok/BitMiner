@@ -42,3 +42,4 @@ npm run build
 - [Electron](https://electronjs.org/) 기반의 웹 게임
 - 리소스 [출처](https://github.com/leegeunhyeok/BitMiner/blob/master/RESORCES.md)
 - 개발자: 이근혁(lghlove0509@naver.com)
+- 도움을 주신 분: [JeehoKim](https://github.com/JeehoKim), [JongwonBaek](https://github.com/introduce131)

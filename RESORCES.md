@@ -3,6 +3,8 @@
 - 인게임 방 이미지: `Leegeunhyeok`
 - 인게임 도시 이미지: `Leegeunhyeok`
 - 인게임 상점 아이템 이미지: `Leegeunhyeok`
+- 인게임 도시2 이미지: [JeehoKim](https://github.com/JeehoKim)
+- 인게임 부동산 이미지: [JongwonBaek](https://github.com/introduce131)
 - 폰트: `소야논8` 사용 중
 - 메인배경 이미지: [출처](https://www.pixelstalk.net/hd-8-bit-backgrounds/)
 - 배경음악: [출처](https://bgmstore.net/playlists/play/WdfYZ?q_type=category&q=%EB%B9%84%ED%8A%B8)
