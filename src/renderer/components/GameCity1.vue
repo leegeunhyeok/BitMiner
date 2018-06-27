@@ -24,10 +24,10 @@
         <img src="~@/assets/arrow.png">
       </div>
     </div>
-    <div id="go-to-city-2" class="store" @click="$emit('changeLocation', 'city2')">
+    <div id="go-to-city-2" class="move-right" @click="$emit('changeLocation', 'city2')">
       <div id="city2-icon">
-        <div class="arrow-area">옆 동네</div>
-        <img src="~@/assets/arrow.png">
+        <div class="arrow-area right-city-text">옆 동네</div>
+        <img src="~@/assets/arrow_2.png" class="right">
       </div>
     </div>
     <button id="go-to-home" @click="$emit('changeLocation', 'home')">돌아가기</button>
@@ -79,6 +79,29 @@ export default {
   animation: arrow 1s alternate infinite;
 }
 
+.right {
+  float: left;
+  transform: rotate(-90deg);
+}
+
+.move-right {
+  position: absolute;
+  cursor: pointer;
+  animation: right 1s alternate infinite;
+}
+
+.right-city-text {
+  float: left;
+  margin-right: 10px;
+}
+
+/* 아이콘 위 아래로 움직이는 애니메이션 */
+@keyframes right {
+  100% {
+    transform: translateX(20px);
+  }
+}
+
 /* RAM 매장 영역 */
 #ram-store {
   top: 50px;
@@ -109,9 +132,9 @@ export default {
 
 /* City2 이동 */
 #go-to-city-2 {
-  bottom: 20px;
-  right: 70px;
-  height: 180px;
+  bottom: 60px;
+  right: 80px;
+  height: 50px;
 }
 
 </style>

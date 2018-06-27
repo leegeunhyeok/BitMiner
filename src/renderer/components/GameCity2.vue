@@ -1,9 +1,9 @@
 <template>
   <div id="city2" v-if="estate === false">
-    <div id="go-to-city-1" class="store" @click="$emit('changeLocation', 'city1')">
+    <div id="go-to-city-1" class="move-left" @click="$emit('changeLocation', 'city1')">
       <div id="city2-icon">
-        <div class="arrow-area">옆 동네</div>
-        <img src="~@/assets/arrow.png">
+        <img src="~@/assets/arrow_2.png" class="left">
+        <div class="arrow-area left-city-text">옆 동네</div>
       </div>
     </div>
     <div id="real-estate" class="store" @click="estateToggle">
@@ -67,7 +67,7 @@ export default {
 #real-estate {
   cursor: pointer;
   position: absolute;
-  top: 180px;
+  top: 200px;
   left: 50px;
   height: 180px;
   text-align: center;
@@ -76,9 +76,9 @@ export default {
 
 /* City1 이동 */
 #go-to-city-1 {
-  top: 40px;
-  left: 20px;
-  height: 180px;
+  top: 100px;
+  left: 40px;
+  height: 50px;
 }
 
 #real-estate-area {
@@ -117,6 +117,29 @@ export default {
   top: 150px;
   left: 110px;
   height: 200px;
+}
+
+.left {
+  float: left;
+  transform: rotate(90deg);
+}
+
+.move-left {
+  position: absolute;
+  cursor: pointer;
+  animation: left 1s alternate infinite;
+}
+
+.left-city-text {
+  float: left;
+  margin-left: 10px;
+}
+
+/* 아이콘 위 아래로 움직이는 애니메이션 */
+@keyframes left {
+  100% {
+    transform: translateX(-20px);
+  }
 }
 
 </style>

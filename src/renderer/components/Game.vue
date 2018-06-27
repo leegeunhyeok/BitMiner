@@ -269,6 +269,7 @@ export default {
 
 /* 영역 표시 아이콘 */
 .arrow-area {
+  cursor: pointer;
   font-weight: bold;
   background-color: #fff;
   border-radius: 5px;
