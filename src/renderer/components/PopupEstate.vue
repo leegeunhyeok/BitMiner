@@ -7,7 +7,7 @@
       <img :src="item.src" class="estate-image">
       <div>가격: <b>{{ item.price.toLocaleString('en') }}</b>원</div>
       <button class="buy-button" @click="buy(item, i)" v-if="ownHome < i">구매</button>
-      <button class="buy-button" disabled v-else>판매 됨</button>
+      <button class="buy-button" disabled v-else>보유 중</button>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@
 import Home from '../models/home.js'
 
 export default {
-  name: 'computer-popup',
+  name: 'estate-popup',
   data () {
     return {
       home: Home

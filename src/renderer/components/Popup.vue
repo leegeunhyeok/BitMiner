@@ -4,10 +4,11 @@
     <div class="popup-title">{{ title }}</div>
     <div class="popup-content">
       <!-- 팝업 내용 영역 -->
-      <popup-computer v-if="type === 'computer'" @notify="notify" @save="$emit('save')"></popup-computer>
-      <popup-estate v-else-if="type === 'estate'" @notify="notify" @save="$emit('save')"></popup-estate>
-      <popup-other-store v-else-if="other" @notify="notify" @save="$emit('save')"></popup-other-store>
-      <popup-store v-else-if="store" :type="type" @notify="notify" @save="$emit('save')"></popup-store>
+      <popup-computer v-if="type === 'computer'" @notify="notify" @save="$emit('save')"/>
+      <popup-estate v-else-if="type === 'estate'" @notify="notify" @save="$emit('save')"/>
+      <popup-electonic v-else-if="type === 'electronic'" @notify="notify" @save="$emit('save')"/>
+      <popup-other-store v-else-if="other" @notify="notify" @save="$emit('save')"/>
+      <popup-store v-else-if="store" :type="type" @notify="notify" @save="$emit('save')"/>
     </div>
   </div>
 </template>
@@ -31,7 +32,8 @@ export default {
     'popup-computer': require('@/components/PopupComputer').default,
     'popup-estate': require('@/components/PopupEstate').default,
     'popup-store': require('@/components/PopupStore').default,
-    'popup-other-store': require('@/components/PopupOther').default
+    'popup-other-store': require('@/components/PopupOther').default,
+    'popup-electonic': require('@/components/PopupElectronic').default
   },
   methods: {
     /**

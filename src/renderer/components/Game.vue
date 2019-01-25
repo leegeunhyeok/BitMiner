@@ -6,22 +6,46 @@
     <audio src="./static/sound/phone.mp3" id="phone-effect"></audio>
     <audio src="./static/sound/shop.mp3" id="shop-effect"></audio>
     <game-header></game-header>
-    <tutorial v-if="tutorialShow" @exitTutorial="exitTutorial" @changeLocation="changeLocation" @notify="showNotify"></tutorial>
-    <game-home-1 v-if="location === 'home1'" @changeLocation="changeLocation" @openPopup="openPopup" @openPhone="openPhone"></game-home-1>
-    <game-home-2 v-if="location === 'home2'" @changeLocation="changeLocation" @openPopup="openPopup" @openMonitor="openMonitor"></game-home-2>
-    <game-city-1 v-if="location === 'city1'" @changeLocation="changeLocation" @openPopup="openPopup"></game-city-1>
-    <game-city-2 v-if="location === 'city2'" @changeLocation="changeLocation" @openPopup="openPopup"></game-city-2>
+    <tutorial v-if="tutorialShow"
+      @exitTutorial="exitTutorial"
+      @changeLocation="changeLocation"
+      @notify="showNotify"/>
+    <game-home-1 v-if="location === 'home1'" 
+      @changeLocation="changeLocation"
+      @openPopup="openPopup"
+      @openPhone="openPhone"/>
+    <game-home-2 v-if="location === 'home2'"
+      @changeLocation="changeLocation"
+      @openPopup="openPopup"
+      @openMonitor="openMonitor"/>
+    <game-city-1 v-if="location === 'city1'"
+      @changeLocation="changeLocation"
+      @openPopup="openPopup"/>
+    <game-city-2 v-if="location === 'city2'"
+      @changeLocation="changeLocation"
+      @openPopup="openPopup"/>
     <transition name="fade">
-      <popup @closePopup="popup = false" v-if="popup" :type="popupType" :title="popupTitle" @notify="showNotify" @save="$emit('save')"></popup>
+      <popup 
+        :type="popupType"
+        :title="popupTitle"
+        @closePopup="popup = false"
+        @notify="showNotify"
+        @save="$emit('save')"
+        v-if="popup"/>
     </transition>
     <transition name="fade" mode="out-in">
-      <notify v-if="notify" :message="notifyMessage"></notify>
+      <notify v-if="notify" 
+        :message="notifyMessage"/>
     </transition>
     <transition name="fade" mode="out-in">
-      <monitor v-if="monitor" @closeMonitor="monitor = false"></monitor>
+      <monitor v-if="monitor"
+        @closeMonitor="monitor = false"/>
     </transition>
     <transition name="phone" mode="in-out">
-      <phone v-if="phone" @closePhone="phone = false" @notify="showNotify" @save="$emit('save')"></phone>
+      <phone v-if="phone"
+        @closePhone="phone = false"
+        @notify="showNotify"
+        @save="$emit('save')"/>
     </transition>
     <button id="game-exit" v-if="isHome" @click="gameExit">종료</button>
   </div>
@@ -50,6 +74,8 @@ export default {
       notify: false,
       /* 알림에 보여질 메시지 */
       notifyMessage: '',
+      /* 알림 Timeout */
+      notifyTimeout: null,
       /* 핸드폰 팝업 보여주기 여부 */
       phone: false,
       /* 모니터 팝업 보여주기 여부 */
@@ -135,7 +161,7 @@ export default {
       if (location === 'home') {
         location = 'home' + (this.$store.state.userdata.data.home + 1 || '1')
       }
-      this.popup = this.phone = this.monitor = false
+      this.popup = this.phone = this.monitor = this.electronic = false
       this.location = location
     },
     /**
@@ -161,15 +187,13 @@ export default {
       if (!this.popup) {
         if (type === 'computer') {
           document.getElementById('computer-effect').play()
-        } else if (type.search('store')) {
+        } else if (type.toLowerCase().indexOf('store') !== -1) {
           document.getElementById('shop-effect').play()
         }
 
-        /* 핸드폰 또는 모니터 팝업이 열려있는 경우 닫기 */
-        if (this.phone || this.monitor) {
-          this.phone = false
-          this.monitor = false
-        }
+        // 다른 팝업 모두 닫기
+        this.phone = this.monitor = false
+
         this.popupType = type
         this.popupTitle = title
         this.popup = true
@@ -187,10 +211,8 @@ export default {
         document.getElementById('phone-effect').play()
 
         /* 다른 팝업이 열려있는 경우 닫기 */
-        if (this.popup || this.monitor) {
-          this.popup = false
-          this.monitor = false
-        }
+        this.popup = this.monitor = false
+
         this.phone = true
       } else {
         /* 핸드폰 팝업이 열려있는 경우 닫기 */
@@ -206,10 +228,8 @@ export default {
         document.getElementById('phone-effect').play()
 
         /* 다른 팝업이 열려있는 경우 닫기 */
-        if (this.popup || this.phone) {
-          this.popup = false
-          this.phone = false
-        }
+        this.popup = this.phone = false
+
         this.monitor = true
       } else {
         /* 핸드폰 팝업이 열려있는 경우 닫기 */
@@ -221,13 +241,25 @@ export default {
      * @param {string} 알림에 표시할 메시지
      */
     showNotify (message) {
-      this.notifyMessage = message
-      this.notify = true
-
-      /* 알림은 2.5초 뒤 닫기 */
-      setTimeout(() => {
+      // 알림이 이미 있는 경우 기존 알림 닫고 0.5초 후 보여주기
+      if (this.notify) {
         this.notify = false
-      }, 2500)
+        clearTimeout(this.notifyTimeout)
+        setTimeout(() => {
+          this.notifyMessage = message
+          this.notify = true
+          this.notifyTimeout = setTimeout(() => {
+            this.notify = false
+          }, 2500)
+        }, 500)
+      } else {
+        this.notifyMessage = message
+        this.notify = true
+        /* 알림은 2.5초 뒤 닫기 */
+        this.notifyTimeout = setTimeout(() => {
+          this.notify = false
+        }, 2500)
+      }
     },
     /**
      * @description 1초당 채굴되는 코인 량 계산
