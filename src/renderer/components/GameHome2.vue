@@ -39,7 +39,7 @@ export default {
      * @description 모니터 이미지 갱신
      */
     monitorImageUpdate () {
-      this.monitor = './static/monitor/' + ((this.$store.state.userdata.data.monitor || 0) + 1) + '.png'
+      this.monitor = './static/monitor/' + (this.$store.state.userdata.data.monitor || 1) + '.png'
     },
     /**
      * @description 도시로 외출

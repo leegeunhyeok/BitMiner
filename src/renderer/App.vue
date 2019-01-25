@@ -42,7 +42,7 @@ const defaultSaveData = {
   /* 소유중인 집 유형 */
   'home': 0,
   /* 소유중인 모니터 유형 */
-  'monitor': 0
+  'monitor': 1
 }
 
 export default {
@@ -139,7 +139,7 @@ export default {
         }
 
         if (data['monitor'] === undefined) {
-          data['monitor'] = 0
+          data['monitor'] = 1
         }
 
         console.log(data)

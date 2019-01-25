@@ -71,7 +71,7 @@ export default {
     'notify': require('@/components/Notify').default
   },
   computed: {
-    /* Vuex 유저 데이터에 저장된 튜토리얼 보이기 여부 */
+    /* 튜토리얼 보이기 여부 */
     tutorial () {
       return this.$store.state.userdata.data.tutorial === 1
     },
@@ -79,6 +79,7 @@ export default {
     exitStatus () {
       return this.$store.state.info.exit
     },
+    /* 현재 위치가 집인지 여부 */
     isHome () {
       return this.location.search('home') !== -1
     }
@@ -90,7 +91,6 @@ export default {
     },
     /* 게임 종료 여부 감시(데이터 변경이 감지되면 메인으로 이동) */
     exitStatus (newVal, oldVal) {
-      clearInterval(this.loop)
       this.$router.push({name: 'main'})
     }
   },
@@ -103,12 +103,16 @@ export default {
   mounted () {
     this.start()
   },
+  beforeDestroy () {
+    clearInterval(this.loop)
+  },
   methods: {
     /**
      * @description 게임 시작 (setInterval을 통해 1초마다 데이터 갱신)
      */
     start () {
-      let time = 0
+      // 시작 시 바로 1주가 오르는 문제를 방지하기 위해 1로 시작
+      let time = 1
       this.loop = setInterval(() => {
         const coin = this.$store.state.userdata.data.coin
         const coinPerSecond = this.$store.state.info.coinPerSecond
@@ -117,6 +121,7 @@ export default {
         this.$store.commit('BOOST_TIME_DOWN')
         this.$store.commit('SET_DATA', {key: 'coin', value: totalCoin})
         if (time % 60 === 0) {
+          this.$store.commit('SET_DATA', {key: 'days', value: this.$store.state.userdata.data.days + 1})
           this.$emit('save')
           this.$store.commit('SET_COIN_PRICE', this.$store.state.userdata.data.psu)
         }
@@ -312,5 +317,12 @@ export default {
 .phone-enter, .phone-leave-to {
   opacity: 0;
   transform: translateY(50px);
+}
+
+/* 클릭영역 스타일 */
+.store {
+  position: absolute;
+  cursor: pointer;
+  animation: arrow 1s alternate infinite;
 }
 </style>

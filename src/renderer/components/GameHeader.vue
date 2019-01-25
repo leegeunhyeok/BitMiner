@@ -12,6 +12,8 @@
     <span id="boost-percent" class="header-boost">{{ $store.state.info.boostPercent }} %</span>
     <!-- 부스트 남은 시간 -->
     <span id="boost-time" class="header-boost">{{ $store.state.info.boostTime }} 초</span>
+    <!-- 게임 진행시간 -->
+    <span id="play-time" class="header-time">{{ playTime }}</span>
   </div>
 </template>
 
@@ -22,6 +24,13 @@ export default {
     /* 부스트 지속시간 및 부스트 퍼센트가 0 이상인지 확인 */
     boost () {
       return this.$store.state.info.boostTime > 0 && this.$store.state.info.boostPercent > 0
+    },
+    /* 게임 진행시간 */
+    playTime () {
+      const days = this.$store.state.userdata.data.days || 0
+      const month = Math.floor(days / 4)
+      const weeks = days % 4
+      return `${month}개월 ${weeks}주 째`
     }
   }
 }
@@ -75,5 +84,17 @@ export default {
 
 #boost-time {
   background-color: #50b970;
+}
+
+#play-time {
+  margin: 10px 5px;
+  background-color: dodgerblue;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 5px 10px;
+  position: absolute;
+  left: 0;
+  top: 40px;
 }
 </style>

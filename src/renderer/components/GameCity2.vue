@@ -12,6 +12,18 @@
         <img src="~@/assets/arrow.png">
       </div>
     </div>
+    <div id="electronic-store" class="store" @click="$emit('openPopup', 'electronic', '전자제품 매장')">
+      <div id="electronic-icon">
+        <div class="arrow-area">전자제품 매장</div>
+        <img src="~@/assets/arrow.png">
+      </div>
+    </div>
+    <div id="lottery-ticket-store" class="store" @click="$emit('openPopup', 'ticket', '복권 매장')">
+      <div id="lottery-ticket-icon">
+        <img class="" src="~@/assets/arrow.png">
+        <div class="arrow-area">복권 매장</div>
+      </div>
+    </div>
     <button id="go-to-home" @click="$emit('changeLocation', 'home')">돌아가기</button>
   </div>
   <div id="real-estate-area" v-else>
@@ -65,13 +77,9 @@ export default {
 
 /* 부동산 선택 영역 */
 #real-estate {
-  cursor: pointer;
-  position: absolute;
   top: 200px;
   left: 50px;
   height: 180px;
-  text-align: center;
-  animation: arrow 1s alternate infinite;
 }
 
 /* City1 이동 */
@@ -111,12 +119,31 @@ export default {
   color: #c54040;
 }
 
-
 #buy-home {
   position: absolute;
   top: 150px;
   left: 110px;
   height: 200px;
+}
+
+#electronic-store {
+  top: 200px;
+  left: 340px;
+  height: 250px;
+}
+
+#lottery-ticket-store {
+  top: 50px;
+  right: 190px;
+  height: 180px;
+}
+
+#lottery-ticket-icon {
+  margin-top: 100px;
+}
+
+#lottery-ticket-icon img {
+  transform: rotate(180deg);
 }
 
 .left {
