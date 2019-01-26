@@ -13,13 +13,20 @@ module.exports = [
     name: 'Aple iSee',
     price: 1500000,
     info: '코인 시세 변동 시 메시지 알림',
-    src: 'broken.png'
+    src: 'electronic/isee.png'
   },
   {
     id: 'monitor_2',
     name: '144Hz 모니터',
-    price: 55000000,
-    info: '코인 시세 변동주기 -10%',
+    price: 25000000,
+    info: '코인 시세 변동주기 -10초',
     src: 'monitor/2.png'
+  },
+  {
+    id: 'monitor_3',
+    name: '240Hz Curved 모니터',
+    price: 100000000,
+    info: '코인 시세 변동주기 -20초',
+    src: 'monitor/3.png'
   }
 ]

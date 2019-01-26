@@ -52,7 +52,7 @@ export default {
      */
     estateToggle () {
       if (!this.estate) {
-        document.getElementById('shop-effect').play()
+        this.$emit('playSound', 'shop')
         this.estate = true
       } else {
         this.estate = false

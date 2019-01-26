@@ -14,7 +14,9 @@
 export default {
   name: 'dialog-view',
   /* 대화창에 표시될 메시지 */
-  props: ['message']
+  props: {
+    message: String
+  }
 }
 </script>
 
@@ -23,7 +25,7 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  transform: translate(-50%, -50%);
   padding: 10px;
   padding-top: 40px;
   background-color: #fff;

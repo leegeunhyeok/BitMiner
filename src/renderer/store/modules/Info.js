@@ -34,7 +34,7 @@ const mutations = {
   },
   /* PSU 레벨에 따른 1코인 가격 설정 */
   SET_COIN_PRICE (state, level) {
-    state.coinPrice = Math.floor(Math.random() * (level * 10)) + 1
+    state.coinPrice = Math.floor(Math.random() * ((level + 1) * 5)) + 1
   },
   /* 게임 종료, 부스트 시간 및 채굴량 0으로 초기화 */
   EXIT (state) {

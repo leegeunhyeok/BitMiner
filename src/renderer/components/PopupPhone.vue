@@ -55,7 +55,7 @@ export default {
 
       /* 매도할 코인 갯수가 보유중인 갯수를 초과하지 않은 경우 */
       if (coin - this.count >= 0 && this.count > 0) {
-        document.getElementById('coin-effect').play()
+        this.$emit('playSound', 'coin')
         this.$store.commit('SET_DATA', {key: 'coin', value: coin - this.count})
         this.$store.commit('SET_DATA', {key: 'money', value: money})
         this.count = 0
@@ -74,8 +74,9 @@ export default {
   position: absolute;
   width: 320px;
   height: 400px;
-  left: calc(50% - 160px);
+  left: 50%;
   top: 100px;
+  transform: translateX(-50%);
   border-radius: 24px;
   background-color: #222;
   padding: 25px 20px;

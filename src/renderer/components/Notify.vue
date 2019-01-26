@@ -1,12 +1,16 @@
 <template>
-  <div id="notify">{{ message }}</div>
+  <div id="notify">
+    {{ message }}
+  </div>
 </template>
 
 <script>
 export default {
   name: 'notify',
   /* 알림에 표시할 데이터 */
-  props: ['message']
+  props: {
+    message: String
+  }
 }
 </script>
 

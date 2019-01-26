@@ -22,7 +22,9 @@ import Vga from '../models/vga.js'
 export default {
   name: 'store',
   /* 상점 유형 */
-  props: ['type'],
+  props: {
+    type: String
+  },
   data () {
     return {
       /* 상품 리스트 */
@@ -86,7 +88,7 @@ export default {
 
       /* 보유한 현금으로 구매가 가능한 경우 */
       if (money - price >= 0) {
-        document.getElementById('coin-effect').play()
+        this.$emit('playSound', 'coin')
         this.$store.commit('SET_DATA', {key: 'money', value: (money - price)})
         this.$store.commit('SET_DATA', {key: this.module, value: index})
         this.$store.commit('SET_DATA', {key: this.module + 'Lv', value: 0})

@@ -7,7 +7,7 @@
       <img :src="item.src" class="estate-image">
       <div>가격: <b>{{ item.price.toLocaleString('en') }}</b>원</div>
       <button class="buy-button" @click="buy(item, i)" v-if="ownHome < i">구매</button>
-      <button class="buy-button" disabled v-else>보유 중</button>
+      <button class="buy-button" disabled v-else>소유 중</button>
     </div>
   </div>
 </template>
@@ -37,7 +37,7 @@ export default {
     buy (home, index) {
       const money = this.$store.state.userdata.data.money
       if (money - home.price >= 0) {
-        document.getElementById('coin-effect').play()
+        this.$emit('playSound', 'coin')
         this.$store.commit('SET_DATA', {key: 'money', value: (money - home.price)})
         this.$store.commit('SET_DATA', {key: 'home', value: index})
         this.$emit('notify', name + ' 구매 완료')

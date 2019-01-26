@@ -115,7 +115,7 @@ export default {
     /* PSU 레벨에 따른 1코인의 최대 가격 */
     coinPriceScope () {
       const psuLv = this.$store.state.userdata.data.psu
-      return 10 * psuLv
+      return 10 + 5 * (psuLv - 1)
     },
     /* CPU 명 */
     cpuName () {
@@ -201,7 +201,7 @@ export default {
           if (cpuLv + 1 > 10) {
             this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
           } else if (money - this.cpuOverClockCost >= 0) {
-            document.getElementById('coin-effect').play()
+            this.$emit('playSound', 'coin')
             this.$store.commit('SET_DATA', {key: 'money', value: money - this.cpuOverClockCost})
             this.$store.commit('SET_DATA', {key: 'cpuLv', value: cpuLv + 1})
           }
@@ -209,7 +209,7 @@ export default {
           if (ramLv + 1 > 10) {
             this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
           } else if (money - this.ramOverClockCost >= 0) {
-            document.getElementById('coin-effect').play()
+            this.$emit('playSound', 'coin')
             this.$store.commit('SET_DATA', {key: 'money', value: money - this.ramOverClockCost})
             this.$store.commit('SET_DATA', {key: 'ramLv', value: ramLv + 1})
           } else {
@@ -219,7 +219,7 @@ export default {
           if (vgaLv + 1 > 10) {
             this.$emit('notify', '이미 최대 레벨에 도달하였습니다.')
           } else if (money - this.vgaOverClockCost >= 0) {
-            document.getElementById('coin-effect').play()
+            this.$emit('playSound', 'coin')
             this.$store.commit('SET_DATA', {key: 'money', value: money - this.vgaOverClockCost})
             this.$store.commit('SET_DATA', {key: 'vgaLv', value: vgaLv + 1})
           } else {

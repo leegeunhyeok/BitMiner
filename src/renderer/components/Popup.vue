@@ -4,11 +4,11 @@
     <div class="popup-title">{{ title }}</div>
     <div class="popup-content">
       <!-- 팝업 내용 영역 -->
-      <popup-computer v-if="type === 'computer'" @notify="notify" @save="$emit('save')"/>
-      <popup-estate v-else-if="type === 'estate'" @notify="notify" @save="$emit('save')"/>
-      <popup-electonic v-else-if="type === 'electronic'" @notify="notify" @save="$emit('save')"/>
-      <popup-other-store v-else-if="other" @notify="notify" @save="$emit('save')"/>
-      <popup-store v-else-if="store" :type="type" @notify="notify" @save="$emit('save')"/>
+      <popup-computer v-if="type === 'computer'" @notify="notify" @save="$emit('save')" @playSound="$emit('playSound', $event)"/>
+      <popup-estate v-else-if="type === 'estate'" @notify="notify" @save="$emit('save')"  @playSound="$emit('playSound', $event)"/>
+      <popup-electonic v-else-if="type === 'electronic'" @notify="notify" @save="$emit('save')"  @playSound="$emit('playSound', $event)"/>
+      <popup-other-store v-else-if="other" @notify="notify" @save="$emit('save')" @playSound="$emit('playSound', $event)"/>
+      <popup-store v-else-if="store" :type="type" @notify="notify" @save="$emit('save')"  @playSound="$emit('playSound', $event)"/>
     </div>
   </div>
 </template>
@@ -17,7 +17,10 @@
 export default {
   name: 'popup',
   /* 팝업 제목, 유형 */
-  props: ['title', 'type'],
+  props: {
+    title: String,
+    type: String
+  },
   computed: {
     /* type에 store 문자가 있는지 확인 */
     store () {

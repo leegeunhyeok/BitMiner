@@ -5,8 +5,10 @@
         <b>{{ item.name }}</b>
       </div>
       <img :src="'./static/' + item.src" class="electonic-image">
+      <div>{{ item.info }}</div>
       <div>가격: <b>{{ item.price.toLocaleString('en') }}</b>원</div>
-      <button class="buy-button" @click="buy(item, i)">구매</button>
+      <button class="buy-button" @click="buy(item, i)" v-if="sold.indexOf(item.id) === -1">구매</button>
+      <button class="buy-button" disabled v-else>매진</button>
     </div>
   </div>
 </template>
@@ -18,12 +20,42 @@ export default {
   name: 'electronic-popup',
   data () {
     return {
-      electronic: Electronic
+      electronic: Electronic,
+      sold: []
+    }
+  },
+  created () {
+    if (this.$store.state.userdata.data.isee === 1) {
+      this.sold.push('i_see')
+    }
+
+    if (this.$store.state.userdata.data.monitor > 1) {
+      for (let i = 2; i <= this.$store.state.userdata.data.monitor; i++) {
+        this.sold.push('monitor_' + i)
+      }
     }
   },
   methods: {
     buy (item, i) {
-      console.log(item, i)
+      /* 유저가 보유한 현금 */
+      const money = this.$store.state.userdata.data.money
+
+      /* 보유한 현금으로 구매가 가능한 경우 */
+      if (money - item.price >= 0) {
+        this.$emit('playSound', 'coin')
+        if (item.id === 'i_see') {
+
+        }
+        // this.$store.commit('SET_DATA', {key: 'money', value: (money - price)})
+        // this.$store.commit('SET_DATA', {key: this.module, value: index})
+        // this.$store.commit('SET_DATA', {key: this.module + 'Lv', value: 0})
+        // this.$store.commit('COIN_PER_SECOND')
+        this.$emit('notify', name + ' 구매 완료')
+        this.calcCoinPerSecond()
+        this.$emit('save')
+      } else {
+        this.$emit('notify', '보유중인 현금이 부족합니다.')
+      }
     }
   }
 }

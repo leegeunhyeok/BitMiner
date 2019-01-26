@@ -29,7 +29,7 @@ export default {
      * @description 도시로 외출
      */
     goToCity () {
-      document.getElementById('door-effect').play()
+      this.$emit('playSound', 'door')
       this.$emit('changeLocation', 'city1')
     }
   }

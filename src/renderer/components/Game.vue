@@ -1,10 +1,5 @@
 <template>
   <div id="game">
-    <audio src="./static/sound/coin.mp3" id="coin-effect"></audio>
-    <audio src="./static/sound/computer.mp3" id="computer-effect"></audio>
-    <audio src="./static/sound/door.mp3" id="door-effect"></audio>
-    <audio src="./static/sound/phone.mp3" id="phone-effect"></audio>
-    <audio src="./static/sound/shop.mp3" id="shop-effect"></audio>
     <game-header></game-header>
     <tutorial v-if="tutorialShow"
       @exitTutorial="exitTutorial"
@@ -13,39 +8,50 @@
     <game-home-1 v-if="location === 'home1'" 
       @changeLocation="changeLocation"
       @openPopup="openPopup"
-      @openPhone="openPhone"/>
+      @openPhone="openPhone"
+      @playSound="$emit('playSound', $event)"/>
     <game-home-2 v-if="location === 'home2'"
       @changeLocation="changeLocation"
       @openPopup="openPopup"
-      @openMonitor="openMonitor"/>
+      @openMonitor="openMonitor"
+      @playSound="$emit('playSound', $event)"/>
     <game-city-1 v-if="location === 'city1'"
       @changeLocation="changeLocation"
-      @openPopup="openPopup"/>
+      @openPopup="openPopup"
+      @playSound="$emit('playSound', $event)"/>
     <game-city-2 v-if="location === 'city2'"
       @changeLocation="changeLocation"
-      @openPopup="openPopup"/>
+      @openPopup="openPopup"
+      @playSound="$emit('playSound', $event)"/>
     <transition name="fade">
       <popup 
         :type="popupType"
         :title="popupTitle"
         @closePopup="popup = false"
         @notify="showNotify"
+        @playSound="$emit('playSound', $event)"
         @save="$emit('save')"
         v-if="popup"/>
     </transition>
     <transition name="fade" mode="out-in">
-      <notify v-if="notify" 
+      <notify v-if="notify"
         :message="notifyMessage"/>
     </transition>
     <transition name="fade" mode="out-in">
       <monitor v-if="monitor"
-        @closeMonitor="monitor = false"/>
+        @closeMonitor="monitor = false"
+        @playSound="$emit('playSound', $event)"/>
     </transition>
     <transition name="phone" mode="in-out">
       <phone v-if="phone"
         @closePhone="phone = false"
         @notify="showNotify"
+        @playSound="$emit('playSound', $event)"
         @save="$emit('save')"/>
+    </transition>
+    <transition name="phone" mode="in-out">
+      <message-notify v-if="message"
+        :message="messageText"/>
     </transition>
     <button id="game-exit" v-if="isHome" @click="gameExit">종료</button>
   </div>
@@ -76,6 +82,12 @@ export default {
       notifyMessage: '',
       /* 알림 Timeout */
       notifyTimeout: null,
+      /* 문자 메시지알림 보여주기 여부 */
+      message: false,
+      /* 문자 메시지에 보여질 텍스트 */
+      messageText: '',
+      /* 문자 메시지 Timeout */
+      messageTimeout: null,
       /* 핸드폰 팝업 보여주기 여부 */
       phone: false,
       /* 모니터 팝업 보여주기 여부 */
@@ -94,7 +106,8 @@ export default {
     'popup': require('@/components/Popup').default,
     'phone': require('@/components/PopupPhone').default,
     'monitor': require('@/components/PopupMonitor').default,
-    'notify': require('@/components/Notify').default
+    'notify': require('@/components/Notify').default,
+    'message-notify': require('@/components/MessageNotify').default
   },
   computed: {
     /* 튜토리얼 보이기 여부 */
@@ -150,6 +163,10 @@ export default {
           this.$store.commit('SET_DATA', {key: 'days', value: this.$store.state.userdata.data.days + 1})
           this.$emit('save')
           this.$store.commit('SET_COIN_PRICE', this.$store.state.userdata.data.psu)
+
+          if (this.$store.state.userdata.data.isee === 1) {
+            this.showMessage('> 코인 시세가 변동되었습니다.')
+          }
         }
         time++
       }, 1000)
@@ -186,9 +203,9 @@ export default {
       /* 팝업이 닫혀있는 경우 열기 */
       if (!this.popup) {
         if (type === 'computer') {
-          document.getElementById('computer-effect').play()
+          this.$emit('playSound', 'computer')
         } else if (type.toLowerCase().indexOf('store') !== -1) {
-          document.getElementById('shop-effect').play()
+          this.$emit('playSound', 'shop')
         }
 
         // 다른 팝업 모두 닫기
@@ -208,7 +225,7 @@ export default {
     openPhone () {
       /* 핸드폰 팝업이 닫혀있는 경우 열기 */
       if (!this.phone) {
-        document.getElementById('phone-effect').play()
+        this.$emit('playSound', 'phone')
 
         /* 다른 팝업이 열려있는 경우 닫기 */
         this.popup = this.monitor = false
@@ -225,7 +242,7 @@ export default {
     openMonitor () {
       /* 핸드폰 팝업이 닫혀있는 경우 열기 */
       if (!this.monitor) {
-        document.getElementById('phone-effect').play()
+        this.$emit('playSound', 'phone')
 
         /* 다른 팝업이 열려있는 경우 닫기 */
         this.popup = this.phone = false
@@ -258,6 +275,33 @@ export default {
         /* 알림은 2.5초 뒤 닫기 */
         this.notifyTimeout = setTimeout(() => {
           this.notify = false
+        }, 2500)
+      }
+    },
+    /**
+     * @description 메시지 알림 띄우기
+     * @param {string} 메시지에 표시할 텍스트
+     */
+    showMessage (message) {
+      // 알림이 이미 있는 경우 기존 알림 닫고 0.5초 후 보여주기
+      if (this.message) {
+        this.message = false
+        clearTimeout(this.messageTimeout)
+        setTimeout(() => {
+          this.$emit('playSound', 'message')
+          this.messageText = message
+          this.message = true
+          this.messageTimeout = setTimeout(() => {
+            this.message = false
+          }, 2500)
+        }, 500)
+      } else {
+        this.$emit('playSound', 'message')
+        this.messageText = message
+        this.message = true
+        /* 알림은 2.5초 뒤 닫기 */
+        this.messageTimeout = setTimeout(() => {
+          this.message = false
         }, 2500)
       }
     },
@@ -302,6 +346,7 @@ export default {
   height: 100%;
   text-align: center;
   background-color: #353535;
+  overflow-y: hidden;
 }
 
 /* 영역 표시 아이콘 */
@@ -348,7 +393,7 @@ export default {
 
 .phone-enter, .phone-leave-to {
   opacity: 0;
-  transform: translateY(50px);
+  transform: translateX(-50%) translateY(50px) !important;
 }
 
 /* 클릭영역 스타일 */

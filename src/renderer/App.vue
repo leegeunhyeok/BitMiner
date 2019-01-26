@@ -2,7 +2,10 @@
   <div id="app">
     <audio src="./static/sound/bgm.mp3" id="bgm" autoplay loop></audio>
     <!-- 메인화면, 게임 등 라우터 경로에 따른 뷰 영역 -->
-    <router-view @openDialog="openDialog" @save="fileSave"></router-view>
+    <router-view
+      @openDialog="openDialog"
+      @playSound="playSound"
+      @save="fileSave"/>
     <transition name="fade">
       <!-- 대화창 -->
       <dialog-view v-if="dialog" :message="message" @closeDialog="closeDialog"></dialog-view>
@@ -42,7 +45,9 @@ const defaultSaveData = {
   /* 소유중인 집 유형 */
   'home': 0,
   /* 소유중인 모니터 유형 */
-  'monitor': 1
+  'monitor': 1,
+  /* 코인 시세 알림 */
+  'isee': 0
 }
 
 export default {
@@ -53,6 +58,10 @@ export default {
       userDataPath: '',
       /* 유저 세이브파일 명 */
       fileName: 'user.dat',
+      /* 사운드 컨텍스트 */
+      context: null,
+      /* 사운드 트랙 */
+      track: null,
       /* 대화창 닫힘/열림 */
       dialog: false,
       /* 대화창에 보여질 메시지 */
@@ -75,6 +84,38 @@ export default {
     if (this.fileExistCheck()) {
       /* 파일이 존재하면 Load */
       this.fileLoad()
+    }
+
+    this.track = [
+      {
+        name: 'coin',
+        src: './static/sound/coin.mp3'
+      },
+      {
+        name: 'computer',
+        src: './static/sound/computer.mp3'
+      },
+      {
+        name: 'door',
+        src: './static/sound/door.mp3'
+      },
+      {
+        name: 'phone',
+        src: './static/sound/phone.mp3'
+      },
+      {
+        name: 'shop',
+        src: './static/sound/shop.mp3'
+      },
+      {
+        name: 'message',
+        src: './static/sound/message.mp3'
+      }
+    ]
+
+    for (let audioInfo of this.track) {
+      const audio = document.createElement('audio')
+      audio.src = audioInfo.src
     }
   },
   methods: {
@@ -104,6 +145,19 @@ export default {
         } else if (this.dialogType === 'exit') {
           this.fileSave()
           this.$store.commit('EXIT')
+        }
+      }
+    },
+    /**
+     * @description 사운드 재생
+     * @param {string} 재생할 사운드 이름
+     */
+    playSound (name) {
+      for (let audio of this.track) {
+        if (audio.name === name) {
+          const sound = new Audio(audio.src)
+          sound.play()
+          return
         }
       }
     },
@@ -140,6 +194,11 @@ export default {
 
         if (data['monitor'] === undefined) {
           data['monitor'] = 1
+        }
+
+        /* 0.0.16 Beta 추가 됨 */
+        if (data['isee'] === undefined) {
+          data['isee'] = 0
         }
 
         console.log(data)
@@ -203,6 +262,7 @@ html, body, #app {
   padding: 0;
   width: 100%;
   height: 100%;
+  overflow-y: hidden;
 }
 
 /* BODY 폰트를 위에서 불러온 pixel로 지정 */
