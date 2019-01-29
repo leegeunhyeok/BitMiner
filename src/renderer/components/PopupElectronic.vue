@@ -44,14 +44,25 @@ export default {
       if (money - item.price >= 0) {
         this.$emit('playSound', 'coin')
         if (item.id === 'i_see') {
-
+          this.$store.commit('SET_DATA', { key: 'isee', value: 1 })
+          this.sold.push('i_see')
+        } else if (item.id === 'monitor_2') {
+          if (this.$store.state.userdata.data.home === 0) {
+            this.$emit('notify', '매트블랙 이상의 집을 소유해야 구매할 수 있습니다.')
+          } else {
+            this.$store.commit('SET_DATA', { key: 'monitor', value: 2 })
+            this.sold.push('monitor_2')
+          }
+        } else if (item.id === 'monitor_3') {
+          if (this.$store.state.userdata.data.home === 0) {
+            this.$emit('notify', '매트블랙 이상의 집을 소유해야 구매할 수 있습니다.')
+          } else {
+            this.$store.commit('SET_DATA', { key: 'monitor', value: 3 })
+            this.sold.push('monitor_3')
+          }
         }
-        // this.$store.commit('SET_DATA', {key: 'money', value: (money - price)})
-        // this.$store.commit('SET_DATA', {key: this.module, value: index})
-        // this.$store.commit('SET_DATA', {key: this.module + 'Lv', value: 0})
-        // this.$store.commit('COIN_PER_SECOND')
-        this.$emit('notify', name + ' 구매 완료')
-        this.calcCoinPerSecond()
+        this.$store.commit('SET_DATA', {key: 'money', value: (money - item.price)})
+        this.$emit('notify', item.name + ' 구매 완료')
         this.$emit('save')
       } else {
         this.$emit('notify', '보유중인 현금이 부족합니다.')

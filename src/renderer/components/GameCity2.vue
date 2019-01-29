@@ -52,6 +52,7 @@ export default {
      */
     estateToggle () {
       if (!this.estate) {
+        this.$emit('closePopup')
         this.$emit('playSound', 'shop')
         this.estate = true
       } else {

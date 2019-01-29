@@ -5,7 +5,7 @@
       <div class="phone-content">
         <img src="~@/assets/chart.png">
         <div class="phone-footer">
-          <h5>코인 시세는 1분마다 갱신됩니다.</h5>
+          <h5>코인 시세는 {{ refreshTime }}마다 갱신됩니다.</h5>
           <div>
             1 BTC = <b id="coin-price"> {{ $store.state.info.coinPrice }} </b>원
           </div>
@@ -37,6 +37,12 @@ export default {
     /* 예상 수익 계산 */
     prediction () {
       return this.count * this.$store.state.info.coinPrice
+    },
+    /* 코인 시세변동 시간 */
+    refreshTime () {
+      let monitor = this.$store.state.userdata.data.monitor
+      let coinRefreshSeconds = 60 - ((monitor - 1) * 10)
+      return coinRefreshSeconds === 60 ? '1분' : `${coinRefreshSeconds}초`
     }
   },
   methods: {

@@ -66,7 +66,7 @@ export default {
 /* 모니터 가격 */
 #monitor {
   position: absolute;
-  top: 210px;
+  top: 200px;
   right: 243px;
 }
 

@@ -192,7 +192,7 @@ export default {
           data['home'] = '1'
         }
 
-        if (data['monitor'] === undefined) {
+        if (data['monitor'] === undefined || data['monitor'] === 0) {
           data['monitor'] = 1
         }
 
@@ -201,6 +201,7 @@ export default {
           data['isee'] = 0
         }
 
+        console.log(this.userDataPath)
         console.log(data)
         this.$store.commit('LOAD_DATA', data)
       } catch (e) {

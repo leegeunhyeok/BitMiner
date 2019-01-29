@@ -35,7 +35,7 @@
         <button id="information-exit" @click="main">메인으로</button>
       </div>
       <!-- 버전 -->
-      <div id="version">0.0.15 Beta</div>
+      <div id="version">0.0.16 Beta</div>
   </div>
 </template>
 

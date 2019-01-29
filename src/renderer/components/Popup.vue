@@ -7,6 +7,7 @@
       <popup-computer v-if="type === 'computer'" @notify="notify" @save="$emit('save')" @playSound="$emit('playSound', $event)"/>
       <popup-estate v-else-if="type === 'estate'" @notify="notify" @save="$emit('save')"  @playSound="$emit('playSound', $event)"/>
       <popup-electonic v-else-if="type === 'electronic'" @notify="notify" @save="$emit('save')"  @playSound="$emit('playSound', $event)"/>
+      <popup-ticket v-else-if="type === 'ticket'" @notify="notify" @save="$emit('save')"  @playSound="$emit('playSound', $event)"/>
       <popup-other-store v-else-if="other" @notify="notify" @save="$emit('save')" @playSound="$emit('playSound', $event)"/>
       <popup-store v-else-if="store" :type="type" @notify="notify" @save="$emit('save')"  @playSound="$emit('playSound', $event)"/>
     </div>
@@ -36,7 +37,8 @@ export default {
     'popup-estate': require('@/components/PopupEstate').default,
     'popup-store': require('@/components/PopupStore').default,
     'popup-other-store': require('@/components/PopupOther').default,
-    'popup-electonic': require('@/components/PopupElectronic').default
+    'popup-electonic': require('@/components/PopupElectronic').default,
+    'popup-ticket': require('@/components/PopupTicket').default
   },
   methods: {
     /**

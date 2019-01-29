@@ -22,6 +22,7 @@
     <game-city-2 v-if="location === 'city2'"
       @changeLocation="changeLocation"
       @openPopup="openPopup"
+      @closePopup="closePopup"
       @playSound="$emit('playSound', $event)"/>
     <transition name="fade">
       <popup 
@@ -153,15 +154,25 @@ export default {
       // 시작 시 바로 1주가 오르는 문제를 방지하기 위해 1로 시작
       let time = 1
       this.loop = setInterval(() => {
-        const coin = this.$store.state.userdata.data.coin
-        const coinPerSecond = this.$store.state.info.coinPerSecond
-        const coinPerSecondBoost = this.$store.state.info.boostCoinPerSecond
-        const totalCoin = coin + coinPerSecond + coinPerSecondBoost
+        let coin = this.$store.state.userdata.data.coin
+        let coinPerSecond = this.$store.state.info.coinPerSecond
+        let coinPerSecondBoost = this.$store.state.info.boostCoinPerSecond
+        let totalCoin = coin + coinPerSecond + coinPerSecondBoost
         this.$store.commit('BOOST_TIME_DOWN')
         this.$store.commit('SET_DATA', {key: 'coin', value: totalCoin})
+
+        // 모니터 레벨에 따라 -10초씩 (1레벨 모니터 기본 60초)
+        let monitor = this.$store.state.userdata.data.monitor
+        let coinRefreshSeconds = 60 - ((monitor - 1) * 10)
+
+        // 60초마다 Day 1 증가 (1주)
         if (time % 60 === 0) {
           this.$store.commit('SET_DATA', {key: 'days', value: this.$store.state.userdata.data.days + 1})
           this.$emit('save')
+        }
+
+        // 코인 시세 변동량에 따라
+        if (time % coinRefreshSeconds === 0) {
           this.$store.commit('SET_COIN_PRICE', this.$store.state.userdata.data.psu)
 
           if (this.$store.state.userdata.data.isee === 1) {
@@ -204,7 +215,9 @@ export default {
       if (!this.popup) {
         if (type === 'computer') {
           this.$emit('playSound', 'computer')
-        } else if (type.toLowerCase().indexOf('store') !== -1) {
+        } else if (type.toLowerCase().indexOf('store') !== -1 ||
+                   type === 'electronic' ||
+                   type === 'ticket') {
           this.$emit('playSound', 'shop')
         }
 
@@ -218,6 +231,12 @@ export default {
         /* 열려있는 경우 닫기 */
         this.popup = false
       }
+    },
+    /**
+     * @description 팝업 닫기
+     */
+    closePopup () {
+      this.popup = false
     },
     /**
      * @description 핸드폰 팝업 토글
