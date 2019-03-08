@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="./sample/main.png">
+  <img src="https://user-images.githubusercontent.com/26512984/54032967-6e4fe200-41f6-11e9-8190-0e141e8e24fa.png">
 
   [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
   
@@ -17,9 +17,9 @@
 
 <div align="center">
 
-  <img src="./sample/game-home_0.0.10.png">
+  <img src="https://user-images.githubusercontent.com/26512984/54032992-81fb4880-41f6-11e9-9d55-b85b5aa2e82c.png">
 
-  <img src="./sample/game-store_0.0.10.png">
+  <img src="https://user-images.githubusercontent.com/26512984/54033001-8889c000-41f6-11e9-980d-6b57a976d87a.png">
 
 </div>
 
